@@ -3,8 +3,6 @@ const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 console.log(gsap);
 
-
-
 // canvas height and width
 canvas.width = 1280;
 canvas.height = 640;
@@ -44,7 +42,7 @@ collisionsMap.forEach((row, i) => {
 // define canvas images
 //map
 const image = new Image();
-image.src = "images/test.png";
+image.src = "images/map.png";
 
 const foregroundImage = new Image();
 foregroundImage.src = "images/foregroundObjects.png"
@@ -76,9 +74,9 @@ const background = new Sprite({
     },
     image: image,
     frames: {
-        col: 2,
+        col: 4,
         row: 1,
-        hold: 20
+        hold: 30
     },
     animate: true
 })
