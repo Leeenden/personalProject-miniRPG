@@ -2,32 +2,36 @@
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 // console.log(gsap);
-console.log(instancesData);
+// console.log(instancesData);
 
 // canvas height and width
-canvas.width = 1280;
+canvas.width = 960;
 canvas.height = 640;
 
 const collisionsMap = [];
-
 //parse JSON file to produce arrays of the array for collisions
 for (let i = 0; i < collisions.length; i += 20){
    collisionsMap.push(collisions.slice(i, 20 + i))
 }
 
 const instancesMap = [];
-
 //parse JSON file to produce arrays of the array for battleZones
 for (let i = 0; i < instancesData.length; i += 20){
     instancesMap.push(instancesData.slice(i, 20 + i))
 }
 // console.log(instancesMap)
 
+const battleZonesMap = [];
+//parse JSON file to produce arrays of the array for battleZones
+for (let i = 0; i < battleZonesData.length; i += 20){
+    battleZonesMap.push(battleZonesData.slice(i, 20 + i))
+}
+
 // booundaries array for pushing boundary  
 const boundaries = [];
 const offset = {
-    x: -240,
-    y: -400
+    x: -275,
+    y: -350
 }
 
 collisionsMap.forEach((row, i) => {
@@ -62,7 +66,22 @@ instancesMap.forEach((row, i) => {
     });
 });
 
+const battleZones = [];
 
+battleZonesMap.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        if (symbol === 2477)
+            battleZones.push(
+                new Boundary({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    }
+                })
+            );
+
+    });
+});
 
 // define canvas images
 //map
@@ -131,7 +150,7 @@ const keys = {
 }
 
 // moveables 
-const moveables = [background, ...boundaries, foreground, ...instanceZones]
+const moveables = [background, ...boundaries, foreground, ...instanceZones, ...battleZones]
 
 function rectanglularCollision({rectangle1, rectangle2}) {
     return (
@@ -140,6 +159,11 @@ function rectanglularCollision({rectangle1, rectangle2}) {
     rectangle1.position.y <= rectangle2.position.y + rectangle2.height &&
     rectangle1.position.y + rectangle1.height >= rectangle2.position.y
     )
+}
+
+// battle initiations
+const battle = {
+    initiated: false 
 }
 
 // animate function 
@@ -157,6 +181,11 @@ function animate() {
         // collision detection
         
     });
+    battleZones.forEach((battleZone) => {
+        battleZone.draw()
+        // collision detection
+        
+    });
     player.draw();
     foreground.draw();
 
@@ -166,65 +195,65 @@ function animate() {
 
     // stopping movement on battle
     // console.log(animationId)
-    // if (battle.initiated) return
+    if (battle.initiated) return
 
-    // // battlezone collisions detection / battle activation
-    // if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
-    //     // loop through array
-    //     for (let i = 0; i < battleZones.length; i++){
-    //         const battleZone = battleZones[i]
-    //         const overlappingArea = 
-    //             (Math.min(
-    //                 player.position.x + player.width, 
-    //                 battleZone.position.x + battleZone.width
-    //             ) - 
-    //                 Math.max(player.position.x, battleZone.position.x)) * 
-    //             (Math.min(
-    //                 player.position.y + player.height, 
-    //                 battleZone.position.y + battleZone.height
-    //             ) - Math.max(player.position.y, battleZone.position.y))
-    //         if (
-    //             rectanglularCollision({
-    //                 rectangle1: player, 
-    //                 rectangle2: battleZone
-    //             }) &&
-    //             overlappingArea > (player.width * player.height) / 2
-    //             && Math.random() < 0.01
-    //         ) {
-    //             console.log("battle activated")
+    // battlezone collisions detection / battle activation
+    if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
+        // loop through array
+        for (let i = 0; i < battleZones.length; i++){
+            const battleZone = battleZones[i]
+            const overlappingArea = 
+                (Math.min(
+                    player.position.x + player.width, 
+                    battleZone.position.x + battleZone.width
+                ) - 
+                    Math.max(player.position.x, battleZone.position.x)) * 
+                (Math.min(
+                    player.position.y + player.height, 
+                    battleZone.position.y + battleZone.height
+                ) - Math.max(player.position.y, battleZone.position.y))
+            if (
+                rectanglularCollision({
+                    rectangle1: player, 
+                    rectangle2: battleZone
+                }) &&
+                overlappingArea > (player.width * player.height) / 2
+                && Math.random() < 0.01
+            ) {
+                console.log("battle activated")
 
-    //             // deactivate current animation loop
-    //             window.cancelAnimationFrame(animationId)
-    //             battle.initiated = true
+                // deactivate current animation loop
+                window.cancelAnimationFrame(animationId)
+                battle.initiated = true
 
-    //             // gsap libaray animation settings
-    //             gsap.to("#battleFlash", {
-    //                 opacity: 1, 
-    //                 repeat: 3,
-    //                 yoyo: true,
-    //                 duration: 0.4,
-    //                 // show battle screen at the end of animation
-    //                 onComplete() {
-    //                     gsap.to("#battleFlash", {
-    //                         opacity: 1,
-    //                         duration: 0.4, 
-    //                         onComplete() {
-    //                             // activate new animation loop only when animation is complete
-    //                             animateBattle();
-    //                             gsap.to("#battleFlash", {
-    //                                 opacity: 0,
-    //                                 duration: 0.4
-    //                             })
-    //                         }
-    //                     })
+                // gsap libaray animation settings
+                gsap.to("#battleFlash", {
+                    opacity: 1, 
+                    repeat: 3,
+                    yoyo: true,
+                    duration: 0.4,
+                    // show battle screen at the end of animation
+                    onComplete() {
+                        gsap.to("#battleFlash", {
+                            opacity: 1,
+                            duration: 0.4, 
+                            onComplete() {
+                                // activate new animation loop only when animation is complete
+                                animateBattle();
+                                gsap.to("#battleFlash", {
+                                    opacity: 0,
+                                    duration: 0.4
+                                })
+                            }
+                        })
 
                         
-    //                 }
-    //             })
-    //             break
-    //         }
-    //     }
-    // }
+                    }
+                })
+                break
+            }
+        }
+    }
 
     // w key function
     if (keys.w.pressed && lastKey === "w") {
@@ -344,41 +373,41 @@ function animate() {
 animate();
 
 // // declare battle image 
-// const battleBackgroundImage = new Image();
-// battleBackgroundImage.src = "images/bg-forest1.png";
+const battleBackgroundImage = new Image();
+battleBackgroundImage.src = "images/bg-forest1.png";
 
-// // battle sprite object
-// const battleBackground = new Sprite({
-//     position: {
-//         x: 0,
-//         y: 0
-//     },
-//     image: battleBackgroundImage
-// })
+// battle sprite object
+const battleBackground = new Sprite({
+    position: {
+        x: 0,
+        y: -50
+    },
+    image: battleBackgroundImage
+})
 
 // // monster sprites
-// const brainyImage = new Image();
-// brainyImage.src = "images/brainResized.png";
-// const brainy = new Sprite({
-//     position: {
-//         x: 550,
-//         y: 100
-//     },
-//     image: brainyImage,
-//     frames: {
-//         col: 8,
-//         row: 5,
-//         hold: 10
-//     },
-//     animate: true
+const brainyImage = new Image();
+brainyImage.src = "images/brain.png";
+const brainy = new Sprite({
+    position: {
+        x: 550,
+        y: 100
+    },
+    image: brainyImage,
+    frames: {
+        col: 8,
+        row: 5,
+        hold: 10
+    },
+    animate: true
     
-// })
+})
 
-// function animateBattle() {
-//     window.requestAnimationFrame(animateBattle);
-//     battleBackground.draw();
-//     brainy.draw();
-// }
+function animateBattle() {
+    window.requestAnimationFrame(animateBattle);
+    battleBackground.draw();
+    brainy.draw();
+}
 
 // should be off 
 // animateBattle();
