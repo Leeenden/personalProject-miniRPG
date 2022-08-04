@@ -1,7 +1,8 @@
 // canvas DOM and context
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
-console.log(gsap);
+// console.log(gsap);
+console.log(instancesData);
 
 // canvas height and width
 canvas.width = 1280;
@@ -13,6 +14,14 @@ const collisionsMap = [];
 for (let i = 0; i < collisions.length; i += 20){
    collisionsMap.push(collisions.slice(i, 20 + i))
 }
+
+const instancesMap = [];
+
+//parse JSON file to produce arrays of the array for battleZones
+for (let i = 0; i < instancesData.length; i += 20){
+    instancesMap.push(instancesData.slice(i, 20 + i))
+}
+// console.log(instancesMap)
 
 // booundaries array for pushing boundary  
 const boundaries = [];
@@ -36,8 +45,24 @@ collisionsMap.forEach((row, i) => {
     });
 });
 
-// console.log(battleZones)
-// // console.log(boundaries);
+const instanceZones = [];
+
+instancesMap.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        if (symbol === 2476)
+            instanceZones.push(
+                new Boundary({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
+                    }
+                })
+            );
+
+    });
+});
+
+
 
 // define canvas images
 //map
@@ -106,7 +131,7 @@ const keys = {
 }
 
 // moveables 
-const moveables = [background, ...boundaries, foreground]
+const moveables = [background, ...boundaries, foreground, ...instanceZones]
 
 function rectanglularCollision({rectangle1, rectangle2}) {
     return (
@@ -127,12 +152,79 @@ function animate() {
         // collision detection
         
     });
+    instanceZones.forEach((instanceZone) => {
+        instanceZone.draw()
+        // collision detection
+        
+    });
     player.draw();
     foreground.draw();
 
     // movment tracking
     let moving = true;
     player.animate = false;
+
+    // stopping movement on battle
+    // console.log(animationId)
+    // if (battle.initiated) return
+
+    // // battlezone collisions detection / battle activation
+    // if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
+    //     // loop through array
+    //     for (let i = 0; i < battleZones.length; i++){
+    //         const battleZone = battleZones[i]
+    //         const overlappingArea = 
+    //             (Math.min(
+    //                 player.position.x + player.width, 
+    //                 battleZone.position.x + battleZone.width
+    //             ) - 
+    //                 Math.max(player.position.x, battleZone.position.x)) * 
+    //             (Math.min(
+    //                 player.position.y + player.height, 
+    //                 battleZone.position.y + battleZone.height
+    //             ) - Math.max(player.position.y, battleZone.position.y))
+    //         if (
+    //             rectanglularCollision({
+    //                 rectangle1: player, 
+    //                 rectangle2: battleZone
+    //             }) &&
+    //             overlappingArea > (player.width * player.height) / 2
+    //             && Math.random() < 0.01
+    //         ) {
+    //             console.log("battle activated")
+
+    //             // deactivate current animation loop
+    //             window.cancelAnimationFrame(animationId)
+    //             battle.initiated = true
+
+    //             // gsap libaray animation settings
+    //             gsap.to("#battleFlash", {
+    //                 opacity: 1, 
+    //                 repeat: 3,
+    //                 yoyo: true,
+    //                 duration: 0.4,
+    //                 // show battle screen at the end of animation
+    //                 onComplete() {
+    //                     gsap.to("#battleFlash", {
+    //                         opacity: 1,
+    //                         duration: 0.4, 
+    //                         onComplete() {
+    //                             // activate new animation loop only when animation is complete
+    //                             animateBattle();
+    //                             gsap.to("#battleFlash", {
+    //                                 opacity: 0,
+    //                                 duration: 0.4
+    //                             })
+    //                         }
+    //                     })
+
+                        
+    //                 }
+    //             })
+    //             break
+    //         }
+    //     }
+    // }
 
     // w key function
     if (keys.w.pressed && lastKey === "w") {
