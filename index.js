@@ -16,7 +16,6 @@ for (let i = 0; i < collisions.length; i += 20){
    collisionsMap.push(collisions.slice(i, 20 + i))
 }
 
-
 // booundaries array for pushing boundary  
 const boundaries = [];
 const offset = {
@@ -39,14 +38,13 @@ collisionsMap.forEach((row, i) => {
     });
 });
 
-
 // console.log(battleZones)
 // // console.log(boundaries);
 
 // define canvas images
 //map
 const image = new Image();
-image.src = "images/frame1.png";
+image.src = "images/test.png";
 
 const foregroundImage = new Image();
 foregroundImage.src = "images/foregroundObjects.png"
@@ -60,12 +58,12 @@ playerImage.src = "images/char.png";
 const player = new Sprite({
     position: {
         x: canvas.width / 2 - 128 / 4,
-        y: canvas.height / 2 - 128 / 4 
+        y: canvas.height / 2 - 160 / 5 
     },
     image: playerImage,
     frames: {
         col: 4,
-        row: 4,
+        row: 5,
         hold: 10
     },
     animate: true
@@ -76,7 +74,13 @@ const background = new Sprite({
         x: offset.x, 
         y: offset.y
     },
-    image: image
+    image: image,
+    frames: {
+        col: 2,
+        row: 1,
+        hold: 20
+    },
+    animate: true
 })
 // foreground
 const foreground = new Sprite({
