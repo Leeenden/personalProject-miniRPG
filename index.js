@@ -380,7 +380,7 @@ battleBackgroundImage.src = "images/bg-forest1.png";
 const battleBackground = new Sprite({
     position: {
         x: -150,
-        y: -50
+        y: -75
     },
     image: battleBackgroundImage
 })
@@ -390,8 +390,8 @@ const draggleImage = new Image();
 draggleImage.src = "images/draggleSprite.png";
 const draggle = new Sprite({
     position: {
-        x: 675,
-        y: 200
+        x: 710,
+        y: 175
     },
     image: draggleImage,
     frames: {
@@ -407,8 +407,8 @@ const embyImage = new Image();
 embyImage.src = "images/embySprite.png";
 const emby = new Sprite({
     position: {
-        x: 220,
-        y: 425
+        x: 225,
+        y: 375
     },
     image: embyImage,
     frames: {

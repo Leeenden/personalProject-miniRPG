@@ -6,32 +6,38 @@
     font-family: 'Poppins', sans-serif;
 }
 body {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background-color: black;
 }
 /* ------------------- Actual Screen ------------------------------ */
 #screen{
-    height: 95vh;
-    width: 95vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: relative;
+    display: inline-block;
+    background-color: black;
+    left: 204px;
+    right: 204px;
+    top: 104px;
 }
 canvas {
-    border: solid 5px black;
+    border: solid 5px gray;
 }
 
 #battleFlash {
     position: absolute;
-    display: inline-block;
-    width: 960px;
-    height: 640px;
+    top: 0;
+    bottom: 20;
+    left: 0;
+    right: 0;
     background: black;
     opacity: 0;
     pointer-events: none;
 }
 
+#battleMenu {
+    background-color: white;
+    height: 140px;
+    position: absolute;
+    bottom: 10px;
+    left: 5px;
+    right: 5px;
+    border: solid 3px black;
+}
