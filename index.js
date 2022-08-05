@@ -370,7 +370,7 @@ function animate() {
 }
 // calling animation functions
 //  should be on
-animate();
+// animate();
 
 // // declare battle image 
 const battleBackgroundImage = new Image();
@@ -379,25 +379,42 @@ battleBackgroundImage.src = "images/bg-forest1.png";
 // battle sprite object
 const battleBackground = new Sprite({
     position: {
-        x: 0,
+        x: -150,
         y: -50
     },
     image: battleBackgroundImage
 })
 
 // // monster sprites
-const brainyImage = new Image();
-brainyImage.src = "images/brain.png";
-const brainy = new Sprite({
+const draggleImage = new Image();
+draggleImage.src = "images/draggleSprite.png";
+const draggle = new Sprite({
     position: {
-        x: 550,
-        y: 100
+        x: 675,
+        y: 200
     },
-    image: brainyImage,
+    image: draggleImage,
     frames: {
-        col: 8,
-        row: 5,
-        hold: 10
+        col: 4,
+        row: 1,
+        hold: 30
+    },
+    animate: true
+    
+})
+
+const embyImage = new Image();
+embyImage.src = "images/embySprite.png";
+const emby = new Sprite({
+    position: {
+        x: 220,
+        y: 425
+    },
+    image: embyImage,
+    frames: {
+        col: 4,
+        row: 1,
+        hold: 30
     },
     animate: true
     
@@ -406,11 +423,12 @@ const brainy = new Sprite({
 function animateBattle() {
     window.requestAnimationFrame(animateBattle);
     battleBackground.draw();
-    brainy.draw();
+    draggle.draw();
+    emby.draw();
 }
 
 // should be off 
-// animateBattle();
+animateBattle();
 
 // key up event listeners
 let lastKey= ""

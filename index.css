@@ -8,10 +8,10 @@
 body {
     height: 100vh;
     width: 100vw;
-    border: 2px solid green;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: black;
 }
 /* ------------------- Actual Screen ------------------------------ */
 #screen{
@@ -20,7 +20,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 canvas {
     border: solid 5px black;
@@ -28,7 +27,7 @@ canvas {
 
 #battleFlash {
     position: absolute;
-    top: 12.4%;
+    display: inline-block;
     width: 960px;
     height: 640px;
     background: black;
