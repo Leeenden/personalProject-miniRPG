@@ -34,7 +34,25 @@ class Sprite {
             if (this.frames.colVal < this.frames.col - 1) this.frames.colVal++
             else this.frames.colVal = 0
         }
-    } 
+    }
+    attack({attack, recipient}) {
+        const tl = gsap.timeline()
+        tl.to(this.position, {
+            x: this.position.x -20
+        }).to(this.position, {
+            x: this.position.x + 40,
+            duration: 0.1,
+            onComplete() {
+                gsap.to(recipient.position, {
+                    x: recipient.position.x + 10,
+                    yoyo: true,
+                    repeat: 5
+                })
+            }
+        }).to(this.position, {
+            x: this.position.x 
+        });
+    }
 }
 
 // define booundaries class

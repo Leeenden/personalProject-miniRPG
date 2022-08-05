@@ -385,7 +385,7 @@ const battleBackground = new Sprite({
     image: battleBackgroundImage
 })
 
-// // monster sprites
+// --------- monster sprites ---------------
 const draggleImage = new Image();
 draggleImage.src = "images/draggleSprite.png";
 const draggle = new Sprite({
@@ -429,6 +429,20 @@ function animateBattle() {
 
 // should be off 
 animateBattle();
+
+// ------ event listeners for attack buttons -------
+document.querySelectorAll('button').forEach((button) => {
+    button.addEventListener('click', () => {
+        console.log("clicked");
+        emby.attack({ attack: {
+            name: "Tackle",
+            damage: 10,
+            type: "Normal"
+        },
+        recipient: draggle
+    })
+    })
+});
 
 // key up event listeners
 let lastKey= ""
