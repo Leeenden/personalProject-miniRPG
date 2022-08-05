@@ -6,11 +6,10 @@
     box-sizing: border-box;
     font-family: 'Press Start 2P', cursive;
 }
-
 body {
     background-color: black;
 }
-/* ------------------- Actual Screen ------------------------------ */
+/* --------- Main Screen --------------- */
 #screen{
     position: relative;
     display: inline-block;
@@ -19,10 +18,57 @@ body {
     right: 204px;
     top: 104px;
 }
+/* ---------- Enemy UI and Player UI--------------- */
+/* player */
+#playerUI {
+    background-color: white;
+    border: 3px solid black;
+    width: 350px;
+    position: absolute;
+    top: 400px;
+    right: 25px;
+    padding: 12px;
+}
+/* enemy */
+#enemyUI {
+    background-color: white;
+    border: 3px solid black;
+    width: 350px;
+    position:absolute;
+    top: 25px;
+    left: 25px;
+    padding: 12px;
+}
+/* combined player and enemy */
+#enemyUI #enemyName, #playerUI #playerName {
+    font-size: 20px;
+}
+#enemyHealthbars, #playerHealthbars{
+    position: relative;
+}
+#enemyhealthbar, #playerhealthbar{
+    height: 5px;
+    background-color: #ccc;
+    margin-top: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+#enemyhealthFull, #playerhealthFull{
+    height: 5px;
+    background-color: green;
+    margin-top: 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+/* ---------- Main Canvas -------------- */
 canvas {
     border: solid 5px gray;
 }
-
+/* ----------- battle flash --------- */
 #battleFlash {
     position: absolute;
     top: 0;
@@ -34,32 +80,31 @@ canvas {
     pointer-events: none;
 }
 
+/* --------------- battle menu ----------------- */
 #battleMenu {
     background-color: white;
     height: 160px;
     position: absolute;
-    bottom: 10px;
+    bottom: 5px;
     left: 5px;
     right: 5px;
     border: solid 3px black;
     display:flex;
 }
-
 #attacks {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     width: 66.66%;
 }
-
 button {
     cursor: pointer;
     font-size: 16px;
+    border: none;
 }
 button:hover {
     background-color: #bbb;
     transition: 0.5s;
 }
-
 #attackDetails{
     width: 33.33%;
     display: flex;
@@ -67,7 +112,7 @@ button:hover {
     justify-content: center;
     border-left: solid 3px black;
 }
-
 h1 {
     font-size: 16px;
 }
+
