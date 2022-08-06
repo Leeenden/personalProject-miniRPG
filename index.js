@@ -421,11 +421,16 @@ const emby = new Sprite({
     
 })
 
+// animate battle sequence 
+
+const renderedSprites = [draggle, emby]
 function animateBattle() {
     window.requestAnimationFrame(animateBattle);
     battleBackground.draw();
-    draggle.draw();
-    emby.draw();
+
+    renderedSprites.forEach((sprite) => {
+        sprite.draw()
+    })
 }
 
 // should be off 
@@ -433,15 +438,13 @@ animateBattle();
 
 // ------ event listeners for attack buttons -------
 document.querySelectorAll('button').forEach((button) => {
-    button.addEventListener('click', () => {
-        console.log("clicked");
-        emby.attack({ attack: {
-            name: "Tackle",
-            damage: 10,
-            type: "Normal"
-        },
-        recipient: draggle
-    })
+    button.addEventListener('click', (e) => {
+        const selectedAttack = attacks[e.currentTarget.innerHTML]
+        emby.attack({ 
+            attack: selectedAttack,
+            recipient: draggle,
+            renderedSprites
+        })
     })
 });
 
