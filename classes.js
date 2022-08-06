@@ -47,8 +47,13 @@ class Sprite {
     attack({attack, recipient}) {
         const tl = gsap.timeline()
 
+        this.health -= attack.damage
+
         let movementDistance = 20
         if(this.isEnemy) movementDistance = -20
+
+        let healthbar = "#enemyhealthFull"
+        if(this.isEnemy) healthbar = "#playerhealthFull"
 
         tl.to(this.position, {
             x: this.position.x - movementDistance
@@ -57,8 +62,8 @@ class Sprite {
             duration: 0.1,
             onComplete: () => {
                 // enemy gets hit
-                gsap.to("#enemyhealthFull", {
-                    width: this.health - attack.damage + "%"
+                gsap.to(healthbar, {
+                    width: this.health + "%"
                 })
                 // player action animation 
                 gsap.to(recipient.position, {

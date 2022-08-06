@@ -435,12 +435,12 @@ animateBattle();
 document.querySelectorAll('button').forEach((button) => {
     button.addEventListener('click', () => {
         console.log("clicked");
-        draggle.attack({ attack: {
+        emby.attack({ attack: {
             name: "Tackle",
             damage: 10,
             type: "Normal"
         },
-        recipient: emby
+        recipient: draggle
     })
     })
 });
