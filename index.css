@@ -64,6 +64,16 @@ body {
     left: 0;
     right: 0;
 }
+#battleDialogueBox{
+    position: absolute;
+    background-color: white;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 12px;
+    display: none;
+}
 /* ---------- Main Canvas -------------- */
 canvas {
     border: solid 5px gray;

@@ -1,6 +1,6 @@
 // class definining
 class Sprite {
-    constructor({ position, image, frames = {col: 1, row: 1, hold: 10}, animate = false, isEnemy = false, rotation = 0}) { 
+    constructor({ position, image, frames = {col: 1, row: 1, hold: 10}, animate = false, isEnemy = false, rotation = 0, name}) { 
         this.position = position
         this.image = image
         this.frames = {...frames, colVal: 0, rowVal: 0, elapsed: 0}
@@ -17,6 +17,7 @@ class Sprite {
         this.health = 100
         this.isEnemy = isEnemy
         this.rotation = rotation
+        this.name = name
         // this.scale = 1
     }
     draw() {
@@ -49,6 +50,8 @@ class Sprite {
         }
     }
     attack({attack, recipient, renderedSprites}) {
+        document.querySelector('#battleDialogueBox').style.display ="block";
+        document.querySelector('#battleDialogueBox').innerHTML = this.name + " used " + attack.name;
         // healthbar variables
         let healthbar = "#enemyhealthFull"
         if(this.isEnemy) healthbar = "#playerhealthFull"
