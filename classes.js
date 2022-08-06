@@ -1,6 +1,6 @@
 // class definining
 class Sprite {
-    constructor({ position, image, frames = {col: 1, row: 1, hold: 10}, animate = false, isEnemy = false, rotation = 0, name}) { 
+    constructor({ position, image, frames = {col: 1, row: 1, hold: 10}, animate = false, rotation = 0}) { 
         this.position = position
         this.image = image
         this.frames = {...frames, colVal: 0, rowVal: 0, elapsed: 0}
@@ -13,11 +13,8 @@ class Sprite {
         }
         this.animate = animate
         this.opacity = 1
-        // change health to constructor later for variability
-        this.health = 100
-        this.isEnemy = isEnemy
         this.rotation = rotation
-        this.name = name
+        
         // this.scale = 1
     }
     draw() {
@@ -48,6 +45,33 @@ class Sprite {
             if (this.frames.colVal < this.frames.col - 1) this.frames.colVal++
             else this.frames.colVal = 0
         }
+    }
+    
+}
+// extending the parent Sprites for monsters
+class Monster extends Sprite {
+    constructor({
+        position, 
+        image, 
+        frames = {col: 1, row: 1, hold: 10}, 
+        animate = false, 
+        rotation = 0,
+        isEnemy = false,  
+        name,
+        attacks
+    }) {
+        super({
+            position, 
+            image, 
+            frames, 
+            animate, 
+            rotation,
+        })
+        // change health to constructor later for variability
+        this.health = 100
+        this.isEnemy = isEnemy
+        this.name = name
+        this.attacks = attacks
     }
     attack({attack, recipient, renderedSprites}) {
         document.querySelector('#battleDialogueBox').style.display ="block";

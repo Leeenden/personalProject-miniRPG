@@ -1,7 +1,6 @@
-// declare battle image 
+// ---------- battle background image -------- 
 const battleBackgroundImage = new Image();
 battleBackgroundImage.src = "images/bg-forest1.png";
-
 // battle sprite object
 const battleBackground = new Sprite({
     position: {
@@ -11,47 +10,20 @@ const battleBackground = new Sprite({
     image: battleBackgroundImage
 })
 
-// --------- monster sprites ---------------
-const draggleImage = new Image();
-draggleImage.src = "images/draggleSprite.png";
-const draggle = new Sprite({
-    position: {
-        x: 710,
-        y: 175
-    },
-    image: draggleImage,
-    frames: {
-        col: 4,
-        row: 1,
-        hold: 30
-    },
-    animate: true,
-    isEnemy:  true,
-    name: "Draggle"
-    
-})
+// --------- monster sprites creation ---------------
+const draggle = new Monster(monsters.Draggle)
+const emby = new Monster(monsters.Emby)
 
-const embyImage = new Image();
-embyImage.src = "images/embySprite.png";
-const emby = new Sprite({
-    position: {
-        x: 225,
-        y: 375
-    },
-    image: embyImage,
-    frames: {
-        col: 4,
-        row: 1,
-        hold: 30
-    },
-    animate: true,
-    name: "Emby"
-    
-})
-
-// animate battle sequence 
-
+// ---------- animate battle sequence --------------
 const renderedSprites = [draggle, emby]
+// populate attacks dynamically
+emby.attacks.forEach((attack) => {
+    const button = document.createElement('button')
+    button.innerHTML = attack.name
+    document.querySelector("#attacksBox").append(button)
+})
+
+// animate battle function
 function animateBattle() {
     window.requestAnimationFrame(animateBattle);
     battleBackground.draw();
