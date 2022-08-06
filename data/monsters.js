@@ -1,10 +1,3 @@
-// -=-------- image variables ---------
-// -- Emby
-const embyImage = new Image();
-embyImage.src = "images/embySprite.png";
-// --Draggle
-const draggleImage = new Image();
-draggleImage.src = "images/draggleSprite.png";
 // -------------- monsters array ---------------
 const monsters = {
     Emby: {
@@ -12,7 +5,9 @@ const monsters = {
         x: 225,
         y: 375
         },
-        image: embyImage,
+        image: {
+            src: "./images/embySprite.png"
+        },
         frames: {
             col: 4,
             row: 1,
@@ -27,7 +22,9 @@ const monsters = {
             x: 710,
             y: 175
         },
-        image: draggleImage,
+        image: {
+            src: "./images/draggleSprite.png"
+        },
         frames: {
             col: 4,
             row: 1,

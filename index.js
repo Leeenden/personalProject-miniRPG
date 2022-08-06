@@ -239,6 +239,7 @@ function animate() {
                             duration: 0.4, 
                             onComplete() {
                                 // activate new animation loop only when animation is complete
+                                initBattle();
                                 animateBattle();
                                 gsap.to("#battleFlash", {
                                     opacity: 0,
@@ -246,8 +247,6 @@ function animate() {
                                 })
                             }
                         })
-
-                        
                     }
                 })
                 break

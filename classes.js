@@ -1,16 +1,22 @@
 // class definining
 class Sprite {
-    constructor({ position, image, frames = {col: 1, row: 1, hold: 10}, animate = false, rotation = 0}) { 
+    constructor({ 
+        position, 
+        image, 
+        frames = {col: 1, row: 1, hold: 10}, 
+        animate = false, 
+        rotation = 0
+    }) { 
         this.position = position
-        this.image = image
+        this.image = new Image()
         this.frames = {...frames, colVal: 0, rowVal: 0, elapsed: 0}
-
+        
         this.image.onload = () => {
             this.width = this.image.width / this.frames.col
             this.height = this.image.height / this.frames.row
-            // console.log(this.width)
-            // console.log(this.height)
         }
+        this.image.src = image.src
+        
         this.animate = animate
         this.opacity = 1
         this.rotation = rotation
