@@ -58,6 +58,11 @@ document.querySelectorAll('button').forEach((button) => {
             })
         })
     })
+    button.addEventListener("mouseenter", (e) => {
+        const selectedAttack = attacks[e.currentTarget.innerHTML];
+        document.querySelector("#attackDetails").innerHTML = selectedAttack.type;
+        document.querySelector("#attackDetails").style.color = selectedAttack.color;
+    })
 });
 
 // event listener for dialogue box removal 
