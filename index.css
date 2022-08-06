@@ -73,6 +73,7 @@ body {
     bottom: 0;
     padding: 12px;
     display: none;
+    cursor: pointer;
 }
 /* ---------- Main Canvas -------------- */
 canvas {

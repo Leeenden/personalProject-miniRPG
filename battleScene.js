@@ -64,6 +64,8 @@ function animateBattle() {
 // should be off 
 animateBattle();
 
+const queue = []
+
 // ------ event listeners for attack buttons -------
 document.querySelectorAll('button').forEach((button) => {
     button.addEventListener('click', (e) => {
@@ -73,5 +75,23 @@ document.querySelectorAll('button').forEach((button) => {
             recipient: draggle,
             renderedSprites
         })
+
+        queue.push(() => {
+            draggle.attack({ 
+                attack: attacks.Tackle,
+                recipient: emby,
+                renderedSprites
+            })
+        })
     })
 });
+
+// event listener for dialogue box removal 
+document.querySelector('#battleDialogueBox').addEventListener("click", (e) => {
+    if(queue.length > 0){
+        queue[0]()
+        queue.shift()
+    } else {
+        e.currentTarget.style.display = "none";
+    }
+})
