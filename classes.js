@@ -1,6 +1,6 @@
 // class definining
 class Sprite {
-    constructor({ position, image, frames = {col: 1, row: 1, hold: 10}, animate = false}) { 
+    constructor({ position, image, frames = {col: 1, row: 1, hold: 10}, animate = false, isEnemy = false}) { 
         this.position = position
         this.image = image
         this.frames = {...frames, colVal: 0, rowVal: 0, elapsed: 0}
@@ -12,8 +12,15 @@ class Sprite {
             // console.log(this.height)
         }
         this.animate = animate
+        this.opacity = 1
+        // change health to constructor later for variability
+        this.health = 100
+        this.isEnemy = isEnemy
+        // this.scale = 1
     }
     draw() {
+        c.save()
+        c.globalAlpha = this.opacity
         c.drawImage(
             this.image,
             this.frames.colVal * this.width,
@@ -25,6 +32,8 @@ class Sprite {
             this.image.width / this.frames.col,
             this.image.height / this.frames.row
         )
+        c.restore()
+
         if (!this.animate) return
 
         if (this.frames.col > 1){
@@ -37,16 +46,34 @@ class Sprite {
     }
     attack({attack, recipient}) {
         const tl = gsap.timeline()
+
+        let movementDistance = 20
+        if(this.isEnemy) movementDistance = -20
+
         tl.to(this.position, {
-            x: this.position.x -20
+            x: this.position.x - movementDistance
         }).to(this.position, {
-            x: this.position.x + 40,
+            x: this.position.x + movementDistance * 2,
             duration: 0.1,
-            onComplete() {
+            onComplete: () => {
+                // enemy gets hit
+                gsap.to("#enemyhealthFull", {
+                    width: this.health - attack.damage + "%"
+                })
+                // player action animation 
                 gsap.to(recipient.position, {
                     x: recipient.position.x + 10,
                     yoyo: true,
-                    repeat: 5
+                    repeat: 5,
+                    duration: 0.08
+                })
+                // enemy reaction animation
+                gsap.to(recipient, {
+                    opacity: 0,
+                    repeat: 5,
+                    yoyo: true,
+                    duration: 0.08
+                    
                 })
             }
         }).to(this.position, {
