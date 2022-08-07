@@ -92,7 +92,7 @@ const foregroundImage = new Image();
 foregroundImage.src = "images/foregroundObjects.png"
 // player
 const playerImage = new Image();
-playerImage.src = "images/char.png";
+playerImage.src = "images/char3.png";
 
 
 // creating class objects
@@ -108,7 +108,8 @@ const player = new Sprite({
         row: 5,
         hold: 10
     },
-    animate: true
+    animate: true,
+    scale: 1
 })
 // background
 const background = new Sprite({
@@ -122,7 +123,8 @@ const background = new Sprite({
         row: 1,
         hold: 30
     },
-    animate: true
+    animate: true,
+    scale: 1
 })
 // foreground
 const foreground = new Sprite({
@@ -130,7 +132,8 @@ const foreground = new Sprite({
         x: offset.x, 
         y: offset.y
     },
-    image: foregroundImage
+    image: foregroundImage,
+    scale: 1
 })
 
 // keys object
@@ -224,6 +227,12 @@ function animate() {
 
                 // deactivate current animation loop
                 window.cancelAnimationFrame(animationId)
+                // stop audio 
+                audio.map.stop()
+                // play new audio
+                audio.initBattle.play()
+                audio.battle.play()
+
                 battle.initiated = true
 
                 // gsap libaray animation settings
@@ -412,3 +421,11 @@ window.addEventListener("keyup", (e) => {
     }
     // console.log(keys)
 });
+
+let clicked = false
+addEventListener("click", () => {
+    if(!clicked) {
+        audio.map.play()
+        clicked = true
+    }
+})

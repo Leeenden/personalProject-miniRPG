@@ -63,6 +63,7 @@ function initBattle() {
                                 opacity: 0
                             })
                             battle.initiated = false
+                            audio.map.play()
                         }
                     })
                 })
@@ -94,6 +95,7 @@ function initBattle() {
                                     opacity: 0
                                 })
                                 battle.initiated = false
+                                audio.map.play()
                             }
                         })
                     })
@@ -121,8 +123,9 @@ function animateBattle() {
 }
 
 // should be off 
-initBattle()
-animateBattle();
+animate()
+// initBattle()
+// animateBattle();
 
 // ------ event listeners for attack buttons -------
 

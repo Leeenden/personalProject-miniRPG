@@ -5,7 +5,8 @@ class Sprite {
         image, 
         frames = {col: 1, row: 1, hold: 10}, 
         animate = false, 
-        rotation = 0
+        rotation = 0,
+        scale = 1
     }) { 
         this.position = position
         this.image = new Image()
@@ -20,8 +21,7 @@ class Sprite {
         this.animate = animate
         this.opacity = 1
         this.rotation = rotation
-        
-        // this.scale = 1
+        this.scale = scale
     }
     draw() {
         c.save()
@@ -37,8 +37,8 @@ class Sprite {
             this.image.height / this.frames.row,
             this.position.x,
             this.position.y,
-            this.image.width / this.frames.col,
-            this.image.height / this.frames.row
+            this.image.width / this.frames.col * this.scale,
+            this.image.height / this.frames.row * this.scale
         )
         c.restore()
 
@@ -87,6 +87,8 @@ class Monster extends Sprite {
         gsap.to(this, {
             opacity: 0
         })
+        audio.battle.stop()
+        audio.victory.play()
     }
     attack({attack, recipient, renderedSprites}) {
         document.querySelector('#battleDialogueBox').style.display ="block";
@@ -102,6 +104,7 @@ class Monster extends Sprite {
         // switch case for attack choices
         switch (attack.name) {
             case "Fireball":
+                audio.initFireball.play()
                 // grab and assign sprite image
                 const fireballImage = new Image()
                 fireballImage.src = "./images/fireball.png"
@@ -130,6 +133,7 @@ class Monster extends Sprite {
                     y: recipient.position.y,
                     onComplete: () => {
                         // enemy gets hit
+                        audio.fireballHit.play()
                         gsap.to(healthbar, {
                             width: recipient.health + "%"
                         })
@@ -166,6 +170,7 @@ class Monster extends Sprite {
                     duration: 0.1,
                     onComplete: () => {
                         // enemy gets hit
+                        audio.tackleHit.play()
                         gsap.to(healthbar, {
                             width: recipient.health + "%"
                         })

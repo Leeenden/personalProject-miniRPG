@@ -19,6 +19,10 @@ body {
     top: 104px;
 }
 /* ---------- Enemy UI and Player UI--------------- */
+/*  battle screen ui */
+#battlescreenUI {
+    display: none;
+}
 /* player */
 #playerUI {
     background-color: white;
