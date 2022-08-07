@@ -8,6 +8,7 @@ const c = canvas.getContext("2d");
 canvas.width = 960;
 canvas.height = 640;
 
+// -------------- data parsing for boundary -------------------------
 const collisionsMap = [];
 //parse JSON file to produce arrays of the array for collisions
 for (let i = 0; i < collisions.length; i += 20){
@@ -27,7 +28,7 @@ for (let i = 0; i < battleZonesData.length; i += 20){
     battleZonesMap.push(battleZonesData.slice(i, 20 + i))
 }
 
-// booundaries array for pushing boundary  
+// -------------- collision boundary code -------------------------
 const boundaries = [];
 const offset = {
     x: -275,
@@ -49,6 +50,7 @@ collisionsMap.forEach((row, i) => {
     });
 });
 
+// -------------- instance tiles boundary code -------------------------
 const instanceZones = [];
 
 instancesMap.forEach((row, i) => {
@@ -66,6 +68,7 @@ instancesMap.forEach((row, i) => {
     });
 });
 
+// -------------- battle zone boundary code -------------------------
 const battleZones = [];
 
 battleZonesMap.forEach((row, i) => {
@@ -83,11 +86,11 @@ battleZonesMap.forEach((row, i) => {
     });
 });
 
-// define canvas images
+// ------------- canvas images -----------------------
 //map
 const image = new Image();
 image.src = "images/map.png";
-
+// foreground objects (walk behind tiles)
 const foregroundImage = new Image();
 foregroundImage.src = "images/foregroundObjects.png"
 // player
@@ -95,8 +98,7 @@ const playerImage = new Image();
 playerImage.src = "images/char3.png";
 
 
-// creating class objects
-// player
+// ------------ player sprite creation -----------------
 const player = new Sprite({
     position: {
         x: canvas.width / 2 - 128 / 4,
@@ -111,7 +113,7 @@ const player = new Sprite({
     animate: true,
     scale: 1
 })
-// background
+// ----------------- background sprite creation --------------------
 const background = new Sprite({
     position: {
         x: offset.x, 
@@ -126,7 +128,7 @@ const background = new Sprite({
     animate: true,
     scale: 1
 })
-// foreground
+// ----------------- foreground sprite creation --------------------
 const foreground = new Sprite({
     position: {
         x: offset.x, 
@@ -136,7 +138,7 @@ const foreground = new Sprite({
     scale: 1
 })
 
-// keys object
+// ----------------- object - key tracker --------------------
 const keys = {
     w: {
         pressed: false
@@ -149,10 +151,13 @@ const keys = {
     },
     d: {
         pressed: false
+    },
+    m: {
+        pressed: false
     }
 }
 
-// moveables 
+// ----------------- moveable sprites array (when walking) --------------------
 const moveables = [background, ...boundaries, foreground, ...instanceZones, ...battleZones]
 
 function rectanglularCollision({rectangle1, rectangle2}) {
@@ -164,12 +169,12 @@ function rectanglularCollision({rectangle1, rectangle2}) {
     )
 }
 
-// battle initiations
+// ----------------- initiate battle status object --------------------
 const battle = {
     initiated: false 
 }
 
-// animate function 
+// ----------------- MAIN ANIMATE FUNCTION / GAME CODE --------------------
 function animate() {
     const animationId = window.requestAnimationFrame(animate);
     //draw game map
@@ -262,7 +267,7 @@ function animate() {
             }
         }
     }
-
+    // ---------------------- W, A, S, D movement code ----------------------- 
     // w key function
     if (keys.w.pressed && lastKey === "w") {
         player.frames.rowVal = 3
@@ -376,11 +381,8 @@ function animate() {
         })
     }
 }
-// calling animation functions
-//  should be on
-// animate();
 
-// key up event listeners
+// ----------------- key down event listener code --------------------
 let lastKey= ""
 window.addEventListener("keydown", (e) => {
     switch (e.key) {
@@ -400,10 +402,13 @@ window.addEventListener("keydown", (e) => {
             keys.d.pressed = true
             lastKey = "d"
             break
+        case "m": 
+            keys.m.pressed = true
+            // lastKey = "d"
+            break
     }
-    // console.log(keys)
 });
-// key up event listeners
+// ----------------- key up event listener code --------------------
 window.addEventListener("keyup", (e) => {
     switch (e.key) {
         case "w": 
@@ -418,10 +423,14 @@ window.addEventListener("keyup", (e) => {
         case "d": 
             keys.d.pressed = false
             break
+        case "m": 
+            keys.m.pressed = false
+            // lastKey = "d"
+            break
     }
-    // console.log(keys)
 });
 
+// ----------------- music / howler initiationevent listener --------------------
 let clicked = false
 addEventListener("click", () => {
     if(!clicked) {
@@ -429,3 +438,22 @@ addEventListener("click", () => {
         clicked = true
     }
 })
+// inventory menu event listeners
+let openInventory = false
+
+
+addEventListener("keydown", (e) => {
+       
+    if(keys.m.pressed === true && openInventory === false) {
+        document.querySelector("#characterInventory").style.display = "block";
+        openInventory = true;
+        console.log(openInventory);
+    } else if (keys.m.pressed === false && openInventory === true ) {
+        
+        document.querySelector("#characterInventory").style.display = "none";
+        openInventory = false;
+        console.log(openInventory);
+    }
+
+})
+

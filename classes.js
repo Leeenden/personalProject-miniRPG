@@ -23,6 +23,7 @@ class Sprite {
         this.rotation = rotation
         this.scale = scale
     }
+    // draw (class method)
     draw() {
         c.save()
         c.translate(this.position.x + this.width / 2, this.position.y + this.height / 2)
@@ -79,6 +80,7 @@ class Monster extends Sprite {
         this.name = name
         this.attacks = attacks
     }
+    // faint (class method)
     faint() {
         document.querySelector('#battleDialogueBox').innerHTML = this.name + " fainted!";
         gsap.to(this.position, {
@@ -90,6 +92,7 @@ class Monster extends Sprite {
         audio.battle.stop()
         audio.victory.play()
     }
+    // attack (class method)
     attack({attack, recipient, renderedSprites}) {
         document.querySelector('#battleDialogueBox').style.display ="block";
         document.querySelector('#battleDialogueBox').innerHTML = this.name + " used " + attack.name;
@@ -101,8 +104,10 @@ class Monster extends Sprite {
         if(this.isEnemy) rotation = -2.7
         // healthbar calc for all attacks
         recipient.health -= attack.damage
+
         // switch case for attack choices
         switch (attack.name) {
+            // case fireball
             case "Fireball":
                 audio.initFireball.play()
                 // grab and assign sprite image
@@ -157,6 +162,7 @@ class Monster extends Sprite {
                 })
 
                 break
+            // tackle case
             case "Tackle":
                 const tl = gsap.timeline()
 
@@ -198,8 +204,31 @@ class Monster extends Sprite {
         }
     }
 }
-
-// define booundaries class
+// extending the parent Sprites for items
+class OverworldItem extends Sprite {
+    constructor({
+        position, 
+        image, 
+        frames = {col: 1, row: 1, hold: 10}, 
+        animate = false, 
+        rotation = 0,
+        name,
+    }) {
+        super({
+            position, 
+            image, 
+            frames, 
+            animate, 
+            rotation,
+        })
+        // change health to constructor later for variability
+        this.health = 100
+        this.isEnemy = isEnemy
+        this.name = name
+        this.attacks = attacks
+    }
+}
+// ----------------- booundaries class -----------------------------
 class Boundary {
     // static property for zoomed in map image (16px actual x 4 zoom)
     static width = 64
@@ -209,7 +238,7 @@ class Boundary {
         this.width = 64
         this.height = 64
     }
-
+    // draw the block 
     draw() {
         c.fillStyle = "rgba(255, 0, 0, 0)"
         c.fillRect(this.position.x, this.position.y, this.width, this.height)

@@ -10,6 +10,7 @@ body {
     background-color: black;
 }
 /* --------- Main Screen --------------- */
+/* ------------------------------------- */
 #screen{
     position: relative;
     display: inline-block;
@@ -18,11 +19,93 @@ body {
     right: 204px;
     top: 104px;
 }
+/* --------------- Overworld player UI ---------------- */
+/* --------------------------------------------------- */
+/* overworld UI main div */
+#overworldUI {
+    background-color: transparent;
+    border: 3px solid black;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+}
+/* player exp bar div */
+#playerExpbars {
+    position: relative;
+}
+/* underneath grey exp bar (empty) */
+#playerExpbar{
+    height: 8px;
+    background-color: #ccc;
+    border: 3px solid black;
+    margin: 5px;
+    position: absolute;
+    top: 0;
+    right: 50px;
+    left: 50px;
+}
+/* overlapping exp bar (gained exp) */
+#playerExpbarChange {
+    height: 8px;
+    background-color: lightskyblue;
+    border: 3px solid black;
+    margin: 5px;
+    position: absolute;
+    top: 0;
+    right: 50px;
+    left: 50px;
+}
+/* character health bars */
+#characterHealthbars {
+    position: relative;
+}
+/* hidden health bar (empty) */
+#characterHealthbar {
+    height: 6px;
+    background-color: #ccc;
+    border: 2px solid black;
+    margin: 5px;
+    position: absolute;
+    top: 325px;
+    right: 390px;
+    left: 375px;
+}
+/* overlapping healthbar */
+#characterHealthbarChange {
+    height: 6px;
+    background-color: green;
+    border: 2px solid black;
+    margin: 5px;
+    position: absolute;
+    top: 325px;
+    right: 390px;
+    left: 375px;
+}
+/*  character inventory*/
+#characterInventory {
+    height: 500px;
+    width: 350px;
+    background-color: #ccc;
+    border: 3px solid black;
+    margin: 5px;
+    position: absolute;
+    top: 50px;
+    right: 20px;
+
+    display: none;
+}
+#characterInventory h1 {
+    margin: 5px;
+}
 /* ---------- Enemy UI and Player UI--------------- */
+/* ------------------------------------------------ */
 /*  battle screen ui */
 #battlescreenUI {
     display: none;
 }
+
 /* player */
 #playerUI {
     background-color: white;
