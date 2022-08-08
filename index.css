@@ -83,7 +83,7 @@ body {
     right: 390px;
     left: 375px;
 }
-/*  character inventory*/
+/* -------------character inventory -------------------*/
 #characterInventory {
     height: 500px;
     width: 350px;
@@ -96,9 +96,72 @@ body {
 
     display: none;
 }
-#characterInventory h1, #characterDetails h1{
+/* skills menu */
+#skillsMenu {
+    height: 500px;
+    width: 350px;
+    background-color: #ccc;
+    border: 3px solid black;
     margin: 5px;
-    text-align: Center;
+    position: absolute;
+    top: 50px;
+    right: 20px;
+
+    display: none;
+}
+#skillGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 8px;
+    column-gap: 5px;
+    margin-left: 4px;
+    width: 98%;
+    height: 94%;
+    justify-content: center;
+    text-align: center;
+    text-justify: center;
+}
+.skillChoice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+}
+/* ---------- talent menu  -------------------*/
+#talentsMenu {
+    height: 500px;
+    width: 350px;
+    background-color: #ccc;
+    border: 3px solid black;
+    margin: 5px;
+    position: absolute;
+    top: 50px;
+    left: 20px;
+
+    display: none;
+}
+#talentGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 8px;
+    column-gap: 5px;
+    margin-left: 4px;
+    width: 98%;
+    height: 94%;
+    justify-content: center;
+    text-align: center;
+    text-justify: center;
+}
+.talentChoice {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+}
+/* menu name  */
+#characterInventory h1, #characterDetails h1, #talentsMenu h1, #skillsMenu h1, #questMenu h1{
+    margin: 5px;
+    text-align: center;
 }
 /* actual bag for items */
 #bag {
@@ -121,7 +184,7 @@ body {
     border: 2px solid green;
 }
 
-/* charcter details menu */
+/* ------------------- charcter details menu  ---------------------*/
 #characterDetails {
     height: 500px;
     width: 350px;
@@ -134,7 +197,37 @@ body {
 
     display: none;
 }
-/* Main bottom menu bar with butotns to open all overworld UI menu */
+/* ------------------- quest menu  ---------------------*/
+#questMenu {
+    background-color: #ccc;
+    border: 3px solid black;
+    margin: 5px;
+    position: absolute;
+    top: 50px;
+    left: 15px;
+    right: 15px;
+    bottom: 100px;
+
+    display: none;
+}
+#questLog {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    row-gap: 8px;
+    column-gap: 5px;
+    margin-left: 4px;
+    width: 98%;
+    height: 94%;
+    justify-content: center;
+    text-align: center;
+    text-justify: center;
+}
+.questItem {
+    display: flex;
+    align-items: center;
+    border: 2px solid green;
+}
+/* --------------- bottom menu bar w/ buttons to all overworld UI -----------*/
 #bottomMenubar {
     height: 60px;
     background-color: #ccc;
@@ -149,9 +242,9 @@ body {
     grid-template-columns: repeat(6, 1fr);
     column-gap: 4px;
 
-    display: none;
+    /* display: none; */
 }
-/* buttons for bototm menu bar */
+/* buttons for bottom menu bar */
 #charBtn, #skillBtn, #talBtn, #mapBtn, #invBtn, #questBtn {
     display: flex;
     align-items: center;
@@ -160,9 +253,8 @@ body {
     width: 95%;
     border: 2px solid black;
     background-color: lightgray;
-
-    
 }
+/* hover animation for menu buttons */
 #charBtn:hover, #skillBtn:hover, #talBtn:hover, #mapBtn:hover, #invBtn:hover, #questBtn:hover{
     background-color: darkgray;
 }
