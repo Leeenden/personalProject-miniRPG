@@ -59,15 +59,15 @@ function initBattle() {
                         opacity: 1, 
                         onComplete: () => {
                             cancelAnimationFrame(battleAnimationId)
-                            animate()
-                            document.querySelector("#overworldUI").style.display = "block";
                             document.querySelector("#battlescreenUI").style.display = "none";
+                            document.querySelector("#overworldUI").style.display = "block";
+                            animate()
                             gsap.to("#battleFlash", {
                                 opacity: 0
                             })
                             battle.initiated = false
                             audio.map.play()
-                        }
+                    }
                     })
                 })
             }
@@ -92,9 +92,9 @@ function initBattle() {
                             opacity: 1, 
                             onComplete: () => {
                                 cancelAnimationFrame(battleAnimationId)
-                                animate()
                                 document.querySelector("#battlescreenUI").style.display = "none";
                                 document.querySelector("#overworldUI").style.display = "block";
+                                animate()
                                 gsap.to("#battleFlash", {
                                     opacity: 0
                                 })

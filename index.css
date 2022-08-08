@@ -33,9 +33,14 @@ body {
 #playerExpbars {
     position: relative;
 }
+#playerExpbars h1 {
+    position: absolute;
+    border: 2px solid red;
+}
 /* underneath grey exp bar (empty) */
 #playerExpbar{
     height: 8px;
+    max-width: 820px;
     background-color: #ccc;
     margin: 5px;
     position: absolute;
@@ -48,6 +53,7 @@ body {
 /* overlapping exp bar (gained exp) */
 #playerExpbarChange {
     height: 8px;
+    max-width: 820px;
     background-color: lightskyblue;
     margin: 5px;
     position: absolute;
@@ -59,8 +65,6 @@ body {
 /* character health bars */
 #characterHealthbars {
     position: relative;
-    width: 100%;
-    height: 85%;
 }
 /* hidden health bar (empty) */
 #characterHealthbar {
@@ -69,7 +73,7 @@ body {
     border: 2px solid black;
     margin: 5px;
     position: absolute;
-    top: 305px;
+    top: 325px;
     right: 390px;
     left: 375px;
 }
@@ -80,7 +84,7 @@ body {
     border: 2px solid black;
     margin: 5px;
     position: absolute;
-    top: 305px;
+    top: 325px;
     right: 390px;
     left: 375px;
 }
@@ -102,7 +106,7 @@ body {
     border: 3px solid black;
     border-radius: 20px;
 
-    /* display: none; */
+    display: none;
 }
 .chosenSkill {
     background-color: lightgray;
@@ -216,6 +220,7 @@ body {
     justify-content: center;
     align-items: center;
     border: 2px solid green;
+    border-radius: 20px;
 }
 
 /* ------------------- charcter details menu  ---------------------*/
@@ -277,7 +282,7 @@ body {
 
     /* border-radius: 20px; */
     /* border: 3px solid black; */
-    /* display: none; */
+    display: none;
 }
 /* buttons for bottom menu bar */
 #charBtn, #skillBtn, #talBtn, #mapBtn, #invBtn, #questBtn {
@@ -295,6 +300,20 @@ body {
 #charBtn:hover, #skillBtn:hover, #talBtn:hover, #mapBtn:hover, #invBtn:hover, #questBtn:hover{
     background-color: darkgray;
 }
+/* overworld dialogue box */
+#overworldDialogueBox {
+    position: absolute;
+    height: 50px;
+    background-color: white;
+    top: 50px;
+    right: 15px;
+    left: 15px;
+    padding: 10px;
+    cursor: pointer;
+
+    border: 3px solid black;
+}
+
 /* ---------- Enemy UI and Player UI--------------- */
 /* ------------------------------------------------ */
 /*  battle screen ui */

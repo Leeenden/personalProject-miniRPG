@@ -152,9 +152,9 @@ const keys = {
     d: {
         pressed: false
     },
-    m: {
-        pressed: false
-    }
+    // m: {
+    //     pressed: false
+    // }
 }
 
 // ----------------- moveable sprites array (when walking) --------------------
@@ -402,10 +402,10 @@ window.addEventListener("keydown", (e) => {
             keys.d.pressed = true
             lastKey = "d"
             break
-        case "m": 
-            keys.m.pressed = true
-            // lastKey = "d"
-            break
+        // case "m": 
+        //     keys.m.pressed = true
+        //     // lastKey = "d"
+        //     break
     }
 });
 // ----------------- key up event listener code --------------------
@@ -423,10 +423,10 @@ window.addEventListener("keyup", (e) => {
         case "d": 
             keys.d.pressed = false
             break
-        case "m": 
-            keys.m.pressed = false
-            // lastKey = "d"
-            break
+        // case "m": 
+        //     keys.m.pressed = false
+        //     // lastKey = "d"
+        //     break
     }
 });
 
@@ -439,21 +439,66 @@ addEventListener("click", () => {
     }
 })
 // inventory menu event listeners
-let openInventory = false
 
-
-addEventListener("keydown", (e) => {
-       
-    if(keys.m.pressed === true && openInventory === false) {
-        document.querySelector("#characterInventory").style.display = "block";
-        openInventory = true;
-        console.log(openInventory);
-    } else if (keys.m.pressed === false && openInventory === true ) {
-        
-        document.querySelector("#characterInventory").style.display = "none";
-        openInventory = false;
-        console.log(openInventory);
+let menuToggle = {
+    inventory: {
+        open: false
+    },
+    quests: {
+        open: false
+    },
+    char: {
+        open: false
+    },
+    skills: {
+        open: false
+    },
+    talents: {
+        open: false
     }
+}
 
+addEventListener("keypress", (e) => {
+       
+    if(e.key === "i" && menuToggle.inventory.open === false) {
+        document.querySelector("#characterInventory").style.display = "block";
+        menuToggle.inventory.open = true
+        console.log(menuToggle.inventory.open)
+    } else if (e.key === "i" && menuToggle.inventory.open === true ) {
+        document.querySelector("#characterInventory").style.display = "none";
+        menuToggle.inventory.open = false
+        console.log(menuToggle.inventory.open)
+    }
+    if(e.key === "n" && menuToggle.talents.open === false) {
+        document.querySelector("#talentsMenu").style.display = "block";
+        menuToggle.talents.open = true
+    } else if (e.key === "n" && menuToggle.talents.open === true ) {
+        document.querySelector("#talentsMenu").style.display = "none";
+        menuToggle.talents.open = false
+    }
+    if(e.key === "b" && menuToggle.skills.open === false) {
+        document.querySelector("#skillsMenu").style.display = "block";
+        menuToggle.skills.open = true
+    } else if (e.key === "b" && menuToggle.skills.open === true ) {
+        document.querySelector("#skillsMenu").style.display = "none";
+        menuToggle.skills.open = false
+    }
+    if(e.key === "c" && menuToggle.char.open === false) {
+        document.querySelector("#characterDetails").style.display = "block";
+        menuToggle.char.open = true
+    } else if (e.key === "c" && menuToggle.char.open === true ) {
+        document.querySelector("#characterDetails").style.display = "none";
+        menuToggle.char.open = false
+    }
+    if(e.key === "v" && menuToggle.quests.open === false) {
+        document.querySelector("#questMenu").style.display = "block";
+        menuToggle.quests.open = true
+    } else if (e.key === "v" && menuToggle.quests.open === true ) {
+        document.querySelector("#questMenu").style.display = "none";
+        menuToggle.quests.open = false
+    }
 })
+
+warrior.gainExp();
+let dialogueBox = document.querySelector("#overworldDialogueBox");
 
