@@ -375,7 +375,7 @@ class Character {
                 this.currentExp += 1;
                 dialogueBox.innerHTML = `${this.currentExp} EXP`;
                 gsap.to(expbar, {
-                    width: (this.currentExp / this.requiredExp) * 90  + "%" 
+                    width: (this.currentExp / this.requiredExp) * 88  + "%" 
                 })
                 this.levelUp();
             }, 1000);
