@@ -80,7 +80,7 @@ body {
     margin: 5px;
     position: absolute;
     top: 325px;
-    right: 390px;
+    right: 375px;
     left: 375px;
 }
 /*  character inventory*/
@@ -94,11 +94,45 @@ body {
     top: 50px;
     right: 20px;
 
-    display: none;
+    /* display: none; */
 }
-#characterInventory h1 {
+#characterInventory h1, #characterDetails h1{
     margin: 5px;
+    text-align: Center;
 }
+#bag {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 8px;
+    column-gap: 5px;
+    margin-left: 4px;
+    width: 98%;
+    height: 94%;
+    justify-content: center;
+    text-align: center;
+    text-justify: center;
+}
+.bagSpace {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid green;
+}
+
+/* charcter details menu */
+#characterDetails {
+    height: 500px;
+    width: 350px;
+    background-color: #ccc;
+    border: 3px solid black;
+    margin: 5px;
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    border: 2px solid black;
+}
+
+
 /* ---------- Enemy UI and Player UI--------------- */
 /* ------------------------------------------------ */
 /*  battle screen ui */

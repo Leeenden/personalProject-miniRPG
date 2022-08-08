@@ -21,8 +21,10 @@ let queue = []
 
 
 function initBattle() {
+    
     document.querySelector("#battlescreenUI").style.display = "block";
     document.querySelector("#battleDialogueBox").style.display = "none";
+    document.querySelector("#overworldUI").style.display = "none";
     document.querySelector("#enemyhealthFull").style.width = "100%";
     document.querySelector("#playerhealthFull").style.width = "100%";
     document.querySelector("#attacksBox").replaceChildren() 
@@ -33,9 +35,9 @@ function initBattle() {
     queue = []
 
     emby.attacks.forEach((attack) => {
-        const button = document.createElement('button')
-        button.innerHTML = attack.name
-        document.querySelector("#attacksBox").append(button)
+        const button = document.createElement('button');
+        button.innerHTML = attack.name;
+        document.querySelector("#attacksBox").append(button);
     })
 
     document.querySelectorAll('button').forEach((button) => {
@@ -58,7 +60,8 @@ function initBattle() {
                         onComplete: () => {
                             cancelAnimationFrame(battleAnimationId)
                             animate()
-                            document.querySelector("#battlescreenUI").style.display = "none"
+                            document.querySelector("#overworldUI").style.display = "block";
+                            document.querySelector("#battlescreenUI").style.display = "none";
                             gsap.to("#battleFlash", {
                                 opacity: 0
                             })
@@ -90,7 +93,8 @@ function initBattle() {
                             onComplete: () => {
                                 cancelAnimationFrame(battleAnimationId)
                                 animate()
-                                document.querySelector("#battlescreenUI").style.display = "none"
+                                document.querySelector("#battlescreenUI").style.display = "none";
+                                document.querySelector("#overworldUI").style.display = "block";
                                 gsap.to("#battleFlash", {
                                     opacity: 0
                                 })

@@ -162,6 +162,114 @@ class Monster extends Sprite {
                 })
 
                 break
+            case "Mudthrow":
+                audio.initFireball.play()
+                // grab and assign sprite image
+                const mudthrowImage = new Image()
+                mudthrowImage.src = "./images/mudthrow.png"
+                // create the new sprite
+                const mudthrow = new Sprite({
+                    position: {
+                        x: this.position.x,
+                        y: this.position.y
+                    },
+                    image: mudthrowImage,
+                    frames: {
+                        col: 6,
+                        row: 1,
+                        hold: 10
+                    },
+                    animate: true,
+                    rotation
+                    
+                })
+                // remove form dynamic sprite array
+                renderedSprites.splice(1, 0, mudthrow)
+
+                // moving fireball to enemy
+                gsap.to(mudthrow.position, {
+                    x: recipient.position.x,
+                    y: recipient.position.y,
+                    onComplete: () => {
+                        // enemy gets hit
+                        audio.fireballHit.play()
+                        gsap.to(healthbar, {
+                            width: recipient.health + "%"
+                        })
+                        // player action animation 
+                        gsap.to(recipient.position, {
+                            x: recipient.position.x + 10,
+                            yoyo: true,
+                            repeat: 5,
+                            duration: 0.08
+                        })
+                        // enemy reaction animation
+                        gsap.to(recipient, {
+                            opacity: 0,
+                            repeat: 5,
+                            yoyo: true,
+                            duration: 0.08
+                            
+                        })
+                        renderedSprites.splice(1, 1)
+                    }
+                })
+
+                break
+            case "Gust":
+                audio.initFireball.play()
+                // grab and assign sprite image
+                const gustImage = new Image()
+                gustImage.src = "./images/gust.png"
+                // create the new sprite
+                const gust = new Sprite({
+                    position: {
+                        x: this.position.x,
+                        y: this.position.y
+                    },
+                    image: gustImage,
+                    frames: {
+                        col: 6,
+                        row: 1,
+                        hold: 10
+                    },
+                    animate: true,
+                    rotation
+                    
+                })
+                // remove form dynamic sprite array
+                renderedSprites.splice(1, 0, gust)
+
+                // moving fireball to enemy
+                gsap.to(gust.position, {
+                    x: recipient.position.x,
+                    y: recipient.position.y,
+                    onComplete: () => {
+                        // enemy gets hit
+                        audio.fireballHit.play()
+                        gsap.to(healthbar, {
+                            width: recipient.health + "%"
+                        })
+                        // player action animation 
+                        gsap.to(recipient.position, {
+                            x: recipient.position.x + 10,
+                            yoyo: true,
+                            repeat: 5,
+                            duration: 0.08
+                        })
+                        // enemy reaction animation
+                        gsap.to(recipient, {
+                            opacity: 0,
+                            repeat: 5,
+                            yoyo: true,
+                            duration: 0.08
+                            
+                        })
+                        renderedSprites.splice(1, 1)
+                    }
+                })
+
+                break
             // tackle case
             case "Tackle":
                 const tl = gsap.timeline()
@@ -200,7 +308,7 @@ class Monster extends Sprite {
                     x: this.position.x 
                 })
 
-            break;
+                break;
         }
     }
 }
