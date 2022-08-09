@@ -1,0 +1,87 @@
+const skillChoices = {
+        Punch: {
+            name: "Punch",
+            description: "A feeble punch",
+            type: "Attack",
+            color: "black",
+            level: 1,
+            rank: "Novice",
+            image: {
+                src: "./images/skills/punch.png"
+            },
+            damage: randomInt = (min, max) => {
+                return Math.floor(Math.random() * (max - min + 1) + min)
+            },
+            effect: randomInt(1, 3),
+            effectType: "Active",
+            cooldown: 300,
+        },
+        Swing: {
+            name: "Swing",
+            description: "A weak sword swing.",
+            type: "Attack",
+            color: "black",
+            level: 1,
+            rank: "Novice",
+            image: {
+                src: "./images/skills/swing.png"
+            },
+            damage: randomInt = (min, max) => {
+                return Math.floor(Math.random() * (max - min + 1) + min)
+            },
+            effect: randomInt(2, 5),
+            effectType: "Active",
+            cooldown: 500,
+        },
+        Stab: {
+            name: "Stab",
+            description: "A weak sword stab.",
+            type: "Attack",
+            color: "black",
+            level: 1,
+            rank: "Novice",
+            image: {
+                src: "./images/skills/stab.png"
+            },
+            damage: randomInt = (min, max) => {
+                return Math.floor(Math.random() * (max - min + 1) + min)
+            },
+            effect: randomInt(4, 7),
+            effectType: "Active",
+            cooldown: 1000,
+        },
+        Battlecry: {
+            name: "Battle cry",
+            description: "A loud cry of anger to raise attack.",
+            type: "CC",
+            color: "black",
+            level: 1,
+            rank: "Novice",
+            image: {
+                src: "./images/skills/battlecry.png"
+            },
+            damage: fixedBuff = (min) => {
+                return Math.floor(Math.random() * (min + 1) + min)
+            },
+            effect: fixedBuff(10),
+            effectType: "Active",
+            cooldown: 5000,
+        },
+    Roar: {
+            name: "Roar",
+            description: "A loud cry of anger, to raise defense.",
+            type: "CC",
+            color: "black",
+            level: 1,
+            rank: "Novice",
+            image: {
+                src: "./images/skills/roar.png"
+            },
+            damage: fixedBuff = (min) => {
+                return Math.floor(Math.random() * (min + 1) + min)
+            },
+            effect: fixedBuff(10),
+            effectType: "Active",
+            cooldown: 5000,
+        },
+}

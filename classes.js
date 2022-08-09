@@ -365,7 +365,7 @@ class Character {
             
             this.talentpoint = 0,
             this.talents = {}
-            this.skills = {}
+            this.skills = {...skillChoices}
             
         }
         gainExp(){
@@ -413,6 +413,10 @@ class Character {
         }
         markOfTheRogue(){
             this.Speed +=10;
+        }
+        // passive skills example
+        practiceskillsMethod() {
+            this.stats.Defense += this.skills.Battlecry.effect;
         }
         useTalentPointChoice1(){
             console.log("You used a talent point");

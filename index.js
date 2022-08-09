@@ -500,5 +500,9 @@ addEventListener("keypress", (e) => {
 })
 
 warrior.gainExp();
+console.log(warrior.skills.Swing.effect)
+console.log(warrior.stats.Defense) 
+warrior.practiceskillsMethod()
+console.log(warrior.stats.Defense)
 let dialogueBox = document.querySelector("#overworldDialogueBox");
 
