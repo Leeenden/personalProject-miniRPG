@@ -503,9 +503,10 @@ addEventListener("keypress", (e) => {
 
 warrior.gainExp();
 // console.log(warrior.skills.Swing.effect)
-console.log(warrior.stats.Attack) 
+console.log(warrior.stats.Health) 
 console.log(warrior.skills)
-console.log(warrior.stats.Attack)
+warrior.displayStats()
+console.log(warrior.stats.Health)
 
 // function to animate the charatcer box
 

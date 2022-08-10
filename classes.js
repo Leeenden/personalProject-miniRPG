@@ -368,6 +368,29 @@ class Character {
             this.skills = {}
             
         }
+        displayStats() {
+            // health
+            let charHP = document.querySelector("#charHP")
+            charHP.innerHTML = this.stats.Health
+            if(this.stats.Health !== charHP.innerHTML) {
+                charHP.innerHTML = this.stats.Health
+            }
+            //  stamina
+            let charSP = document.querySelector("#charSP")
+            charSP.innerHTML = this.stats.Stamina
+            //  mana
+            let charMP = document.querySelector("#charMP")
+            charMP.innerHTML = this.stats.Mana
+            //  attack
+            let charATK = document.querySelector("#charATK")
+            charATK.innerHTML = this.stats.Attack
+            //  defence
+            let charDEF = document.querySelector("#charDEF")
+            charDEF.innerHTML = this.stats.Defense
+            //  speed
+            let charSPD = document.querySelector("#charSPD")
+            charSPD.innerHTML = this.stats.Speed
+        }
         gainExp(){
             let expbar = "#playerExpbarChange" 
             let float = "#floatingText"
@@ -379,12 +402,10 @@ class Character {
                 const expText = document.createElement("div");
                 expText.innerHTML = "1 EXP";
                 document.getElementById("floatingText").appendChild(expText);
-                // document.querySelector("#floatingText").innerHTML = "1 EXP";
-                document.querySelector("#overworldDialogueBox").innerHTML = `${this.currentExp}` + " EXP";
                 fltl.to(float, {
                     bottom: 125 + "px",
                     yoyo: false,
-                    duration: 0.2,
+                    duration: 1,
                     onComplete: () => {
                         fltl.to(float, {
                             display: "none",
@@ -402,10 +423,7 @@ class Character {
                     width: (this.currentExp / this.requiredExp) * 88  + "%" 
                 })
                 this.levelUp();
-            }, 3000);
-            // if(document.querySelector("#floatingText").style.bottom === "149px"){
-            //     expText.remove();
-            // }
+            }, 2000);
         }
         levelUp(){
             let expbar = "#playerExpbarChange" 
@@ -413,6 +431,8 @@ class Character {
                 this.currentExp = 0
                 this.level += 1;
                 this.talentpoint += 1;
+                this.stats.Health += 3;
+                this.displayStats();
                 setTimeout(() => {
                     gsap.to(expbar, {
                         width: this.currentExp  + "%" 
@@ -440,6 +460,8 @@ class Character {
                 console.log({...this.skills})
                 document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skills.name}`
             }
+
+
         }
         useBattlecry(){
             this.skills.Battlecry.effect;

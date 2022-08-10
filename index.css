@@ -266,7 +266,46 @@ body {
     top: 50px;
     left: 20px;
 
-    display: none;
+    /* display: none; */
+}
+#characterStats {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    row-gap: 8px;
+    column-gap: 5px;
+    margin-left: 8px;
+    width: 98%;
+    height: 50%;
+    justify-content: center;
+    text-align: center;
+    text-justify: center;
+
+    border: 2px solid red;
+}
+/* divs for each stat type */
+#characterHP, #characterSP, #characterMP, #characterATK, #characterDEF, #characterSPD {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid green;
+    width: 99%;
+}
+/* actual stats rendering */
+#characterStats .charStats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+}
+#charMP {
+    margin-left: 47px;
+}
+#charATK, #charHP {
+    margin-left: 14px;
+}
+#charSPD {
+    margin-left: 32px;
 }
 /* ------------------- quest menu  ---------------------*/
 #questMenu {
@@ -344,7 +383,7 @@ body {
     cursor: pointer;
 
     border: 3px solid black;
-    display: flex;
+    display: none;
 }
 
 /* ---------- Enemy UI and Player UI--------------- */
