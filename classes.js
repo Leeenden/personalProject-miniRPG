@@ -365,20 +365,47 @@ class Character {
             
             this.talentpoint = 0,
             this.talents = {}
-            this.skills = {...skillChoices}
+            this.skills = {}
             
         }
         gainExp(){
             let expbar = "#playerExpbarChange" 
-            
+            let float = "#floatingText"
+            const fltl = gsap.timeline()
             setInterval(() => {
                 this.currentExp += 1;
-                dialogueBox.innerHTML = `${this.currentExp} EXP`;
+
+                // test 
+                const expText = document.createElement("div");
+                expText.innerHTML = "1 EXP";
+                document.getElementById("floatingText").appendChild(expText);
+                // document.querySelector("#floatingText").innerHTML = "1 EXP";
+                document.querySelector("#overworldDialogueBox").innerHTML = `${this.currentExp}` + " EXP";
+                fltl.to(float, {
+                    bottom: 125 + "px",
+                    yoyo: false,
+                    duration: 0.2,
+                    onComplete: () => {
+                        fltl.to(float, {
+                            display: "none",
+                            onComplete: () => {
+                                expText.remove();
+                                fltl.to(float, {
+                                    bottom: 0 + "px",
+                                    display: "flex"
+                                })
+                            }
+                        })
+                    }
+                })
                 gsap.to(expbar, {
                     width: (this.currentExp / this.requiredExp) * 88  + "%" 
                 })
                 this.levelUp();
-            }, 1000);
+            }, 3000);
+            // if(document.querySelector("#floatingText").style.bottom === "149px"){
+            //     expText.remove();
+            // }
         }
         levelUp(){
             let expbar = "#playerExpbarChange" 
@@ -392,32 +419,39 @@ class Character {
                     })
                 }, 500);
                 
-                console.log("LEVEL UP");
-                dialogueBox.innerHTML = "LEVEL UP"
-                console.log(`You are now level-${this.level}`);
-                dialogueBox.innerHTML = `You are now level-${this.level}`
+                console.log("LEVEL UP")
+                document.querySelector("#overworldDialogueBox").innerHTML = "LEVEL UP"
+                console.log(`You are now level-${this.level}`)
+                document.querySelector("#overworldDialogueBox").innerHTML = `You are now level-${this.level}`
                 console.log(`You earned 1 Talent point. You now have ${this.talentpoint}`);
-                dialogueBox.innerHTML = `You earned 1 Talent point. You now have ${this.talentpoint}`
+                document.querySelector("#overworldDialogueBox").innerHTML = `You gained a Talent point. You now have ${this.talentpoint} talent points.`
                 this.requiredExp += this.level * 5;
-                
+                this.learnSkills()
                 // this.currentExp = 0;
-                
             }
         }
-        
-        markOfTheSavage(){
-            this.Attack +=10;
+        learnSkills() {
+            if (this.level === skillChoices.Battlecry.level) {
+                this.skills = {...skillChoices.Battlecry}
+                console.log(this.skills)
+                document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skills}`
+            } else if (this.level === skillChoices.Punch.level) {
+                this.skills = skillChoices.Punch
+                console.log({...this.skills})
+                document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skills.name}`
+            }
         }
-        markOfTheTitan(){
-            this.Defense +=10;
+        useBattlecry(){
+            this.skills.Battlecry.effect;
         }
+        // useRoar(){
+        //     this.stats.Defense += this.skills.Roar.effect;
+        // }
         markOfTheRogue(){
             this.Speed +=10;
         }
         // passive skills example
-        practiceskillsMethod() {
-            this.stats.Defense += this.skills.Battlecry.effect;
-        }
+        
         useTalentPointChoice1(){
             console.log("You used a talent point");
             this.talentpoint -= 1;

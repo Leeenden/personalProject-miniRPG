@@ -499,10 +499,24 @@ addEventListener("keypress", (e) => {
     }
 })
 
-warrior.gainExp();
-console.log(warrior.skills.Swing.effect)
-console.log(warrior.stats.Defense) 
-warrior.practiceskillsMethod()
-console.log(warrior.stats.Defense)
-let dialogueBox = document.querySelector("#overworldDialogueBox");
+// testing mechnaics code 
 
+warrior.gainExp();
+// console.log(warrior.skills.Swing.effect)
+console.log(warrior.stats.Attack) 
+console.log(warrior.skills)
+console.log(warrior.stats.Attack)
+
+// function to animate the charatcer box
+
+// let size = Math.random() * 80;
+// document.querySelector("#floatingText").style.width = 20 + size+"px";
+// document.querySelector("#floatingText").style.height = 20 + size+"px";
+
+// let transformValue = Math.random() * 100;
+// document.querySelector("#floatingText").style.transform = "linear("+ transformValue +"px)";
+// document.querySelector("#characterDialogueBox").appendChild(document.querySelector("#floatingText"));
+
+// setTimeout(function(){
+//     document.querySelector("#floatingText").remove();
+// }, 100)

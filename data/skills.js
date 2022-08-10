@@ -4,7 +4,7 @@ const skillChoices = {
             description: "A feeble punch",
             type: "Attack",
             color: "black",
-            level: 1,
+            level: 2,
             rank: "Novice",
             image: {
                 src: "./images/skills/punch.png"
@@ -21,7 +21,7 @@ const skillChoices = {
             description: "A weak sword swing.",
             type: "Attack",
             color: "black",
-            level: 1,
+            level: 3,
             rank: "Novice",
             image: {
                 src: "./images/skills/swing.png"
@@ -38,7 +38,7 @@ const skillChoices = {
             description: "A weak sword stab.",
             type: "Attack",
             color: "black",
-            level: 1,
+            level: 5,
             rank: "Novice",
             image: {
                 src: "./images/skills/stab.png"
@@ -55,7 +55,7 @@ const skillChoices = {
             description: "A loud cry of anger to raise attack.",
             type: "CC",
             color: "black",
-            level: 1,
+            level: 4,
             rank: "Novice",
             image: {
                 src: "./images/skills/battlecry.png"
@@ -67,12 +67,12 @@ const skillChoices = {
             effectType: "Active",
             cooldown: 5000,
         },
-    Roar: {
+        Roar: {
             name: "Roar",
             description: "A loud cry of anger, to raise defense.",
             type: "CC",
             color: "black",
-            level: 1,
+            level: 6,
             rank: "Novice",
             image: {
                 src: "./images/skills/roar.png"
