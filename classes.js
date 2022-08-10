@@ -492,45 +492,58 @@ class Character {
                         width: this.currentExp  + "%" 
                     })
                 }, 1000);
-                // test console.logs 
-                console.log("LEVEL UP")
-                console.log(`You are now level-${this.level}`)
-                console.log(`You earned 1 Talent point. You now have ${this.talentpoint}`);
-
-                const levelupMessage = document.createElement("div");
-                levelupMessage.innerHTML = `You gained a Talent point. You now have ${this.talentpoint} talent points.`;
-                
-                document.getElementById("overworldDialogueBox").style.display = "block";
-                document.getElementById("overworldDialogueBox").appendChild(levelupMessage);
+                // level -up message variables
                 setTimeout(() => {
-                    levelupMessage.remove();
-                    document.getElementById("overworldDialogueBox").style.display = "none";
+                    const levelupMessage = document.createElement("div");
+                    levelupMessage.innerHTML = `You gained a Talent point. You now have ${this.talentpoint} talent points.`;
+                    // display box and inject the created div with the message
+                    document.getElementById("overworldDialogueBox").style.display = "block";
+                    document.getElementById("overworldDialogueBox").appendChild(levelupMessage);
+                    setTimeout(() => {
+                        levelupMessage.remove();
+                        document.getElementById("overworldDialogueBox").style.display = "none";
+                        
+                    }, 2500);
+                    // run skills code incase any skills can be learned that level
+                    this.learnSkills()
                 }, 2000);
                 
+                
+                
+                // change the required exp for the next level
                 this.requiredExp += this.level * 5;
-                this.learnSkills()
-                // this.currentExp = 0;
+                
             }
         }
         learnSkills() {
-            if (this.level === skillChoices.Punch.level) {
-                this.skills.first = skillChoices.Punch
-                console.log(this.skills)
-                document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skills.first.name}.`
-            }
+            const levelupMessage = document.createElement("div");
+            levelupMessage.innerHTML = `You gained a Talent point. You now have ${this.talentpoint} talent points.`;
+            // check if levels match and if yes, show 
+            setTimeout(() => {
+                if (this.level === skillChoices.Punch.level) {
+                    // just using punch for now, later if statement 
+                    this.skills.first = skillChoices.Punch
+                    console.log(this.skills)
+                    document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skills.first.name}.`
+                    setTimeout(() => {
+                        levelupMessage.remove();
+                        document.getElementById("overworldDialogueBox").style.display = "none";
+                    }, 6500);
+                }
+            }, 2000);
         }
-        useBattlecry(){
-            this.skills.Battlecry.effect;
-        }
+        // useBattlecry() {
+        //     this.skills.second.effect;
+        // }
         // useRoar(){
         //     this.stats.Defense += this.skills.Roar.effect;
         // }
-        markOfTheRogue(){
+        markOfTheRogue() {
             this.Speed +=10;
         }
         // passive skills example
         
-        useTalentPointChoice1(){
+        useTalentPointChoice1() {
             console.log("You used a talent point");
             this.talentpoint -= 1;
             console.log("You chose mark of the Savage");
