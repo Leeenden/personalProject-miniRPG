@@ -365,7 +365,13 @@ class Character {
             
             this.talentpoint = 0,
             this.talents = {}
-            this.skills = {}
+            this.skills = {
+                first: "",
+                second: "",
+                third: "",
+                fourth: "",
+                fifth: ""
+            }
             
         }
         displayStats() {
@@ -378,36 +384,51 @@ class Character {
             //  stamina
             let charSP = document.querySelector("#charSP")
             charSP.innerHTML = this.stats.Stamina
+            if(this.stats.Stamina !== charSP.innerHTML) {
+                charSP.innerHTML = this.stats.Stamina
+            }
             //  mana
             let charMP = document.querySelector("#charMP")
             charMP.innerHTML = this.stats.Mana
+            if(this.stats.Mana !== charMP.innerHTML) {
+                charMP.innerHTML = this.stats.Mana
+            }
             //  attack
             let charATK = document.querySelector("#charATK")
             charATK.innerHTML = this.stats.Attack
+            if(this.stats.Attack !== charATK.innerHTML) {
+                charATK.innerHTML = this.stats.Attack
+            }
             //  defence
             let charDEF = document.querySelector("#charDEF")
             charDEF.innerHTML = this.stats.Defense
+            if(this.stats.Defense !== charDEF.innerHTML) {
+                charDEF.innerHTML = this.stats.Defense
+            }
             //  speed
             let charSPD = document.querySelector("#charSPD")
             charSPD.innerHTML = this.stats.Speed
+            if(this.stats.Speed !== charSPD.innerHTML) {
+                charSPD.innerHTML = this.stats.Speed
+            }
         }
         gainExp(){
             let expbar = "#playerExpbarChange" 
-            let float = "#floatingText"
+            let float = "#floatingTextEXP"
             const fltl = gsap.timeline()
             setInterval(() => {
                 this.currentExp += 1;
-
-                // test 
+                // create floating exp div 
                 const expText = document.createElement("div");
                 expText.innerHTML = "1 EXP";
-                document.getElementById("floatingText").appendChild(expText);
+                document.getElementById("floatingTextEXP").appendChild(expText);
                 fltl.to(float, {
                     bottom: 125 + "px",
                     yoyo: false,
-                    duration: 1,
+                    duration: 0.5,
                     onComplete: () => {
                         fltl.to(float, {
+                            duration: 0.5,
                             display: "none",
                             onComplete: () => {
                                 expText.remove();
@@ -419,49 +440,84 @@ class Character {
                         })
                     }
                 })
+                // animate top exp bar
                 gsap.to(expbar, {
                     width: (this.currentExp / this.requiredExp) * 88  + "%" 
                 })
+                // run level up function
                 this.levelUp();
-            }, 2000);
+            }, 3000);
         }
         levelUp(){
-            let expbar = "#playerExpbarChange" 
+            let expbar = "#playerExpbarChange"
+            let floaty = "#floatingTextLvlup"
+            const fltl = gsap.timeline()
             if(this.currentExp === this.requiredExp){
                 this.currentExp = 0
                 this.level += 1;
                 this.talentpoint += 1;
                 this.stats.Health += 3;
+                this.stats.Stamina += 3;
+                this.stats.Mana += 3;
+                this.stats.Attack += 3;
+                this.stats.Defense += 3;
+                this.stats.Speed += 3;
                 this.displayStats();
+
+                // update
                 setTimeout(() => {
+                    // create floating exp div 
+                    const levelupText = document.createElement("div");
+                    levelupText.innerHTML = "Level UP!";
+                    document.getElementById("floatingTextLvlup").appendChild(levelupText);
+                    fltl.to(floaty, {
+                        bottom: 125 + "px",
+                        yoyo: false,
+                        duration: 0.5,
+                        onComplete: () => {
+                            fltl.to(floaty, {
+                                duration: 1,
+                                display: "none",
+                                onComplete: () => {
+                                    levelupText.remove();
+                                    fltl.to(floaty, {
+                                        bottom: 0 + "px",
+                                        display: "block"
+                                    })
+                                }
+                            })
+                        }
+                    })
                     gsap.to(expbar, {
                         width: this.currentExp  + "%" 
                     })
-                }, 500);
-                
+                }, 1000);
+                // test console.logs 
                 console.log("LEVEL UP")
-                document.querySelector("#overworldDialogueBox").innerHTML = "LEVEL UP"
                 console.log(`You are now level-${this.level}`)
-                document.querySelector("#overworldDialogueBox").innerHTML = `You are now level-${this.level}`
                 console.log(`You earned 1 Talent point. You now have ${this.talentpoint}`);
-                document.querySelector("#overworldDialogueBox").innerHTML = `You gained a Talent point. You now have ${this.talentpoint} talent points.`
+
+                const levelupMessage = document.createElement("div");
+                levelupMessage.innerHTML = `You gained a Talent point. You now have ${this.talentpoint} talent points.`;
+                
+                document.getElementById("overworldDialogueBox").style.display = "block";
+                document.getElementById("overworldDialogueBox").appendChild(levelupMessage);
+                setTimeout(() => {
+                    levelupMessage.remove();
+                    document.getElementById("overworldDialogueBox").style.display = "none";
+                }, 2000);
+                
                 this.requiredExp += this.level * 5;
                 this.learnSkills()
                 // this.currentExp = 0;
             }
         }
         learnSkills() {
-            if (this.level === skillChoices.Battlecry.level) {
-                this.skills = {...skillChoices.Battlecry}
+            if (this.level === skillChoices.Punch.level) {
+                this.skills.first = skillChoices.Punch
                 console.log(this.skills)
-                document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skills}`
-            } else if (this.level === skillChoices.Punch.level) {
-                this.skills = skillChoices.Punch
-                console.log({...this.skills})
-                document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skills.name}`
+                document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skills.first.name}.`
             }
-
-
         }
         useBattlecry(){
             this.skills.Battlecry.effect;
