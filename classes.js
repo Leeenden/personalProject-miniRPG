@@ -360,13 +360,13 @@ class Character {
     
             // pre-define starting stats
             this.level = 1,
-            this.requiredExp = 10,
+            this.requiredExp = 5,
             this.currentExp = 0,
             
             this.talentpoint = 0,
             this.talents = {}
             this.skills = {
-                first: "",
+                first: "N/A",
                 second: "",
                 third: "",
                 fourth: "",
@@ -375,7 +375,13 @@ class Character {
             
         }
         displayStats() {
-            // health
+            //level
+            let charLevel = document.querySelector("#charLevel")
+            charLevel.innerHTML = this.level
+            if(this.level !== charLevel.innerHTML) {
+                charLevel.innerHTML = this.level
+            }
+            // healLevel
             let charHP = document.querySelector("#charHP")
             charHP.innerHTML = this.stats.Health
             if(this.stats.Health !== charHP.innerHTML) {
@@ -412,6 +418,7 @@ class Character {
                 charSPD.innerHTML = this.stats.Speed
             }
         }
+        
         gainExp(){
             let expbar = "#playerExpbarChange" 
             let float = "#floatingTextEXP"
@@ -508,11 +515,21 @@ class Character {
                     this.learnSkills()
                 }, 2000);
                 
-                
-                
                 // change the required exp for the next level
-                this.requiredExp += this.level * 5;
-                
+                // this.requiredExp += this.level * 2;
+                this.requiredExp += this.level;
+                this.displaySkills();
+            }
+        }
+        displaySkills() {
+            const skillSet = document.createElement("div")
+            skillSet.classList.add("chosenSkill");
+            skillSet.innerHTML = this.skills.first.name;
+            console.log(this.skills.first.name)
+            if(this.skills.first) {
+                skillSet.innerHTML = this.skills.first.name;
+                document.getElementById("charSkills").style.display = "grid";
+                document.getElementById("charSkills").appendChild(skillSet);
             }
         }
         learnSkills() {
@@ -523,7 +540,7 @@ class Character {
                 if (this.level === skillChoices.Punch.level) {
                     // just using punch for now, later if statement 
                     this.skills.first = skillChoices.Punch
-                    console.log(this.skills)
+                    console.log(this.skills.first)
                     document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skills.first.name}.`
                     setTimeout(() => {
                         levelupMessage.remove();
@@ -532,8 +549,8 @@ class Character {
                 }
             }, 2000);
         }
-        // useBattlecry() {
-        //     this.skills.second.effect;
+        // usePunch() {
+        //     this.skills.first.effect;
         // }
         // useRoar(){
         //     this.stats.Defense += this.skills.Roar.effect;
@@ -686,6 +703,9 @@ class Character {
     
 let warrior = new Character(stats={Health: 50, Stamina: 50, Mana: 50, Attack: 15, Defense: 15, Speed: 15});
 let shaman = new Character(stats={Health: 80, Stamina: 20, Mana: 30, Attack: 11, Defense: 16, Speed: 20});
-console.log(warrior.stats)
-console.log(shaman.stats.Health)
-// warrior.gainExp()
+warrior.displaySkills()
+warrior.displayStats()
+warrior.gainExp()
+// console.log(warrior.stats.Health) 
+// warrior.displayStats()
+// console.log(warrior.stats.Health)

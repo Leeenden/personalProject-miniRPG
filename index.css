@@ -299,7 +299,7 @@ body {
     border: 2px solid red;
 }
 /* divs for each stat type */
-#characterHP, #characterSP, #characterMP, #characterATK, #characterDEF, #characterSPD {
+#characterHP, #characterSP, #characterMP, #characterATK, #characterDEF, #characterSPD, #characterLevel {
     display: flex;
     align-items: center;
     justify-content: center;
