@@ -208,9 +208,18 @@ body {
 }
 .skillChoice {
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     border: 2px solid black;
+}
+.skillChoice h4 {
+    width: 100%;
+}
+.skillIcon {
+    border: 2px solid red;
+    display: flex;
 }
 /* ---------- talent menu  -------------------*/
 #talentsMenu {

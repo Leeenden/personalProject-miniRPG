@@ -58,7 +58,7 @@ const skills = {
         level: 4,
         rank: "Novice",
         image: {
-            src: "./images/skills/battlecry.png"
+            src: "./images/skills/shout.png"
         },
         damage: fixedBuff = (min) => {
             return Math.floor(Math.random() * (min + 1) + min)
