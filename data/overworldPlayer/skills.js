@@ -69,7 +69,7 @@ const skills = {
     },
     Five: {
         name: "Roar",
-        description: "A loud cry of anger, to raise defense.",
+        description: "A loud scream to raise defense.",
         type: "CC",
         color: "black",
         level: 5,
@@ -86,7 +86,7 @@ const skills = {
     },
     Six: {
         name: "Slice",
-        description: "A quick slash with your blade.",
+        description: "A quick sword slice.",
         type: "Attack",
         color: "black",
         level: 6,

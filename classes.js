@@ -426,42 +426,33 @@ class Character {
             const skillOne = document.getElementById("skillFirst")
             skillOne.innerHTML = this.skillChoices[0].name;
             console.log(this.skillChoices)
-            if(!skillOne.innerHTML !== this.skillChoices[0].name) {
+            if(skillOne.innerHTML !== this.skillChoices[0].name) {
                 skillOne.innerHTML = this.skillChoices[0].name;
-            } else {
-                document.querySelector("charSkills").style.display = "grid";
-            }
+            } 
+            
             //second skill
             const skillTwo = document.getElementById("skillSecond")
             skillTwo.innerHTML = this.skillChoices[1].name;
-            if(!skillTwo.innerHTML !== this.skillChoices[1].name) {
+            if(skillTwo.innerHTML !== this.skillChoices[1].name) {
                 skillTwo.innerHTML = this.skillChoices[1].name;
-            } else {
-                document.querySelector("charSkills").style.display = "grid";
-            }
+            } 
             // third skill
             const skillThree = document.getElementById("skillThird")
             skillThree.innerHTML = this.skillChoices[2].name;
-            if(!skillThree.innerHTML !== this.skillChoices[2].name) {
+            if(skillThree.innerHTML !== this.skillChoices[2].name) {
                 skillThree.innerHTML = this.skillChoices[2].name;
-            } else {
-                document.querySelector("charSkills").style.display = "grid";
-            }
+            } 
             // fourth skill
             const skillFour = document.getElementById("skillFourth")
             skillFour.innerHTML = this.skillChoices[3].name;
-            if(!skillFour.innerHTML !== this.skillChoices[3].name) {
+            if(skillFour.innerHTML !== this.skillChoices[3].name) {
                 skillFour.innerHTML = this.skillChoices[3].name;
-            } else {
-                document.querySelector("charSkills").style.display = "grid";
-            }
+            } 
             const skillFive = document.getElementById("skillFifth")
             skillFive.innerHTML = this.skillChoices[4].name;
-            if(!skillFive.innerHTML !== this.skillChoices[4].name) {
+            if(skillFive.innerHTML !== this.skillChoices[4].name) {
                 skillFive.innerHTML = this.skillChoices[4].name;
-            } else {
-                document.querySelector("charSkills").style.display = "grid";
-            }
+            } 
         }
         learnSkills() {
             const levelupMessage = document.createElement("div");
