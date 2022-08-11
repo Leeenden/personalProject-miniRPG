@@ -429,7 +429,6 @@ class Character {
             if(skillOne.innerHTML !== this.skillChoices[0].name) {
                 skillOne.innerHTML = this.skillChoices[0].name;
             } 
-            
             //second skill
             const skillTwo = document.getElementById("skillSecond")
             skillTwo.innerHTML = this.skillChoices[1].name;
@@ -448,6 +447,7 @@ class Character {
             if(skillFour.innerHTML !== this.skillChoices[3].name) {
                 skillFour.innerHTML = this.skillChoices[3].name;
             } 
+            //fifth skill
             const skillFive = document.getElementById("skillFifth")
             skillFive.innerHTML = this.skillChoices[4].name;
             if(skillFive.innerHTML !== this.skillChoices[4].name) {
@@ -612,9 +612,8 @@ class Character {
                 this.requiredExp += this.level;
             }
         }
-        
         // usePunch() {
-        //     this.skills.first.effect;
+        //     // console.log(this.skillsChoices[0].effect())
         // }
         // useRoar(){
         //     this.stats.Defense += this.skills.Roar.effect;
@@ -622,8 +621,6 @@ class Character {
         markOfTheRogue() {
             this.Speed +=10;
         }
-        // passive skills example
-        
         useTalentPointChoice1() {
             console.log("You used a talent point");
             this.talentpoint -= 1;

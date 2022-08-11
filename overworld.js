@@ -77,3 +77,8 @@ sc6desc.innerHTML = skills.Six.description;
 
 // // skillCard7.innerHTML = skills.Seven.name;
 
+const activeTest = document.getElementById("skillFirst");
+activeTest.addEventListener("click", function(){
+    warrior.usePunch();
+    
+})
