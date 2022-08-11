@@ -501,7 +501,7 @@ addEventListener("keypress", (e) => {
         menuToggle.quests.open = false
     }
     if(e.key === "z" && menuToggle.skillTab.open === false) {
-        document.querySelector("#charSkills").style.display = "block";
+        document.querySelector("#charSkills").style.display = "grid";
         menuToggle.skillTab.open = true
     } else if (e.key === "z" && menuToggle.skillTab.open === true ) {
         document.querySelector("#charSkills").style.display = "none";

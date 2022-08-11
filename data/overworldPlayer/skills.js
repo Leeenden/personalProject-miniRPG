@@ -38,7 +38,7 @@ const skills = {
         description: "A weak sword stab.",
         type: "Attack",
         color: "black",
-        level: 5,
+        level: 3,
         rank: "Novice",
         image: {
             src: "./images/skills/stab.png"
@@ -51,8 +51,8 @@ const skills = {
         cooldown: 1000,
     },
     Four: {
-        name: "Battle cry",
-        description: "A loud cry of anger to raise attack.",
+        name: "Shout",
+        description: "A loud shout to raise attack.",
         type: "CC",
         color: "black",
         level: 4,
@@ -72,7 +72,7 @@ const skills = {
         description: "A loud cry of anger, to raise defense.",
         type: "CC",
         color: "black",
-        level: 6,
+        level: 5,
         rank: "Novice",
         image: {
             src: "./images/skills/roar.png"
@@ -81,6 +81,23 @@ const skills = {
             return Math.floor(Math.random() * (min + 1) + min)
         },
         effect: fixedBuff(10),
+        effectType: "Active",
+        cooldown: 5000,
+    },
+    Six: {
+        name: "Slice",
+        description: "A quick slash with your blade.",
+        type: "Attack",
+        color: "black",
+        level: 6,
+        rank: "Novice",
+        image: {
+            src: "./images/skills/slice.png"
+        },
+        damage: randomInt = (min, max) => {
+            return Math.floor(Math.random() * (max - min + 1) + min)
+        },
+        effect: randomInt(6, 7),
         effectType: "Active",
         cooldown: 5000,
     },

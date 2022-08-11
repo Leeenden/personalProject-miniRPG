@@ -422,11 +422,43 @@ class Character {
             }
         }
         displaySkills() {
+            // first skill
             const skillOne = document.getElementById("skillFirst")
             skillOne.innerHTML = this.skillChoices[0].name;
             console.log(this.skillChoices)
             if(!skillOne.innerHTML !== this.skillChoices[0].name) {
                 skillOne.innerHTML = this.skillChoices[0].name;
+            } else {
+                document.querySelector("charSkills").style.display = "grid";
+            }
+            //second skill
+            const skillTwo = document.getElementById("skillSecond")
+            skillTwo.innerHTML = this.skillChoices[1].name;
+            if(!skillTwo.innerHTML !== this.skillChoices[1].name) {
+                skillTwo.innerHTML = this.skillChoices[1].name;
+            } else {
+                document.querySelector("charSkills").style.display = "grid";
+            }
+            // third skill
+            const skillThree = document.getElementById("skillThird")
+            skillThree.innerHTML = this.skillChoices[2].name;
+            if(!skillThree.innerHTML !== this.skillChoices[2].name) {
+                skillThree.innerHTML = this.skillChoices[2].name;
+            } else {
+                document.querySelector("charSkills").style.display = "grid";
+            }
+            // fourth skill
+            const skillFour = document.getElementById("skillFourth")
+            skillFour.innerHTML = this.skillChoices[3].name;
+            if(!skillFour.innerHTML !== this.skillChoices[3].name) {
+                skillFour.innerHTML = this.skillChoices[3].name;
+            } else {
+                document.querySelector("charSkills").style.display = "grid";
+            }
+            const skillFive = document.getElementById("skillFifth")
+            skillFive.innerHTML = this.skillChoices[4].name;
+            if(!skillFive.innerHTML !== this.skillChoices[4].name) {
+                skillFive.innerHTML = this.skillChoices[4].name;
             } else {
                 document.querySelector("charSkills").style.display = "grid";
             }
@@ -441,6 +473,46 @@ class Character {
                 this.skillChoices.push(skills.One)
                 console.log(this.skillChoices[0].name)
                 document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skillChoices[0].name}`
+                setTimeout(() => {
+                    levelupMessage.remove();
+                    document.getElementById("overworldDialogueBox").style.display = "none";
+                    this.displaySkills();
+                }, 2500);
+            } else if (this.skillChoices.length === 1 && this.level === 3) {
+                // just using punch for now, later if statement
+                this.skillChoices.push(skills.Two)
+                console.log(this.skillChoices[1].name)
+                document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skillChoices[1].name}`
+                setTimeout(() => {
+                    levelupMessage.remove();
+                    document.getElementById("overworldDialogueBox").style.display = "none";
+                    this.displaySkills();
+                }, 2500);
+            } else if (this.skillChoices.length === 2 && this.level === 4) {
+                // just using punch for now, later if statement
+                this.skillChoices.push(skills.Three)
+                console.log(this.skillChoices[2].name)
+                document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skillChoices[2].name}`
+                setTimeout(() => {
+                    levelupMessage.remove();
+                    document.getElementById("overworldDialogueBox").style.display = "none";
+                    this.displaySkills();
+                }, 2500);
+            } else if (this.skillChoices.length === 3 && this.level === 5) {
+                // just using punch for now, later if statement
+                this.skillChoices.push(skills.Four)
+                console.log(this.skillChoices[3].name)
+                document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skillChoices[3].name}`
+                setTimeout(() => {
+                    levelupMessage.remove();
+                    document.getElementById("overworldDialogueBox").style.display = "none";
+                    this.displaySkills();
+                }, 2500);
+            } else if (this.skillChoices.length === 4 && this.level === 6) {
+                // just using punch for now, later if statement
+                this.skillChoices.push(skills.Five)
+                console.log(this.skillChoices[4].name)
+                document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skillChoices[4].name}`
                 setTimeout(() => {
                     levelupMessage.remove();
                     document.getElementById("overworldDialogueBox").style.display = "none";
@@ -704,8 +776,5 @@ class Character {
 let warrior  
 warrior = new Character(characters.Player);
 
-console.log(warrior.stats.Attack)
 warrior.gainExp()
-// console.log(warrior.stats.Health) 
-// warrior.displayStats()
-// console.log(warrior.stats.Health)
+

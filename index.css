@@ -164,6 +164,7 @@ body {
 
     border: 2px solid black;
     border-radius: 20px;
+    font-size: 10px;
 }
 /* -------------character inventory -------------------*/
 #characterInventory {
