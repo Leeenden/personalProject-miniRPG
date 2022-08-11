@@ -8,7 +8,6 @@ const characters = {
             Defense: 15, 
             Speed: 15
         },
-        isPlayer: true,
-        skills: [skillChoices.Punch, skillChoices.Swing, skillChoices.Stab, skillChoices.Battlecry, skillChoices.Roar]
+        isPlayer: true
     } 
 }

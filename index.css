@@ -153,8 +153,6 @@ body {
 
     border: 3px solid black;
     border-radius: 20px;
-
-    display: none;
 }
 .chosenSkill {
     background-color: lightgray;

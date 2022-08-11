@@ -374,7 +374,7 @@ class Character {
             this.talentpoint = 0,
             this.talents = []
             this.isPlayer = isPlayer
-            this.skills = []
+            this.skillChoices = []
             
         }
         displayStats() {
@@ -421,7 +421,34 @@ class Character {
                 charSPD.innerHTML = this.stats.Speed
             }
         }
-        
+        displaySkills() {
+            const skillOne = document.getElementById("skillFirst")
+            skillOne.innerHTML = this.skillChoices[0].name;
+            console.log(this.skillChoices)
+            if(!skillOne.innerHTML !== this.skillChoices[0].name) {
+                skillOne.innerHTML = this.skillChoices[0].name;
+            } else {
+                document.querySelector("charSkills").style.display = "grid";
+            }
+        }
+        learnSkills() {
+            const levelupMessage = document.createElement("div");
+            levelupMessage.innerHTML = `You gained a Talent point. You now have ${this.talentpoint} talent points.`;
+            // check if levels match and if yes, show 
+            
+            if (this.skillChoices.length === 0 && this.level === 2) {
+                // just using punch for now, later if statement
+                this.skillChoices.push(skills.One)
+                console.log(this.skillChoices[0].name)
+                document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skillChoices[0].name}`
+                setTimeout(() => {
+                    levelupMessage.remove();
+                    document.getElementById("overworldDialogueBox").style.display = "none";
+                    this.displaySkills();
+                }, 2500);
+            }
+            
+        }
         gainExp(){
             let expbar = "#playerExpbarChange" 
             let float = "#floatingTextEXP"
@@ -473,7 +500,6 @@ class Character {
                 this.stats.Defense += 3;
                 this.stats.Speed += 3;
                 this.displayStats();
-
                 // update
                 setTimeout(() => {
                     // create floating exp div 
@@ -502,7 +528,7 @@ class Character {
                         width: this.currentExp  + "%" 
                     })
                 }, 1000);
-                // level -up message variables
+                // level-up message variables
                 setTimeout(() => {
                     const levelupMessage = document.createElement("div");
                     levelupMessage.innerHTML = `You gained a Talent point. You now have ${this.talentpoint} talent points.`;
@@ -521,42 +547,9 @@ class Character {
                 // change the required exp for the next level
                 // this.requiredExp += this.level * 2;
                 this.requiredExp += this.level;
-                this.displaySkills();
             }
         }
-        displaySkills() {
-            const skillSet = document.createElement("div")
-            skillSet.classList.add("chosenSkill");
-            console.log(this.skills)
-            
-            this.skills.forEach((skills) => {
-                const skillSet = document.createElement("div")
-                skillSet.classList.add("chosenSkill");
-                
-                skillSet.innerHTML = skills.name;
-                document.querySelector("chosenSkill").append(skillSet);
-            })
-            // if(this.skills) {
-            //     document.getElementById("charSkills").style.display = "grid";
-            //     document.getElementById("charSkills").appendChild(skillSet);
-            // }
-        }
-        learnSkills() {
-            const levelupMessage = document.createElement("div");
-            levelupMessage.innerHTML = `You gained a Talent point. You now have ${this.talentpoint} talent points.`;
-            // check if levels match and if yes, show 
-            setTimeout(() => {
-                if (this.level === 2) {
-                    // just using punch for now, later if statement 
-                    console.log(this.skills)
-                    document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skills.Punch}.`
-                    setTimeout(() => {
-                        levelupMessage.remove();
-                        document.getElementById("overworldDialogueBox").style.display = "none";
-                    }, 6500);
-                }
-            }, 2000);
-        }
+        
         // usePunch() {
         //     this.skills.first.effect;
         // }
@@ -712,9 +705,6 @@ let warrior
 warrior = new Character(characters.Player);
 
 console.log(warrior.stats.Attack)
-console.log(warrior.skills)
-warrior.displaySkills()
-warrior.displayStats()
 warrior.gainExp()
 // console.log(warrior.stats.Health) 
 // warrior.displayStats()
