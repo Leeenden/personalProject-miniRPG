@@ -354,9 +354,17 @@ class Boundary {
 };
 
 class Character {
-        constructor(stats = {Health: 50, Stamina: 50, Mana: 50, Attack: 15, Defense: 15, Speed: 15}) 
-        {
-            this.stats = {...stats}
+        constructor(
+            isPlayer = false
+        ) {
+            this.stats = {
+                Health: 50, 
+                Stamina: 50, 
+                Mana: 50, 
+                Attack: 15, 
+                Defense: 15, 
+                Speed: 15
+            },
     
             // pre-define starting stats
             this.level = 1,
@@ -364,14 +372,9 @@ class Character {
             this.currentExp = 0,
             
             this.talentpoint = 0,
-            this.talents = {}
-            this.skills = {
-                first: "N/A",
-                second: "",
-                third: "",
-                fourth: "",
-                fifth: ""
-            }
+            this.talents = []
+            this.isPlayer = isPlayer
+            this.skills = []
             
         }
         displayStats() {
@@ -381,7 +384,7 @@ class Character {
             if(this.level !== charLevel.innerHTML) {
                 charLevel.innerHTML = this.level
             }
-            // healLevel
+            // healhLevel
             let charHP = document.querySelector("#charHP")
             charHP.innerHTML = this.stats.Health
             if(this.stats.Health !== charHP.innerHTML) {
@@ -524,24 +527,29 @@ class Character {
         displaySkills() {
             const skillSet = document.createElement("div")
             skillSet.classList.add("chosenSkill");
-            skillSet.innerHTML = this.skills.first.name;
-            console.log(this.skills.first.name)
-            if(this.skills.first) {
-                skillSet.innerHTML = this.skills.first.name;
-                document.getElementById("charSkills").style.display = "grid";
-                document.getElementById("charSkills").appendChild(skillSet);
-            }
+            console.log(this.skills)
+            
+            this.skills.forEach((skills) => {
+                const skillSet = document.createElement("div")
+                skillSet.classList.add("chosenSkill");
+                
+                skillSet.innerHTML = skills.name;
+                document.querySelector("chosenSkill").append(skillSet);
+            })
+            // if(this.skills) {
+            //     document.getElementById("charSkills").style.display = "grid";
+            //     document.getElementById("charSkills").appendChild(skillSet);
+            // }
         }
         learnSkills() {
             const levelupMessage = document.createElement("div");
             levelupMessage.innerHTML = `You gained a Talent point. You now have ${this.talentpoint} talent points.`;
             // check if levels match and if yes, show 
             setTimeout(() => {
-                if (this.level === skillChoices.Punch.level) {
+                if (this.level === 2) {
                     // just using punch for now, later if statement 
-                    this.skills.first = skillChoices.Punch
-                    console.log(this.skills.first)
-                    document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skills.first.name}.`
+                    console.log(this.skills)
+                    document.querySelector("#overworldDialogueBox").innerHTML = `You learned 1 new skill. You can now use ${this.skills.Punch}.`
                     setTimeout(() => {
                         levelupMessage.remove();
                         document.getElementById("overworldDialogueBox").style.display = "none";
@@ -700,9 +708,11 @@ class Character {
         } 
       
 };
-    
-let warrior = new Character(stats={Health: 50, Stamina: 50, Mana: 50, Attack: 15, Defense: 15, Speed: 15});
-let shaman = new Character(stats={Health: 80, Stamina: 20, Mana: 30, Attack: 11, Defense: 16, Speed: 20});
+let warrior  
+warrior = new Character(characters.Player);
+
+console.log(warrior.stats.Attack)
+console.log(warrior.skills)
 warrior.displaySkills()
 warrior.displayStats()
 warrior.gainExp()
