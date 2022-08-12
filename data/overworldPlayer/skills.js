@@ -9,10 +9,11 @@ const skills = {
         image: {
             src: "./images/skills/punch.png"
         },
-        damage: randomInt = (min, max) => {
+        effect (min, max) {
+            min = 1 
+            max = 3
             return Math.floor(Math.random() * (max - min + 1) + min)
         },
-        effect: randomInt(1, 3),
         effectType: "Active",
         cooldown: 300,
     },
@@ -26,10 +27,11 @@ const skills = {
         image: {
             src: "./images/skills/swing.png"
         },
-        damage: randomInt = (min, max) => {
+        effect (min, max) {
+            min = 3 
+            max = 5
             return Math.floor(Math.random() * (max - min + 1) + min)
         },
-        effect: randomInt(2, 5),
         effectType: "Active",
         cooldown: 500,
     },

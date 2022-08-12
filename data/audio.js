@@ -33,5 +33,15 @@ const audio = {
         src: "./audio/victory.wav",
         html5: true,
         volume: 0.1
+    }),
+    punch: new Howl({
+        src: "./audio/punch.wav",
+        html5: true,
+        volume: 0.3
+    }),
+    swing: new Howl ({
+        src: "./audio/swing.wav",
+        html5: true,
+        volume: 0.3
     })
 }

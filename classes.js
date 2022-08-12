@@ -612,12 +612,14 @@ class Character {
                 this.requiredExp += this.level;
             }
         }
-        // usePunch() {
-        //     // console.log(this.skillsChoices[0].effect())
-        // }
-        // useRoar(){
-        //     this.stats.Defense += this.skills.Roar.effect;
-        // }
+        usePunch() {
+            this.skillChoices[0].effect
+            audio.punch.play()
+        }
+        useSwing(){
+            this.skillChoices[1].effect
+            audio.swing.play()
+        }
         markOfTheRogue() {
             this.Speed +=10;
         }

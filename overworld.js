@@ -77,10 +77,13 @@ sc6desc.innerHTML = skills.Six.description;
 
 // // skillCard7.innerHTML = skills.Seven.name;
 
-const activeTest = document.getElementById("skillFirst");
-activeTest.addEventListener("click", function(){
+const punchBtn = document.getElementById("skillFirst");
+punchBtn.addEventListener("click", function(){
     warrior.usePunch();
-    
+})
+const swingBtn = document.getElementById("skillSecond");
+swingBtn.addEventListener("click", function(){
+    warrior.useSwing();
 })
 
 let clicked = false
