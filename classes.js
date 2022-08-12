@@ -764,5 +764,5 @@ class Character {
 let warrior  
 warrior = new Character(characters.Player);
 
-warrior.gainExp()
+
 

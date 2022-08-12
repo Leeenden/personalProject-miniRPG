@@ -82,3 +82,12 @@ activeTest.addEventListener("click", function(){
     warrior.usePunch();
     
 })
+
+let clicked = false
+addEventListener("click", () => {
+    if(!clicked) {
+        audio.map.play()
+        clicked = true
+        warrior.gainExp()
+    }
+})

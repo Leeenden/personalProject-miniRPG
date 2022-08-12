@@ -431,13 +431,7 @@ window.addEventListener("keyup", (e) => {
 });
 
 // ----------------- music / howler initiationevent listener --------------------
-let clicked = false
-addEventListener("click", () => {
-    if(!clicked) {
-        audio.map.play()
-        clicked = true
-    }
-})
+
 // inventory menu event listeners
 
 let menuToggle = {
