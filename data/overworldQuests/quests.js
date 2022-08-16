@@ -26,7 +26,7 @@ const quests = [
         },
         status: "Active",
         completed: false,
-        reward: 5,
+        reward: 6,
     },
     Two = {
         id: 2,

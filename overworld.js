@@ -95,6 +95,7 @@ addEventListener("click", () => {
         clicked = true
         quest1.init()
         warrior.init()
+        
     }
 })
 

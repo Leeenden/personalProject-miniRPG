@@ -39,29 +39,35 @@ class Quest {
         this.completed = completed,
         this.reward = reward
     }
-    complete() {
-        console.log(this.completed)
-        this.completed = true;
-        console.log("completed quest")
-        console.log(this.completed)
-    }
     init() {
-        if(this.level === 1) {
+        if(warrior.level === 1) {
             quests.forEach((questInfo) => {
-                if(questInfo.level === this.level) {
+                if(questInfo.id === this.level) {
                     warrior.allQuests.push(questInfo);
                 };  
             })
         }
         console.log(warrior.allQuests)
     }
-    new(){
-        warrior.allQuests.forEach((questInfo) => {
-            if(questInfo.completed === true) {
-                console.log(questInfo.completed)
+    next() {
+        quests.forEach((questInfo) => {
+            if(questInfo.id === 2) {
+                warrior.allQuests.push(questInfo);
+                console.log(warrior.allQuests);
+                warrior.displayQuests()
             };  
         })
     }
+    complete() {
+        this.completed = true;
+        this.active = "inactive"
+        console.log("completed quest")
+        this.next()
+    }
+    reward(){
+        
+    }
+    
 }
 
 // define all quests available 

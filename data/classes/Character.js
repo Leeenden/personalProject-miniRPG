@@ -35,12 +35,16 @@ class Character {
         this.gainExp()
     }
     displayQuests() {
+        const qLog = document.createElement('div');
+        qLog.classList.add("questItem");
         let questInfo = this.allQuests.map(({id, name, reward, status})=>{
-            const qLog = document.createElement('div');
-            qLog.classList.add("questItem")
             qLog.innerHTML = `Q${id}: "${name}" Rewards: ${reward} Status:${status}.`
-            document.querySelector("#questLog").append(qLog);
         })
+        if (questInfo.id === 1) {
+            document.querySelector("#questLog").append(qLog);
+        } else {
+            document.querySelector("#questLog").appendChild(qLog);
+        }
     }
     displayStats() {
         //level
@@ -274,7 +278,7 @@ class Character {
         
         // change the required exp for the next level
         this.requiredExp += this.level * 4;
-        
+        quest1.complete()
         
     }
     usePunch() {
