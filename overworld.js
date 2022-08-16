@@ -110,6 +110,13 @@ addEventListener("click", () => {
     }
 })
 
-setTimeout(() => {
-    warrior.completeQuest();
-}, 6000);
+// setTimeout(() => {
+//     warrior.completeQuest();
+// }, 6000);
+
+// test map 
+quest = [quests.One, quests.Two]
+
+quest.map(({id, name, level})=>{
+    console.log(`quest number ${id}, "${name}" unlocks at ${level}`)
+})
