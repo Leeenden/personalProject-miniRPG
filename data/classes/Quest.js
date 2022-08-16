@@ -45,19 +45,18 @@ class Quest {
         console.log("completed quest")
         console.log(this.completed)
     }
-    initQuest() {
-        if(this.level === 0) {
+    init() {
+        if(this.level === 1) {
             quests.forEach((questInfo) => {
                 if(questInfo.level === this.level) {
-                    this.allQuests.push(questInfo);
-                    console.log(questInfo)
+                    warrior.allQuests.push(questInfo);
                 };  
             })
-        } 
-        this.displayQuests()
+        }
+        console.log(warrior.allQuests)
     }
     new(){
-        this.allQuests.forEach((questInfo) => {
+        warrior.allQuests.forEach((questInfo) => {
             if(questInfo.completed === true) {
                 console.log(questInfo.completed)
             };  

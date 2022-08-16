@@ -30,20 +30,9 @@ class Character {
         
     }
     init(){
-        this.initQuest()
         this.displayStats()
-        this.gainExp()
-    }
-    initQuest() {
-        if(this.allQuests.length === 0) {
-            quests.forEach((questInfo) => {
-                if(questInfo.level === this.level) {
-                    this.allQuests.push(questInfo);
-                    console.log(questInfo)
-                };  
-            })
-        } 
         this.displayQuests()
+        this.gainExp()
     }
     displayQuests() {
         let questInfo = this.allQuests.map(({id, name, reward, status})=>{

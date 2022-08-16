@@ -93,10 +93,8 @@ addEventListener("click", () => {
     if(!clicked) {
         audio.map.play()
         clicked = true
+        quest1.init()
         warrior.init()
     }
 })
 
-setTimeout(() => {
-    quest1.complete();
-}, 6000);
