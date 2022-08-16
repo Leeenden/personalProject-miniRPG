@@ -1,3 +1,17 @@
+// quest variables
+let quest1 
+quest1 = new Quest(quests.One)
+// console.log(quest1.id.level)
+// console.log(quest1.id.name)
+// console.log(quest1.id.reqs)
+// console.log(quest1.id.reward)
+
+//  define warrior (player) class 
+let warrior 
+warrior= new Character(characters.Player);
+
+let npc1 
+npc1 = new Character(characters.NPC1);
 // -------------------- all skill cards ------------------------------------
 // ----- skill card 1  ------
 // //name
@@ -6,8 +20,6 @@ sc1name.innerHTML = skills.One.name;
 // unlock level
 const sc1level = document.querySelector("#skillUnlockLevel1")
 sc1level.innerHTML = skills.One.level;
-
-
 //description
 const sc1desc = document.querySelector("#skillDetails1")
 sc1desc.innerHTML = skills.One.description;
@@ -67,16 +79,6 @@ sc6level.innerHTML = skills.Six.level
 const sc6desc = document.querySelector("#skillDetails6")
 sc6desc.innerHTML = skills.Six.description;
 
-
-// // const skillCard7 = document.querySelector("#sc7");
-// // const skillCard8 = document.querySelector("#sc8");
-// // const skillCard9 = document.querySelector("#sc9");
-// // const skillCard10 = document.querySelector("#sc10");
-// // const skillCard11 = document.querySelector("#sc11");
-// // const skillCard12= document.querySelector("#sc12");
-
-// // skillCard7.innerHTML = skills.Seven.name;
-
 // skill action buttons
 const punchBtn = document.getElementById("skillFirst");
 punchBtn.addEventListener("click", function(){
@@ -104,7 +106,7 @@ addEventListener("click", () => {
     if(!clicked) {
         audio.map.play()
         clicked = true
-        warrior.displayStats()
-        warrior.gainExp()
+        warrior.init()
+        npc1.init()
     }
 })

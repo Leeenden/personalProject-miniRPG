@@ -353,6 +353,50 @@ class Boundary {
     }
 };
 
+// quest class 
+class Quest {
+    constructor(
+        id = "",
+        name = "",
+        description = "",
+        type = "",
+        level = 1,
+        reqs = {
+            npc: {
+                count: "",
+                target: "",
+            },
+            items: {
+                count: "",
+                target: "",
+            },
+            mobs: {
+                count: "",
+                target: "",
+            },
+            boss: {
+                count: "",
+                target: ""
+
+            }
+        },
+        status = "",
+        completed = "",
+        reward = ""
+    ) {
+        this.id = id,
+        this.name = name,
+        this.description = description,
+        this.type = type,
+        this.level = level,
+        this.reqs = reqs,
+        this.status = status,
+        this.completed = completed,
+        this.reward = reward
+    }
+}
+
+// character class 
 class Character {
         constructor(
             stats = {
@@ -364,9 +408,15 @@ class Character {
                 Speed: 15
             },
             isPlayer = false,
-            isNPC = false
+            isNPC = false,
+            allQuests = [],
+            activeQuests = []
         ) {
             this.stats = {...stats}
+            this.isPlayer = isPlayer
+            this.isNPC = isNPC
+            this.allQuests = allQuests
+            this.activeQuests = activeQuests
             // pre-define starting stats
             this.level = 1,
             this.requiredExp = 5,
@@ -374,9 +424,29 @@ class Character {
             
             this.talentpoint = 0,
             this.talents = []
-            this.isPlayer = isPlayer
-            this.isNPC = isNPC
             this.skillChoices = []
+            
+        }
+        init(){
+            this.newQuest()
+            this.gainExp()
+        }
+        displayQuests() {
+            if(this.allQuests[0].level === 1) {
+                const q1 = document.querySelector("#questItem1");
+                q1.innerHTML = this.allQuests[0].name;
+                console.log(this.allQuests[0].name)
+            }
+    
+        }
+        newQuest() {
+            if(this.allQuests.length === 0) {
+                this.allQuests.push(quests.One);
+                this.displayQuests()
+            } else {
+                this.displayQuests()
+            }
+            
         }
         displayStats() {
             //level
@@ -777,47 +847,5 @@ class Character {
       
 };
 
-class Quest {
-    constructor(
-        name = "",
-        description = "",
-        type = "",
-        level = 1,
-        reqs = {
-            npc: {
-                count: "",
-                target: "",
-            },
-            items: {
-                count: "",
-                target: "",
-            },
-            mobs: {
-                count: "",
-                target: "",
-            },
-            boss: {
-                count: "",
-                target: ""
 
-            }
-        },
-        reward = reward()
-    ) {
-        this.name = name,
-        this.description = description,
-        this.type = type,
-        this.level = level,
-        this.reqs = reqs,
-        this.status = "Inactive",
-        this.completed = "false",
-        this.reward = reward
-        
-    }
-}
-
-//  define warrior (player) class 
-
-let warrior = new Character(characters.Player);
-let npc1 = new Character(characters.NPC1);
 

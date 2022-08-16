@@ -9,7 +9,9 @@ const characters = {
             Speed: 15
         },
         isPlayer: true,
-        isNPC: false
+        isNPC: false,
+        allQuests: [],
+        activeQuests: []
     },
     NPC1: {
         stats: {
@@ -21,6 +23,8 @@ const characters = {
             Speed: 150
         },
         isPlayer: false,
-        isNPC: true
+        isNPC: true,
+        allQuests: [quests.One],
+        activeQuests: [quests.One]
     }
 }

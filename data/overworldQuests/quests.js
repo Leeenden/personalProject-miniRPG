@@ -1,5 +1,6 @@
 const quests = {
     One: {
+        id: 1,
         name: "The beginning",
         description: "Speak to the NPC",
         type: "Talk",
@@ -25,10 +26,7 @@ const quests = {
         },
         status: "Active",
         completed: true,
-        reward (min, max) {
-            min = 1 
-            max = 3
-            return Math.floor(Math.random() * (max - min + 1) + min)
-        },
+        reward: 10
+        ,
     },
 }
