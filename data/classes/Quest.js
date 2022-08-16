@@ -59,10 +59,17 @@ class Quest {
         })
     }
     complete() {
-        this.completed = true;
-        this.active = "inactive"
-        console.log("completed quest")
-        this.next()
+        warrior.allQuests.forEach((questInfo) => {
+            if(questInfo.id === 1) {
+                warrior.allQuests[0].completed = true;
+                console.log(warrior.allQuests[0].completed)
+                warrior.allQuests[0].status = "Inactive"
+                console.log(warrior.allQuests[0].status)
+                this.next()
+            };  
+        })
+
+        
     }
     reward(){
         

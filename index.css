@@ -409,8 +409,7 @@ body {
 .questItem {
     color: black;
     height: 10%;
-    display: flex;
-    align-items: center;
+    width: 100%;
     border: 2px solid green;
 }
 /* --------------- bottom menu bar w/ buttons to all overworld UI -----------*/

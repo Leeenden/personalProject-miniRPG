@@ -37,13 +37,16 @@ class Character {
     displayQuests() {
         const qLog = document.createElement('div');
         qLog.classList.add("questItem");
-        let questInfo = this.allQuests.map(({id, name, reward, status})=>{
-            qLog.innerHTML = `Q${id}: "${name}" Rewards: ${reward} Status:${status}.`
+        let questInfo = this.allQuests.map(({id, name, reward, status, completed})=>{
+            qLog.innerHTML = `Q${id}: "${name}" Rewards: ${reward} Status:${status} Completed: ${completed}.`
         })
-        if (questInfo.id === 1) {
+        if (questInfo.completed === true) {
+            console.log("working...")
             document.querySelector("#questLog").append(qLog);
+            
         } else {
             document.querySelector("#questLog").appendChild(qLog);
+             
         }
     }
     displayStats() {

@@ -97,6 +97,9 @@ foregroundImage.src = "images/foregroundObjects.png"
 const playerImage = new Image();
 playerImage.src = "images/char3.png";
 
+// test npc 
+const NPCOneImage = new Image();
+NPCOneImage.src = "images/testNPC.png";
 
 // ------------ player sprite creation -----------------
 const player = new Sprite({
@@ -111,6 +114,21 @@ const player = new Sprite({
         hold: 10
     },
     animate: true,
+    scale: 1
+})
+//test NPC
+const npcOne = new Sprite({
+    position: {
+        x: (canvas.width / 2 - 384 / 8) - 375,
+        y: (canvas.height / 2 - 192 / 4) - 120
+    },
+    image: NPCOneImage,
+    frames: {
+        col: 8,
+        row: 4,
+        hold: 10
+    },
+    animate: false,
     scale: 1
 })
 // ----------------- background sprite creation --------------------
@@ -158,7 +176,7 @@ const keys = {
 }
 
 // ----------------- moveable sprites array (when walking) --------------------
-const moveables = [background, ...boundaries, foreground, ...instanceZones, ...battleZones]
+const moveables = [background, ...boundaries, foreground, ...instanceZones, ...battleZones, npcOne]
 
 function rectanglularCollision({rectangle1, rectangle2}) {
     return (
@@ -194,7 +212,9 @@ function animate() {
         // collision detection
         
     });
+    npcOne.draw();
     player.draw();
+    
     foreground.draw();
 
     // movment tracking
@@ -505,6 +525,4 @@ addEventListener("keypress", (e) => {
 
 // testing mechnaics code 
 
-// warrior.gainExp();
-// console.log(warrior.skills.Swing.effect)
 
