@@ -26,7 +26,7 @@ const quests = {
         },
         status: "Active",
         completed: false,
-        reward: 10,
+        reward: 5,
     },
     Two: {
         id: 2,
@@ -54,6 +54,6 @@ const quests = {
         },
         status: "Inactive",
         completed: false,
-        reward: 10,
+        reward: 4,
     },
 }

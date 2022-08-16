@@ -112,4 +112,4 @@ addEventListener("click", () => {
 
 setTimeout(() => {
     warrior.completeQuest();
-}, 3000);
+}, 6000);
