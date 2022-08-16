@@ -77,6 +77,7 @@ sc6desc.innerHTML = skills.Six.description;
 
 // // skillCard7.innerHTML = skills.Seven.name;
 
+// skill action buttons
 const punchBtn = document.getElementById("skillFirst");
 punchBtn.addEventListener("click", function(){
     warrior.usePunch();
@@ -85,12 +86,25 @@ const swingBtn = document.getElementById("skillSecond");
 swingBtn.addEventListener("click", function(){
     warrior.useSwing();
 })
-
+const stabBtn = document.getElementById("skillThird");
+stabBtn.addEventListener("click", function(){
+    warrior.useStab();
+})
+const shoutBtn = document.getElementById("skillFourth");
+shoutBtn.addEventListener("click", function(){
+    warrior.useShout();
+})
+const roarBtn = document.getElementById("skillFifth");
+roarBtn.addEventListener("click", function(){
+    warrior.useRoar();
+})
+// initiate game
 let clicked = false
 addEventListener("click", () => {
     if(!clicked) {
         audio.map.play()
         clicked = true
+        warrior.displayStats()
         warrior.gainExp()
     }
 })

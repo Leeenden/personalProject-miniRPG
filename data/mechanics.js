@@ -70,12 +70,6 @@
 //         console.log(`You have ${warrior.talentpoint} talent points, you need 1 TP for this talent.`);
 //     }
 // });
-// // =======================================================
-// const activeTest = document.getElementById("active-test");
-// activeTest.addEventListener("click", function(){
-//     warrior.elixirOfHealthTalent();
-//     console.log(`Stats = HP: ${warrior.Health}, MP: ${warrior.Mana}, SP: ${warrior.Stamina}`);
-// })
 // // ======================================================
 
 // r3c1.addEventListener("click", function(){

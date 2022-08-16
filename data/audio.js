@@ -40,8 +40,28 @@ const audio = {
         volume: 0.3
     }),
     swing: new Howl ({
-        src: "./audio/swing.wav",
+        src: "./audio/sword.wav",
         html5: true,
         volume: 0.3
-    })
+    }),
+    stab: new Howl ({
+        src: "./audio/sword.wav",
+        html5: true,
+        volume: 0.3
+    }),
+    shout: new Howl ({
+        src: "./audio/shout.wav",
+        html5: true,
+        volume: 0.3
+    }),
+    roar: new Howl ({
+        src: "./audio/roar.wav",
+        html5: true,
+        volume: 0.3
+    }),
+    slice: new Howl ({
+        src: "./audio/sword.wav",
+        html5: true,
+        volume: 0.3
+    }),
 }

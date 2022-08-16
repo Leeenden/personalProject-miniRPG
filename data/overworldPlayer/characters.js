@@ -8,6 +8,19 @@ const characters = {
             Defense: 15, 
             Speed: 15
         },
-        isPlayer: true
-    } 
+        isPlayer: true,
+        isNPC: false
+    },
+    NPC1: {
+        stats: {
+            Health: 500,
+            Stamina: 500, 
+            Mana: 500, 
+            Attack: 150, 
+            Defense: 150, 
+            Speed: 150
+        },
+        isPlayer: false,
+        isNPC: true
+    }
 }

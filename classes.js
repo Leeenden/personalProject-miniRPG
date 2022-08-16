@@ -355,9 +355,7 @@ class Boundary {
 
 class Character {
         constructor(
-            isPlayer = false
-        ) {
-            this.stats = {
+            stats = {
                 Health: 50, 
                 Stamina: 50, 
                 Mana: 50, 
@@ -365,7 +363,10 @@ class Character {
                 Defense: 15, 
                 Speed: 15
             },
-    
+            isPlayer = false,
+            isNPC = false
+        ) {
+            this.stats = {...stats}
             // pre-define starting stats
             this.level = 1,
             this.requiredExp = 5,
@@ -374,8 +375,8 @@ class Character {
             this.talentpoint = 0,
             this.talents = []
             this.isPlayer = isPlayer
+            this.isNPC = isNPC
             this.skillChoices = []
-            
         }
         displayStats() {
             //level
@@ -386,39 +387,39 @@ class Character {
             }
             // healhLevel
             let charHP = document.querySelector("#charHP")
-            charHP.innerHTML = this.stats.Health
-            if(this.stats.Health !== charHP.innerHTML) {
-                charHP.innerHTML = this.stats.Health
+            charHP.innerHTML = this.stats.stats.Health
+            if(this.stats.stats.Health !== charHP.innerHTML) {
+                charHP.innerHTML = this.stats.stats.Health
             }
             //  stamina
             let charSP = document.querySelector("#charSP")
-            charSP.innerHTML = this.stats.Stamina
-            if(this.stats.Stamina !== charSP.innerHTML) {
-                charSP.innerHTML = this.stats.Stamina
+            charSP.innerHTML = this.stats.stats.Stamina
+            if(this.stats.stats.Stamina !== charSP.innerHTML) {
+                charSP.innerHTML = this.stats.stats.Stamina
             }
             //  mana
             let charMP = document.querySelector("#charMP")
-            charMP.innerHTML = this.stats.Mana
-            if(this.stats.Mana !== charMP.innerHTML) {
-                charMP.innerHTML = this.stats.Mana
+            charMP.innerHTML = this.stats.stats.Mana
+            if(this.stats.stats.Mana !== charMP.innerHTML) {
+                charMP.innerHTML = this.stats.stats.Mana
             }
             //  attack
             let charATK = document.querySelector("#charATK")
-            charATK.innerHTML = this.stats.Attack
-            if(this.stats.Attack !== charATK.innerHTML) {
-                charATK.innerHTML = this.stats.Attack
+            charATK.innerHTML = this.stats.stats.Attack
+            if(this.stats.stats.Attack !== charATK.innerHTML) {
+                charATK.innerHTML = this.stats.stats.Attack
             }
             //  defence
             let charDEF = document.querySelector("#charDEF")
-            charDEF.innerHTML = this.stats.Defense
-            if(this.stats.Defense !== charDEF.innerHTML) {
-                charDEF.innerHTML = this.stats.Defense
+            charDEF.innerHTML = this.stats.stats.Defense
+            if(this.stats.stats.Defense !== charDEF.innerHTML) {
+                charDEF.innerHTML = this.stats.stats.Defense
             }
             //  speed
             let charSPD = document.querySelector("#charSPD")
-            charSPD.innerHTML = this.stats.Speed
-            if(this.stats.Speed !== charSPD.innerHTML) {
-                charSPD.innerHTML = this.stats.Speed
+            charSPD.innerHTML = this.stats.stats.Speed
+            if(this.stats.stats.Speed !== charSPD.innerHTML) {
+                charSPD.innerHTML = this.stats.stats.Speed
             }
         }
         displaySkills() {
@@ -556,12 +557,12 @@ class Character {
                 this.currentExp = 0
                 this.level += 1;
                 this.talentpoint += 1;
-                this.stats.Health += 3;
-                this.stats.Stamina += 3;
-                this.stats.Mana += 3;
-                this.stats.Attack += 3;
-                this.stats.Defense += 3;
-                this.stats.Speed += 3;
+                this.stats.stats.Health += 3;
+                this.stats.stats.Stamina += 3;
+                this.stats.stats.Mana += 3;
+                this.stats.stats.Attack += 3;
+                this.stats.stats.Defense += 3;
+                this.stats.stats.Speed += 3;
                 this.displayStats();
                 // update
                 setTimeout(() => {
@@ -619,6 +620,18 @@ class Character {
         useSwing(){
             this.skillChoices[1].effect
             audio.swing.play()
+        }
+        useStab(){
+            this.skillChoices[2].effect
+            audio.stab.play()
+        }
+        useShout(){
+            this.skillChoices[3].effect
+            audio.shout.play()
+        }
+        useRoar(){
+            this.skillChoices[4].effect
+            audio.roar.play()
         }
         markOfTheRogue() {
             this.Speed +=10;
@@ -763,8 +776,48 @@ class Character {
         } 
       
 };
-let warrior  
-warrior = new Character(characters.Player);
 
+class Quest {
+    constructor(
+        name = "",
+        description = "",
+        type = "",
+        level = 1,
+        reqs = {
+            npc: {
+                count: "",
+                target: "",
+            },
+            items: {
+                count: "",
+                target: "",
+            },
+            mobs: {
+                count: "",
+                target: "",
+            },
+            boss: {
+                count: "",
+                target: ""
 
+            }
+        },
+        reward = reward()
+    ) {
+        this.name = name,
+        this.description = description,
+        this.type = type,
+        this.level = level,
+        this.reqs = reqs,
+        this.status = "Inactive",
+        this.completed = "false",
+        this.reward = reward
+        
+    }
+}
+
+//  define warrior (player) class 
+
+let warrior = new Character(characters.Player);
+let npc1 = new Character(characters.NPC1);
 
