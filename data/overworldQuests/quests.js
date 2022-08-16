@@ -25,8 +25,35 @@ const quests = {
             }
         },
         status: "Active",
-        completed: true,
-        reward: 10
-        ,
+        completed: false,
+        reward: 10,
+    },
+    Two: {
+        id: 2,
+        name: "A small task",
+        description: "Collect 1 item",
+        type: "Gather",
+        level: 2,
+        reqs: {
+            npc: {
+                count: 1,
+                target: "",
+            },
+            items: {
+                count: 1,
+                target: "mushroom",
+            },
+            mobs: {
+                count: 0,
+                target: "",
+            },
+            boss: {
+                count: 0,
+                target: ""
+            }
+        },
+        status: "Inactive",
+        completed: false,
+        reward: 10,
     },
 }

@@ -429,19 +429,35 @@ class Character {
         }
         init(){
             this.newQuest()
+            this.displayStats()
             this.gainExp()
         }
         displayQuests() {
-            if(this.allQuests[0].level === 1) {
+            if(this.allQuests.length === 1) {
                 const q1 = document.querySelector("#questItem1");
                 q1.innerHTML = this.allQuests[0].name;
                 console.log(this.allQuests[0].name)
+            } else if (this.allQuests.length === 2){
+                const q2 = document.querySelector("#questItem2");
+                q2.innerHTML = this.allQuests[1].name;
+                console.log(this.allQuests[1].name)
             }
-    
+        }
+        completeQuest() {
+            console.log(this.allQuests[0].completed);
+            this.allQuests[0].completed = true;
+            console.log("Completed quest!");
+            console.log(this.allQuests[0].completed);
+            this.newQuest();
         }
         newQuest() {
             if(this.allQuests.length === 0) {
                 this.allQuests.push(quests.One);
+                console.log(this.allQuests)
+                this.displayQuests()
+            } 
+            if(this.allQuests[0].completed === true){
+                this.allQuests.push(quests.Two);
                 this.displayQuests()
             } else {
                 this.displayQuests()
