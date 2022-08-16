@@ -1,5 +1,5 @@
-const quests = {
-    One: {
+const quests = [
+    One = {
         id: 1,
         name: "The beginning",
         description: "Speak to the NPC",
@@ -28,7 +28,7 @@ const quests = {
         completed: false,
         reward: 5,
     },
-    Two: {
+    Two = {
         id: 2,
         name: "A small task",
         description: "Collect 1 item",
@@ -56,4 +56,4 @@ const quests = {
         completed: false,
         reward: 4,
     },
-}
+]

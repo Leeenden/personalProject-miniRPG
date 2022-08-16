@@ -402,12 +402,13 @@ body {
     margin-left: 4px;
     width: 98%;
     height: 94%;
-    justify-content: center;
+    justify-content: space-evenly;
     text-align: center;
     text-justify: center;
 }
 .questItem {
     color: black;
+    height: 10%;
     display: flex;
     align-items: center;
     border: 2px solid green;

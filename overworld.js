@@ -1,17 +1,4 @@
-// quest variables
-let quest1 
-quest1 = new Quest(quests.One)
-// console.log(quest1.id.level)
-// console.log(quest1.id.name)
-// console.log(quest1.id.reqs)
-// console.log(quest1.id.reward)
 
-//  define warrior (player) class 
-let warrior 
-warrior= new Character(characters.Player);
-
-let npc1 
-npc1 = new Character(characters.NPC1);
 // -------------------- all skill cards ------------------------------------
 // ----- skill card 1  ------
 // //name
@@ -110,13 +97,6 @@ addEventListener("click", () => {
     }
 })
 
-// setTimeout(() => {
-//     warrior.completeQuest();
-// }, 6000);
-
-// test map 
-quest = [quests.One, quests.Two]
-
-quest.map(({id, name, level})=>{
-    console.log(`quest number ${id}, "${name}" unlocks at ${level}`)
-})
+setTimeout(() => {
+    quest1.complete();
+}, 6000);
