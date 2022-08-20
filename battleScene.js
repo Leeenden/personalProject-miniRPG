@@ -1,6 +1,6 @@
 // ---------- battle background image -------- 
 const battleBackgroundImage = new Image();
-battleBackgroundImage.src = "images/bg-forest1.png";
+battleBackgroundImage.src = "images/maps/bg-forest1.png";
 // battle sprite object
 const battleBackground = new Sprite({
     position: {
@@ -59,13 +59,14 @@ function initBattle() {
                         opacity: 1, 
                         onComplete: () => {
                             cancelAnimationFrame(battleAnimationId)
+                            battle.initiated = false
                             document.querySelector("#battlescreenUI").style.display = "none";
                             document.querySelector("#overworldUI").style.display = "block";
                             animate()
                             gsap.to("#battleFlash", {
                                 opacity: 0
                             })
-                            battle.initiated = false
+                            
                             audio.map.play()
                     }
                     })

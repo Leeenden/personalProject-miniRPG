@@ -205,8 +205,8 @@ body {
 
     display: none;
 }
-/* skills menu */
-#skillsMenu {
+/* ---------------- skills and talent menu --------------- */
+#skillsMenu, #talentsMenu {
     height: 500px;
     width: 850px;
     background-color: #ccc;
@@ -218,7 +218,7 @@ body {
 
     display: none;
 }
-#skillGrid {
+#skillGrid, #talentGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     row-gap: 8px;
@@ -230,7 +230,7 @@ body {
     text-align: center;
     text-justify: center;
 }
-.skillChoice {
+.skillChoice, .talentChoice {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
@@ -239,18 +239,18 @@ body {
     border: 2px solid black;
     background-color: darkgray
 }
-.skillUnlock, .skillDetails{
+.skillUnlock, .skillDetails, .talentUnlock, .talentDetails{
     display: flex;
     width: 100%;
     height: 10%;
     justify-content: center;
     align-items: center;
 }
-.skillChoice h4{
+.skillChoice h4, .talentChoice h4{
     width: 100%;
     font-size: 16px;
 }
-.skillChoice p {
+.skillChoice p, .talentChoice p{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -258,21 +258,29 @@ body {
     height: 100%;
     font-size: 9px;
 }
-.skillDetails p{
+.skillDetails p, .talentDetails p{
     width: 100%;
 }
-.skillIcon {
+.skillIcon, .talentIcon{
     display: flex;
     height: 40%;
     width: 40%;
+    bordeR: 2px solid red;
 }
 .skillIcon img {
     width: 100%;
     height: 100%;
+    border: 2px solid green;
     border-radius: 50%;
 }
+.talentIcon img{
+    width: 100%;
+    height: 100%;
+    border: 2px solid green;
+    /* border-radius: 50%; */
+}
 /* ---------- talent menu  -------------------*/
-#talentsMenu {
+/* #talentsMenu {
     height: 500px;
     width: 350px;
     background-color: #ccc;
@@ -283,8 +291,8 @@ body {
     left: 20px;
 
     display: none;
-}
-#talentGrid {
+} */
+/* #talentGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     row-gap: 8px;
@@ -295,13 +303,13 @@ body {
     justify-content: center;
     text-align: center;
     text-justify: center;
-}
-.talentChoice {
+} */
+/* .talentChoice {
     display: flex;
     justify-content: center;
     align-items: center;
     border: 2px solid black;
-}
+} */
 /* menu name  */
 #characterInventory h1, #characterDetails h1, #talentsMenu h1, #skillsMenu h1, #questMenu h1{
     margin: 5px;

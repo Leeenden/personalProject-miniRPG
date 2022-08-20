@@ -1,3 +1,64 @@
+// -------------------- all talent cards ------------------------------------
+// ----- talent card 1  ------
+// //name
+const tc1name = document.querySelector("#tc1");
+tc1name.innerHTML = talents.One.name;
+// unlock level
+const tc1level = document.querySelector("#talentUnlockLevel1")
+tc1level.innerHTML = talents.One.level;
+//description
+const tc1desc = document.querySelector("#talentDetails1")
+tc1desc.innerHTML = talents.One.description;
+// ----- talent card 2  ------
+// //name
+const tc2name = document.querySelector("#tc2");
+tc2name.innerHTML = talents.Two.name;
+// unlock level
+const tc2level = document.querySelector("#talentUnlockLevel2")
+tc2level.innerHTML = talents.Two.level;
+//description
+const tc2desc = document.querySelector("#talentDetails2")
+tc2desc.innerHTML = talents.Two.description;
+// ----- talent card 3  ------
+// //name
+const tc3name = document.querySelector("#tc3");
+tc3name.innerHTML = talents.Three.name;
+// unlock level
+const tc3level = document.querySelector("#talentUnlockLevel3")
+tc3level.innerHTML = talents.Three.level;
+//description
+const tc3desc = document.querySelector("#talentDetails3")
+tc3desc.innerHTML = talents.Three.description;
+// ----- talent card 4  ------
+// //name
+const tc4name = document.querySelector("#tc4");
+tc4name.innerHTML = talents.Four.name;
+// unlock level
+const tc4level = document.querySelector("#talentUnlockLevel4")
+tc4level.innerHTML = talents.Four.level;
+//description
+const tc4desc = document.querySelector("#talentDetails4")
+tc4desc.innerHTML = talents.Four.description;
+// ----- talent card 5  ------
+// //name
+const tc5name = document.querySelector("#tc5");
+tc5name.innerHTML = talents.Five.name;
+// unlock level
+const tc5level = document.querySelector("#talentUnlockLevel5")
+tc5level.innerHTML = talents.Five.level;
+//description
+const tc5desc = document.querySelector("#talentDetails5")
+tc5desc.innerHTML = talents.Five.description;
+// ----- talent card 2  ------
+// //name
+const tc6name = document.querySelector("#tc6");
+tc6name.innerHTML = talents.Six.name;
+// unlock level
+const tc6level = document.querySelector("#talentUnlockLevel6")
+tc6level.innerHTML = talents.Six.level;
+//description
+const tc6desc = document.querySelector("#talentDetails6")
+tc6desc.innerHTML = talents.Six.description;
 
 // -------------------- all skill cards ------------------------------------
 // ----- skill card 1  ------

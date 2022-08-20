@@ -89,10 +89,10 @@ battleZonesMap.forEach((row, i) => {
 // ------------- canvas images -----------------------
 //map
 const image = new Image();
-image.src = "images/map.png";
+image.src = "images/maps/map.png";
 // foreground objects (walk behind tiles)
 const foregroundImage = new Image();
-foregroundImage.src = "images/foregroundObjects.png"
+foregroundImage.src = "images/maps/foregroundObjects.png"
 // player
 const playerImage = new Image();
 playerImage.src = "images/char3.png";
