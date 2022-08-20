@@ -43,7 +43,8 @@ collisionsMap.forEach((row, i) => {
                     position: {
                         x: j * Boundary.width + offset.x,
                         y: i * Boundary.height + offset.y
-                    }
+                    },
+                    color: "rgba(255, 0, 0, 0.7)"
                 })
             );
 
@@ -61,7 +62,8 @@ instancesMap.forEach((row, i) => {
                     position: {
                         x: j * Boundary.width + offset.x,
                         y: i * Boundary.height + offset.y
-                    }
+                    },
+                    color: "rgba(255, 255, 255, 0.7)"
                 })
             );
 
@@ -79,7 +81,8 @@ battleZonesMap.forEach((row, i) => {
                     position: {
                         x: j * Boundary.width + offset.x,
                         y: i * Boundary.height + offset.y
-                    }
+                    },
+                    color: "rgba(255, 255, 0, 0.7)"
                 })
             );
 
@@ -284,7 +287,67 @@ function animate() {
                     }
                 })
                 break
-            }
+            } 
+        }
+    }
+    // instance collisions detection / new map render
+    if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
+        // loop through array
+        for (let i = 0; i < instanceZones.length; i++){
+            const instanceZone = instanceZones[i]
+            const overlappingArea = 
+                (Math.min(
+                    player.position.x + player.width, 
+                    instanceZone.position.x + instanceZone.width
+                ) - 
+                    Math.max(player.position.x, instanceZone.position.x)) * 
+                (Math.min(
+                    player.position.y + player.height, 
+                    instanceZone.position.y + instanceZone.height
+                ) - Math.max(player.position.y, instanceZone.position.y))
+            if (
+                rectanglularCollision({
+                    rectangle1: player, 
+                    rectangle2: instanceZone
+                }) &&
+                overlappingArea > (player.width * player.height) / 2
+                && Math.random() < 0.99
+            ) {
+                console.log("on/inside instance tile")
+
+                // deactivate current animation loop
+                // window.cancelAnimationFrame(animationId)
+                // stop audio 
+                // audio.map.stop()
+                // play new audio
+
+                
+
+                // gsap libaray animation settings
+                gsap.to("#battleFlash", {
+                    opacity: 1, 
+                    repeat: 3,
+                    yoyo: true,
+                    duration: 0.4,
+                    // show battle screen at the end of animation
+                    onComplete() {
+                        gsap.to("#battleFlash", {
+                            opacity: 1,
+                            duration: 0.4, 
+                            onComplete() {
+                                // activate new map animation loop only when animation is complete
+                                // initBattle();
+                                // animateBattle();
+                                gsap.to("#battleFlash", {
+                                    opacity: 0,
+                                    duration: 0.4
+                                })
+                            }
+                        })
+                    }
+                })
+                break
+            } 
         }
     }
     // ---------------------- W, A, S, D movement code ----------------------- 
