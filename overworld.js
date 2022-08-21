@@ -127,36 +127,132 @@ sc6level.innerHTML = skills.Six.level
 const sc6desc = document.querySelector("#skillDetails6")
 sc6desc.innerHTML = skills.Six.description;
 
-// skill action buttons
+// -------------------- all player skill bar utility ------------------------------------
+// ----- skill button and eventlistener tracking object ------
+let useSkillBtns = {
+    One: {
+        clicked: false,
+        pressed: false
+    },
+    Two: {
+        clicked: false,
+    },
+    Three: {
+        clicked: false,
+        pressed: false
+    },
+    Four: {
+        clicked: false,
+    },
+    Five: {
+        clicked: false,
+        pressed: false
+    },
+}
+// ----- skill button variables ------
 const punchBtn = document.getElementById("skillFirst");
-punchBtn.addEventListener("click", function(){
-    warrior.usePunch();
-})
 const swingBtn = document.getElementById("skillSecond");
-swingBtn.addEventListener("click", function(){
-    warrior.useSwing();
-})
 const stabBtn = document.getElementById("skillThird");
-stabBtn.addEventListener("click", function(){
-    warrior.useStab();
-})
 const shoutBtn = document.getElementById("skillFourth");
-shoutBtn.addEventListener("click", function(){
-    warrior.useShout();
-})
 const roarBtn = document.getElementById("skillFifth");
-roarBtn.addEventListener("click", function(){
-    warrior.useRoar();
+// ----- skill button click functions ------
+punchBtn.addEventListener("click", (e) => {
+    if(e.type === "click" && useSkillBtns.One.clicked === false) {
+        console.log("click skill one")
+        useSkillBtns.One.clicked = true
+        console.log(useSkillBtns.One.clicked)
+        warrior.usePunch();
+        useSkillBtns.One.clicked = false
+        console.log(useSkillBtns.One.clicked)
+    } 
 })
-// initiate game
+swingBtn.addEventListener("click", (e) => {
+    if(e.type === "click" && useSkillBtns.Two.clicked === false) {
+        console.log("click skill two")
+        useSkillBtns.Two.clicked = true
+        console.log(useSkillBtns.Two.clicked)
+        warrior.useSwing();
+        useSkillBtns.Two.clicked = false
+        console.log(useSkillBtns.Two.clicked)
+    } 
+})
+stabBtn.addEventListener("click", (e) => {
+    if(e.type === "click" && useSkillBtns.Three.clicked === false) {
+        console.log("click skill three")
+        useSkillBtns.Three.clicked = true
+        console.log(useSkillBtns.Three.clicked)
+        warrior.useStab();
+        useSkillBtns.Three.clicked = false
+        console.log(useSkillBtns.Three.clicked)
+    } 
+})
+shoutBtn.addEventListener("click", (e) => {
+    if(e.type === "click" && useSkillBtns.Four.clicked === false) {
+        console.log("click skill four")
+        useSkillBtns.Four.clicked = true
+        console.log(useSkillBtns.Four.clicked)
+        warrior.useShout();
+        useSkillBtns.Four.clicked = false
+        console.log(useSkillBtns.Four.clicked)
+    } 
+})
+roarBtn.addEventListener("click", (e) => {
+    if(e.type === "click" && useSkillBtns.Five.clicked === false) {
+        console.log("click skill Five")
+        useSkillBtns.Five.clicked = true
+        console.log(useSkillBtns.Five.clicked)
+        warrior.useRoar();
+        useSkillBtns.Five.clicked = false
+        console.log(useSkillBtns.Five.clicked)
+    } 
+})
+// ----- skill button keypress functions ------
+addEventListener("keypress", (e) => {
+    if(e.key === "1" && useSkillBtns.One.pressed === false) {
+        console.log("pressed skill one")
+        useSkillBtns.One.pressed = true
+        console.log(useSkillBtns.One.pressed)
+        warrior.usePunch();
+        useSkillBtns.One.pressed = false
+        console.log(useSkillBtns.One.pressed)
+    } else if(e.key === "2" && useSkillBtns.Two.pressed === false) {
+        console.log("pressed skill two")
+        useSkillBtns.Two.pressed = true
+        console.log(useSkillBtns.Two.pressed)
+        warrior.useSwing();
+        useSkillBtns.Two.pressed = false
+        console.log(useSkillBtns.Two.pressed)
+    } else if(e.key === "3" && useSkillBtns.Three.pressed === false) {
+        console.log("pressed skill three")
+        useSkillBtns.Three.pressed = true
+        console.log(useSkillBtns.Three.pressed)
+        warrior.useStab();
+        useSkillBtns.Three.pressed = false
+        console.log(useSkillBtns.Three.pressed)
+    } else if(e.key === "4" && useSkillBtns.Four.pressed === false) {
+        console.log("pressed skill four")
+        useSkillBtns.Four.pressed = true
+        console.log(useSkillBtns.Four.pressed)
+        warrior.useShout();
+        useSkillBtns.Four.pressed = false
+        console.log(useSkillBtns.Four.pressed)
+    } else if(e.key === "5" && useSkillBtns.Five.pressed === false) {
+        console.log("pressed skill five")
+        useSkillBtns.Five.pressed = true
+        console.log(useSkillBtns.Five.pressed)
+        warrior.useRoar();
+        useSkillBtns.Five.pressed = false
+        console.log(useSkillBtns.Five.pressed)
+    }
+})
+// ----- initiate game mechanics function ------
 let clicked = false
 addEventListener("click", () => {
     if(!clicked) {
         audio.map.play()
         clicked = true
         quest1.init()
-        warrior.init()
-        
+        warrior.init() 
     }
 })
 
