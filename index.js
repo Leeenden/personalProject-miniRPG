@@ -1,27 +1,30 @@
-// canvas DOM and context
+// ----------------- MAIN ANIMATE FUNCTION / GAME CODE --------------------
+// ----- define canvas variable and context ------
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 // console.log(gsap);
 // console.log(instancesData);
 
-// canvas height and width
+// ----- define canvas height and width ------
 canvas.width = 960;
 canvas.height = 640;
 
 // -------------- data parsing for boundary -------------------------
+// ----- collisions/barrier tiles ------
 const collisionsMap = [];
 //parse JSON file to produce arrays of the array for collisions
 for (let i = 0; i < collisions.length; i += 20){
    collisionsMap.push(collisions.slice(i, 20 + i))
 }
 
+// ----- instance/warp tiles  ------
 const instancesMap = [];
 //parse JSON file to produce arrays of the array for battleZones
 for (let i = 0; i < instancesData.length; i += 20){
     instancesMap.push(instancesData.slice(i, 20 + i))
 }
-// console.log(instancesMap)
 
+// ----- battleZsone tiles ------
 const battleZonesMap = [];
 //parse JSON file to produce arrays of the array for battleZones
 for (let i = 0; i < battleZonesData.length; i += 20){
@@ -29,16 +32,24 @@ for (let i = 0; i < battleZonesData.length; i += 20){
 }
 
 // -------------- collision boundary code -------------------------
+// define empty boundaries arrays for each type needed
 const boundaries = [];
+const instanceZones = [];
+const battleZones = [];
+
+// define the offset of images within the map
 const offset = {
     x: -275,
     y: -350
 }
 
+// ----- check collisions array and create the matching boundaries ------
 collisionsMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
+        // check json map file for correct num val.
         if (symbol === 2475)
             boundaries.push(
+                // create new boundary class object 
                 new Boundary({
                     position: {
                         x: j * Boundary.width + offset.x,
@@ -51,13 +62,13 @@ collisionsMap.forEach((row, i) => {
     });
 });
 
-// -------------- instance tiles boundary code -------------------------
-const instanceZones = [];
-
+// ----- check instance zones array and create the matching boundaries ------
 instancesMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
+        // check json map file for correct num val.
         if (symbol === 2476)
             instanceZones.push(
+                // create new boundary class object 
                 new Boundary({
                     position: {
                         x: j * Boundary.width + offset.x,
@@ -70,13 +81,13 @@ instancesMap.forEach((row, i) => {
     });
 });
 
-// -------------- battle zone boundary code -------------------------
-const battleZones = [];
-
+// ----- check battlezones array and create the matching boundaries ------
 battleZonesMap.forEach((row, i) => {
     row.forEach((symbol, j) => {
+        // check json map file for correct num val.
         if (symbol === 2477)
             battleZones.push(
+                // create new boundary class object 
                 new Boundary({
                     position: {
                         x: j * Boundary.width + offset.x,
@@ -89,14 +100,17 @@ battleZonesMap.forEach((row, i) => {
     });
 });
 
-// ------------- canvas images -----------------------
-//map
-const image = new Image();
-image.src = "images/maps/map.png";
-// foreground objects (walk behind tiles)
-const foregroundImage = new Image();
-foregroundImage.src = "images/maps/foregroundObjects.png"
-// player
+// -------------- main map sprite code -------------------------
+// ----- define sprite images ------
+//  main background map
+const mainMap = new Image();
+mainMap.src = "images/maps/map.png";
+
+// main map foreground objects (walk-behind)
+const mainMapForeground = new Image();
+mainMapForeground.src = "images/maps/foregroundObjects.png";
+
+// main player/character
 const playerImage = new Image();
 playerImage.src = "images/char3.png";
 
@@ -104,7 +118,9 @@ playerImage.src = "images/char3.png";
 const NPCOneImage = new Image();
 NPCOneImage.src = "images/testNPC.png";
 
-// ------------ player sprite creation -----------------
+// ----- create sprite class objects ------
+// ----- character/player sprites ------
+// player
 const player = new Sprite({
     position: {
         x: canvas.width / 2 - 128 / 4,
@@ -119,7 +135,8 @@ const player = new Sprite({
     animate: true,
     scale: 1
 })
-//test NPC
+
+// test NPC
 const npcOne = new Sprite({
     position: {
         x: (canvas.width / 2 - 384 / 8) - 375,
@@ -134,13 +151,15 @@ const npcOne = new Sprite({
     animate: false,
     scale: 1
 })
-// ----------------- background sprite creation --------------------
+
+// ----- main map sprites ------
+// background
 const background = new Sprite({
     position: {
         x: offset.x, 
         y: offset.y
     },
-    image: image,
+    image: mainMap,
     frames: {
         col: 4,
         row: 1,
@@ -149,17 +168,19 @@ const background = new Sprite({
     animate: true,
     scale: 1
 })
-// ----------------- foreground sprite creation --------------------
+
+// foreground
 const foreground = new Sprite({
     position: {
         x: offset.x, 
         y: offset.y
     },
-    image: foregroundImage,
+    image: mainMapForeground,
     scale: 1
 })
 
-// ----------------- object - key tracker --------------------
+// -------------- main map movement and collision controller code -------------------------
+// ----- create keys object to track specific key presses ------
 const keys = {
     w: {
         pressed: false
@@ -172,15 +193,12 @@ const keys = {
     },
     d: {
         pressed: false
-    },
-    // m: {
-    //     pressed: false
-    // }
+    }
 }
 
-// ----------------- moveable sprites array (when walking) --------------------
+// ----- create moveables array which contains the items which should move when the player moves ------
 const moveables = [background, ...boundaries, foreground, ...instanceZones, ...battleZones, npcOne]
-
+// ----- create the rectangle in which a collision will occur ------
 function rectanglularCollision({rectangle1, rectangle2}) {
     return (
     rectangle1.position.x + rectangle1.width >= rectangle2.position.x && 
@@ -190,49 +208,53 @@ function rectanglularCollision({rectangle1, rectangle2}) {
     )
 }
 
-// ----------------- initiate battle status object --------------------
+// ----- battle object to control status (e.g. in or out of battle) ------
 const battle = {
     initiated: false 
 }
 
-// ----------------- MAIN ANIMATE FUNCTION / GAME CODE --------------------
+// -------------- main map animate function  -------------------------
 function animate() {
     const animationId = window.requestAnimationFrame(animate);
-    //draw game map
+    // draw game map
     background.draw();
+    // draw collision boundaries
     boundaries.forEach((boundary) => {
         boundary.draw()
-        // collision detection
-        
     });
+    // draw instance tile boundaries
     instanceZones.forEach((instanceZone) => {
         instanceZone.draw()
-        // collision detection
-        
+
     });
+    // draw battlezone boundaries
     battleZones.forEach((battleZone) => {
         battleZone.draw()
-        // collision detection
-        
     });
+    // draw NPC characters
     npcOne.draw();
+    // draw player character
     player.draw();
-    
+    // draw foreground ** note drawn after player to ensure player can wlak behind those images
     foreground.draw();
 
-    // movment tracking
+    // ----- movement tracking ------
+    // define inital moving variable to true
     let moving = true;
+    // set player animate property to false (no animation by default)
     player.animate = false;
 
-    // stopping movement on battle
+    // ----- stopping movement ------
     // console.log(animationId)
     if (battle.initiated) return
 
-    // battlezone collisions detection / battle activation
+    // ----- checking for collisions in the battle zone tiles whilst moving  ------
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
-        // loop through array
+        // ----- loop through the battleZones array------
         for (let i = 0; i < battleZones.length; i++){
+            // define new variable 
             const battleZone = battleZones[i]
+            // calculation to check if player is overlapping with the battleZone boundary
             const overlappingArea = 
                 (Math.min(
                     player.position.x + player.width, 
@@ -243,30 +265,37 @@ function animate() {
                     player.position.y + player.height, 
                     battleZone.position.y + battleZone.height
                 ) - Math.max(player.position.y, battleZone.position.y))
+                
+            // ----- check if the player is inside the battle zone ------
             if (
                 rectanglularCollision({
                     rectangle1: player, 
                     rectangle2: battleZone
                 }) &&
+                // if the val is set lower (< 1), the event will trigger less frequently.
                 overlappingArea > (player.width * player.height) / 2
                 && Math.random() < 0.01
             ) {
                 console.log("battle activated")
-
+                // -----  if the player is verfied as inside the boundary then do the following: ------
                 // deactivate current animation loop
                 window.cancelAnimationFrame(animationId)
-                // stop audio 
+                // stop the map audio 
                 audio.map.stop()
-                // play new audio
+                // play the battle map audio
                 audio.initBattle.play()
                 audio.battle.play()
-
+                // change battle initiated status to true
                 battle.initiated = true
 
-                // gsap libaray animation settings
+                // -----  the following code controls the animation frames before entering the battle map: ------
+                // -----  GSAP library animation settings ------
+                // initial black flash
                 gsap.to("#battleFlash", {
-                    opacity: 1, 
+                    opacity: 1,
+                    // flash three times
                     repeat: 3,
+                    // end on black screen
                     yoyo: true,
                     duration: 0.4,
                     // show battle screen at the end of animation
@@ -275,9 +304,12 @@ function animate() {
                             opacity: 1,
                             duration: 0.4, 
                             onComplete() {
-                                // activate new animation loop only when animation is complete
+                                // -----  activate new animation loop only when animation is complete ------
+                                // run init battle function
                                 initBattle();
+                                // then run the animate battle function
                                 animateBattle();
+                                // remove black screen once aniation had loaded
                                 gsap.to("#battleFlash", {
                                     opacity: 0,
                                     duration: 0.4
@@ -290,11 +322,14 @@ function animate() {
             } 
         }
     }
-    // instance collisions detection / new map render
+    // ----- checking for collisions in the instance zone tiles whilst moving  ------
+    // ----- loop through the instances array------
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
         // loop through array
         for (let i = 0; i < instanceZones.length; i++){
+            // define new variable 
             const instanceZone = instanceZones[i]
+            // calculation to check if player is overlapping with the battleZone boundary
             const overlappingArea = 
                 (Math.min(
                     player.position.x + player.width, 
@@ -305,28 +340,33 @@ function animate() {
                     player.position.y + player.height, 
                     instanceZone.position.y + instanceZone.height
                 ) - Math.max(player.position.y, instanceZone.position.y))
+                // ----- check if the player is inside the battle zone ------
             if (
                 rectanglularCollision({
                     rectangle1: player, 
                     rectangle2: instanceZone
                 }) &&
+                // if the val is set lower (1 max), the event will trigger less frequently.
                 overlappingArea > (player.width * player.height) / 2
                 && Math.random() < 0.99
             ) {
                 console.log("on/inside instance tile")
 
+                // -----  if the player is verfied as inside the boundary then do the following: ------
                 // deactivate current animation loop
-                // window.cancelAnimationFrame(animationId)
-                // stop audio 
-                // audio.map.stop()
+                window.cancelAnimationFrame(animationId)
+                // stop the map audio 
+                audio.map.stop()
                 // play new audio
 
-                
-
-                // gsap libaray animation settings
+                // -----  the following code controls the animation frames before entering the battle map: ------
+                // -----  GSAP library animation settings ------
+                // initial black flash
                 gsap.to("#battleFlash", {
                     opacity: 1, 
+                    // flash three times
                     repeat: 3,
+                    // end on black screen
                     yoyo: true,
                     duration: 0.4,
                     // show battle screen at the end of animation
@@ -335,9 +375,12 @@ function animate() {
                             opacity: 1,
                             duration: 0.4, 
                             onComplete() {
-                                // activate new map animation loop only when animation is complete
+                                // -----  activate new animation loop only when animation is complete ------
+                                // run init new map function
                                 // initBattle();
-                                // animateBattle();
+                                // then run the animate battle function
+                                //  animateBattle();
+                                // remove black screen once aniation had loaded
                                 gsap.to("#battleFlash", {
                                     opacity: 0,
                                     duration: 0.4
@@ -350,9 +393,10 @@ function animate() {
             } 
         }
     }
-    // ---------------------- W, A, S, D movement code ----------------------- 
-    // w key function
+    // ----- W, A, S, D movement code  ------ 
+    // ----- w / up key controller ------ 
     if (keys.w.pressed && lastKey === "w") {
+        // set animation frame for player sprite object
         player.frames.rowVal = 3
         player.animate = true
         //boundary collisions
@@ -371,6 +415,7 @@ function animate() {
                 })
             ) {
                 console.log("colliding")
+                // set moving to false
                 moving = false 
                 break
             }
@@ -380,8 +425,9 @@ function animate() {
             moveables.forEach((movable) => {
                 movable.position.y += 3
         })
-
+    // ----- a / left key controller ------ 
     } else if (keys.a.pressed && lastKey === "a") {
+        // set animation frame for player sprite object
         player.frames.rowVal = 1
         player.animate = true
         for (let i = 0; i < boundaries.length; i++){
@@ -399,6 +445,7 @@ function animate() {
                 })
             ) {
                 console.log("colliding")
+                // set moving to false
                 moving = false 
                 break
             }
@@ -408,7 +455,9 @@ function animate() {
         moveables.forEach((movable) => {
             movable.position.x += 3
         })
+        // ----- s / down key controller ------ 
     } else if (keys.s.pressed && lastKey === "s") {
+        // set animation frame for player sprite object
         player.frames.rowVal = 0
         player.animate = true
         for (let i = 0; i < boundaries.length; i++){
@@ -426,6 +475,7 @@ function animate() {
                 })
             ) {
                 console.log("colliding")
+                // set moving to false
                 moving = false 
                 break
             }
@@ -435,7 +485,9 @@ function animate() {
         moveables.forEach((movable) => {
             movable.position.y -= 3
         })
+        // ----- d key controller ------ 
     } else if (keys.d.pressed && lastKey === "d") {
+        // set animation frame for player sprite object
         player.frames.rowVal = 2
         player.animate = true
         for (let i = 0; i < boundaries.length; i++){
@@ -453,6 +505,7 @@ function animate() {
                 })
             ) {
                 console.log("colliding")
+                // set moving to false
                 moving = false 
                 break
             }
@@ -513,10 +566,8 @@ window.addEventListener("keyup", (e) => {
     }
 });
 
-// ----------------- music / howler initiationevent listener --------------------
-
-// inventory menu event listeners
-
+// -------------------- all player skill bar utility ------------------------------------
+// ----- skill button and eventlistener tracking object ------
 let menuToggle = {
     inventory: {
         open: false
@@ -537,9 +588,8 @@ let menuToggle = {
         open: false
     }
 }
-
+// ----- menu click function ------
 addEventListener("keypress", (e) => {
-       
     if(e.key === "i" && menuToggle.inventory.open === false) {
         document.querySelector("#characterInventory").style.display = "block";
         menuToggle.inventory.open = true
@@ -585,7 +635,3 @@ addEventListener("keypress", (e) => {
         menuToggle.skillTab.open = false
     }
 })
-
-// testing mechnaics code 
-
-
