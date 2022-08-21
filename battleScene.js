@@ -62,7 +62,7 @@ function initBattle() {
                             battle.initiated = false
                             document.querySelector("#battlescreenUI").style.display = "none";
                             document.querySelector("#overworldUI").style.display = "block";
-                            animate()
+                            animateMain()
                             gsap.to("#battleFlash", {
                                 opacity: 0
                             })
@@ -95,7 +95,7 @@ function initBattle() {
                                 cancelAnimationFrame(battleAnimationId)
                                 document.querySelector("#battlescreenUI").style.display = "none";
                                 document.querySelector("#overworldUI").style.display = "block";
-                                animate()
+                                animateMain()
                                 gsap.to("#battleFlash", {
                                     opacity: 0
                                 })
@@ -126,14 +126,6 @@ function animateBattle() {
         sprite.draw()
     })
 }
-
-// should be off 
-animate()
-// initBattle()
-// animateBattle();
-
-// ------ event listeners for attack buttons -------
-
 
 // event listener for dialogue box removal 
 document.querySelector('#battleDialogueBox').addEventListener("click", (e) => {

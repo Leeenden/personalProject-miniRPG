@@ -23,6 +23,9 @@ class Sprite {
         this.rotation = rotation
         this.scale = scale
     }
+    delete(){
+        c.clearRect(0, 0, this.width, this.height)
+    }
     // draw (class method)
     draw() {
         c.save()

@@ -256,3 +256,6 @@ addEventListener("click", () => {
     }
 })
 
+// run game 
+animateMain()
+

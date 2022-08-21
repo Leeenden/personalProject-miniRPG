@@ -11,49 +11,49 @@ canvas.height = 640;
 
 // -------------- data parsing for boundary -------------------------
 // ----- collisions/barrier tiles ------
-const collisionsMap = [];
+const collisionsMapMain = [];
 //parse JSON file to produce arrays of the array for collisions
 for (let i = 0; i < collisions.length; i += 20){
-   collisionsMap.push(collisions.slice(i, 20 + i))
+   collisionsMapMain.push(collisions.slice(i, 20 + i))
 }
 
 // ----- instance/warp tiles  ------
-const instancesMap = [];
+const instancesMapMain = [];
 //parse JSON file to produce arrays of the array for battleZones
 for (let i = 0; i < instancesData.length; i += 20){
-    instancesMap.push(instancesData.slice(i, 20 + i))
+    instancesMapMain.push(instancesData.slice(i, 20 + i))
 }
 
 // ----- battleZsone tiles ------
-const battleZonesMap = [];
+const battleZonesMapMain = [];
 //parse JSON file to produce arrays of the array for battleZones
 for (let i = 0; i < battleZonesData.length; i += 20){
-    battleZonesMap.push(battleZonesData.slice(i, 20 + i))
+    battleZonesMapMain.push(battleZonesData.slice(i, 20 + i))
 }
 
 // -------------- collision boundary code -------------------------
 // define empty boundaries arrays for each type needed
-const boundaries = [];
-const instanceZones = [];
-const battleZones = [];
+const boundariesMain = [];
+const instanceZonesMain = [];
+const battleZonesMain = [];
 
 // define the offset of images within the map
-const offset = {
+const offsetMain = {
     x: -275,
     y: -350
 }
 
 // ----- check collisions array and create the matching boundaries ------
-collisionsMap.forEach((row, i) => {
+collisionsMapMain.forEach((row, i) => {
     row.forEach((symbol, j) => {
         // check json map file for correct num val.
         if (symbol === 2475)
-            boundaries.push(
+            boundariesMain.push(
                 // create new boundary class object 
                 new Boundary({
                     position: {
-                        x: j * Boundary.width + offset.x,
-                        y: i * Boundary.height + offset.y
+                        x: j * Boundary.width + offsetMain.x,
+                        y: i * Boundary.height + offsetMain.y
                     },
                     color: "rgba(255, 0, 0, 0.7)"
                 })
@@ -63,16 +63,16 @@ collisionsMap.forEach((row, i) => {
 });
 
 // ----- check instance zones array and create the matching boundaries ------
-instancesMap.forEach((row, i) => {
+instancesMapMain.forEach((row, i) => {
     row.forEach((symbol, j) => {
         // check json map file for correct num val.
         if (symbol === 2476)
-            instanceZones.push(
+            instanceZonesMain.push(
                 // create new boundary class object 
                 new Boundary({
                     position: {
-                        x: j * Boundary.width + offset.x,
-                        y: i * Boundary.height + offset.y
+                        x: j * Boundary.width + offsetMain.x,
+                        y: i * Boundary.height + offsetMain.y
                     },
                     color: "rgba(255, 255, 255, 0.7)"
                 })
@@ -82,16 +82,16 @@ instancesMap.forEach((row, i) => {
 });
 
 // ----- check battlezones array and create the matching boundaries ------
-battleZonesMap.forEach((row, i) => {
+battleZonesMapMain.forEach((row, i) => {
     row.forEach((symbol, j) => {
         // check json map file for correct num val.
         if (symbol === 2477)
-            battleZones.push(
+            battleZonesMain.push(
                 // create new boundary class object 
                 new Boundary({
                     position: {
-                        x: j * Boundary.width + offset.x,
-                        y: i * Boundary.height + offset.y
+                        x: j * Boundary.width + offsetMain.x,
+                        y: i * Boundary.height + offsetMain.y
                     },
                     color: "rgba(255, 255, 0, 0.7)"
                 })
@@ -154,10 +154,10 @@ const npcOne = new Sprite({
 
 // ----- main map sprites ------
 // background
-const background = new Sprite({
+const backgroundMain = new Sprite({
     position: {
-        x: offset.x, 
-        y: offset.y
+        x: offsetMain.x, 
+        y: offsetMain.y
     },
     image: mainMap,
     frames: {
@@ -170,10 +170,10 @@ const background = new Sprite({
 })
 
 // foreground
-const foreground = new Sprite({
+const foregroundMain = new Sprite({
     position: {
-        x: offset.x, 
-        y: offset.y
+        x: offsetMain.x, 
+        y: offsetMain.y
     },
     image: mainMapForeground,
     scale: 1
@@ -197,7 +197,7 @@ const keys = {
 }
 
 // ----- create moveables array which contains the items which should move when the player moves ------
-const moveables = [background, ...boundaries, foreground, ...instanceZones, ...battleZones, npcOne]
+const moveablesMain = [backgroundMain, ...boundariesMain, foregroundMain, ...instanceZonesMain, ...battleZonesMain, npcOne]
 // ----- create the rectangle in which a collision will occur ------
 function rectanglularCollision({rectangle1, rectangle2}) {
     return (
@@ -214,21 +214,21 @@ const battle = {
 }
 
 // -------------- main map animate function  -------------------------
-function animate() {
-    const animationId = window.requestAnimationFrame(animate);
+function animateMain() {
+    const animationIdMain = window.requestAnimationFrame(animateMain);
     // draw game map
-    background.draw();
+    backgroundMain.draw();
     // draw collision boundaries
-    boundaries.forEach((boundary) => {
+    boundariesMain.forEach((boundary) => {
         boundary.draw()
     });
     // draw instance tile boundaries
-    instanceZones.forEach((instanceZone) => {
+    instanceZonesMain.forEach((instanceZone) => {
         instanceZone.draw()
 
     });
     // draw battlezone boundaries
-    battleZones.forEach((battleZone) => {
+    battleZonesMain.forEach((battleZone) => {
         battleZone.draw()
     });
     // draw NPC characters
@@ -236,7 +236,7 @@ function animate() {
     // draw player character
     player.draw();
     // draw foreground ** note drawn after player to ensure player can wlak behind those images
-    foreground.draw();
+    foregroundMain.draw();
 
     // ----- movement tracking ------
     // define inital moving variable to true
@@ -251,9 +251,9 @@ function animate() {
     // ----- checking for collisions in the battle zone tiles whilst moving  ------
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
         // ----- loop through the battleZones array------
-        for (let i = 0; i < battleZones.length; i++){
+        for (let i = 0; i < battleZonesMain.length; i++){
             // define new variable 
-            const battleZone = battleZones[i]
+            const battleZone = battleZonesMain[i]
             // calculation to check if player is overlapping with the battleZone boundary
             const overlappingArea = 
                 (Math.min(
@@ -279,7 +279,7 @@ function animate() {
                 console.log("battle activated")
                 // -----  if the player is verfied as inside the boundary then do the following: ------
                 // deactivate current animation loop
-                window.cancelAnimationFrame(animationId)
+                window.cancelAnimationFrame(animationIdMain)
                 // stop the map audio 
                 audio.map.stop()
                 // play the battle map audio
@@ -326,9 +326,9 @@ function animate() {
     // ----- loop through the instances array------
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
         // loop through array
-        for (let i = 0; i < instanceZones.length; i++){
+        for (let i = 0; i < instanceZonesMain.length; i++){
             // define new variable 
-            const instanceZone = instanceZones[i]
+            const instanceZone = instanceZonesMain[i]
             // calculation to check if player is overlapping with the battleZone boundary
             const overlappingArea = 
                 (Math.min(
@@ -354,7 +354,11 @@ function animate() {
 
                 // -----  if the player is verfied as inside the boundary then do the following: ------
                 // deactivate current animation loop
-                window.cancelAnimationFrame(animationId)
+                window.cancelAnimationFrame(animationIdMain)
+                // backgroundMain.delete()
+                // foregroundMain.delete()
+                console.log("cancelled main animation")
+                // cancelAnimationFrame(animateMain)
                 // stop the map audio 
                 audio.map.stop()
                 // play new audio
@@ -379,7 +383,8 @@ function animate() {
                                 // run init new map function
                                 // initBattle();
                                 // then run the animate battle function
-                                //  animateBattle();
+                                animateCave();
+                                console.log("started animation")
                                 // remove black screen once aniation had loaded
                                 gsap.to("#battleFlash", {
                                     opacity: 0,
@@ -393,15 +398,15 @@ function animate() {
             } 
         }
     }
-    // ----- W, A, S, D movement code  ------ 
+    // ----- W, A, S, D movement code with collisions  ------ 
     // ----- w / up key controller ------ 
     if (keys.w.pressed && lastKey === "w") {
         // set animation frame for player sprite object
         player.frames.rowVal = 3
         player.animate = true
         //boundary collisions
-        for (let i = 0; i < boundaries.length; i++){
-            const boundary = boundaries[i]
+        for (let i = 0; i < boundariesMain.length; i++){
+            const boundary = boundariesMain[i]
             if (
                 rectanglularCollision({
                     rectangle1: player, 
@@ -422,7 +427,7 @@ function animate() {
         }
         // stop movement 
         if(moving)
-            moveables.forEach((movable) => {
+            moveablesMain.forEach((movable) => {
                 movable.position.y += 3
         })
     // ----- a / left key controller ------ 
@@ -430,8 +435,8 @@ function animate() {
         // set animation frame for player sprite object
         player.frames.rowVal = 1
         player.animate = true
-        for (let i = 0; i < boundaries.length; i++){
-            const boundary = boundaries[i]
+        for (let i = 0; i < boundariesMain.length; i++){
+            const boundary = boundariesMain[i]
             if (
                 rectanglularCollision({
                     rectangle1: player, 
@@ -452,7 +457,7 @@ function animate() {
         }
         // stop movement 
         if(moving)
-        moveables.forEach((movable) => {
+        moveablesMain.forEach((movable) => {
             movable.position.x += 3
         })
         // ----- s / down key controller ------ 
@@ -460,8 +465,8 @@ function animate() {
         // set animation frame for player sprite object
         player.frames.rowVal = 0
         player.animate = true
-        for (let i = 0; i < boundaries.length; i++){
-            const boundary = boundaries[i]
+        for (let i = 0; i < boundariesMain.length; i++){
+            const boundary = boundariesMain[i]
             if (
                 rectanglularCollision({
                     rectangle1: player, 
@@ -482,7 +487,7 @@ function animate() {
         }
         // stop movement 
         if(moving)
-        moveables.forEach((movable) => {
+        moveablesMain.forEach((movable) => {
             movable.position.y -= 3
         })
         // ----- d key controller ------ 
@@ -490,8 +495,8 @@ function animate() {
         // set animation frame for player sprite object
         player.frames.rowVal = 2
         player.animate = true
-        for (let i = 0; i < boundaries.length; i++){
-            const boundary = boundaries[i]
+        for (let i = 0; i < boundariesMain.length; i++){
+            const boundary = boundariesMain[i]
             if (
                 rectanglularCollision({
                     rectangle1: player, 
@@ -512,7 +517,7 @@ function animate() {
         }
         // stop movement 
         if(moving)
-        moveables.forEach((movable) => {
+        moveablesMain.forEach((movable) => {
             movable.position.x -= 3
         })
     }
@@ -559,10 +564,6 @@ window.addEventListener("keyup", (e) => {
         case "d": 
             keys.d.pressed = false
             break
-        // case "m": 
-        //     keys.m.pressed = false
-        //     // lastKey = "d"
-        //     break
     }
 });
 
