@@ -23,8 +23,11 @@ class Sprite {
         this.rotation = rotation
         this.scale = scale
     }
-    delete(){
-        c.clearRect(0, 0, this.width, this.height)
+    postWarpYUp(){
+        this.position.y - 60;
+    }
+    postWarpYDown(){
+        this.position.y + 60;
     }
     // draw (class method)
     draw() {

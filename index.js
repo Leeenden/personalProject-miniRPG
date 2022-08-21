@@ -244,6 +244,9 @@ function animateMain() {
     // set player animate property to false (no animation by default)
     player.animate = false;
 
+    // set warp tile status 
+    let onWarpTile = false;
+
     // ----- stopping movement ------
     // console.log(animationId)
     if (battle.initiated) return
@@ -329,47 +332,35 @@ function animateMain() {
         for (let i = 0; i < instanceZonesMain.length; i++){
             // define new variable 
             const instanceZone = instanceZonesMain[i]
-            // calculation to check if player is overlapping with the battleZone boundary
-            const overlappingArea = 
-                (Math.min(
-                    player.position.x + player.width, 
-                    instanceZone.position.x + instanceZone.width
-                ) - 
-                    Math.max(player.position.x, instanceZone.position.x)) * 
-                (Math.min(
-                    player.position.y + player.height, 
-                    instanceZone.position.y + instanceZone.height
-                ) - Math.max(player.position.y, instanceZone.position.y))
-                // ----- check if the player is inside the battle zone ------
-            if (
-                rectanglularCollision({
-                    rectangle1: player, 
-                    rectangle2: instanceZone
-                }) &&
+            // calculation to check if player is overlapping with the instance boundary
+            const overlappingArea = (
+                Math.min(player.position.x + player.width, instanceZone.position.x + instanceZone.width) - Math.max(player.position.x, instanceZone.position.x)) * (Math.min(player.position.y + player.height, instanceZone.position.y + instanceZone.height) - Math.max(player.position.y, instanceZone.position.y)
+            )
+            // ----- check if the player is inside the instance ------
+            if(onWarpTile === true) {
+                return
+            } else if (rectanglularCollision({rectangle1: player, rectangle2: instanceZone}) &&
                 // if the val is set lower (1 max), the event will trigger less frequently.
-                overlappingArea > (player.width * player.height) / 2
-                && Math.random() < 0.99
-            ) {
+                overlappingArea > (player.width * player.height) / 2 && onWarpTile === false) {
                 console.log("on/inside instance tile")
-
+                onWarpTile = true
+                console.log(onWarpTile)
                 // -----  if the player is verfied as inside the boundary then do the following: ------
                 // deactivate current animation loop
                 window.cancelAnimationFrame(animationIdMain)
-                // backgroundMain.delete()
-                // foregroundMain.delete()
                 console.log("cancelled main animation")
                 // cancelAnimationFrame(animateMain)
                 // stop the map audio 
                 audio.map.stop()
                 // play new audio
 
-                // -----  the following code controls the animation frames before entering the battle map: ------
+                // -----  the following code controls the animation frames before entering the new map: ------
                 // -----  GSAP library animation settings ------
                 // initial black flash
                 gsap.to("#battleFlash", {
                     opacity: 1, 
                     // flash three times
-                    repeat: 3,
+                    repeat: 2,
                     // end on black screen
                     yoyo: true,
                     duration: 0.4,
@@ -384,6 +375,8 @@ function animateMain() {
                                 // initBattle();
                                 // then run the animate battle function
                                 animateCave();
+                                backgroundMain.postWarpYUp()
+                                foregroundMain.postWarpYUp()
                                 console.log("started animation")
                                 // remove black screen once aniation had loaded
                                 gsap.to("#battleFlash", {
@@ -396,6 +389,11 @@ function animateMain() {
                 })
                 break
             } 
+            // if (rectanglularCollision({rectangle1: player, rectangle2: instanceZone}) &&
+            //     // if the val is set lower (1 max), the event will trigger less frequently.
+            //     overlappingArea > (player.width * player.height) / 2 && onWarpTile === true) {
+            //     console.log("just warped")
+            // }
         }
     }
     // ----- W, A, S, D movement code with collisions  ------ 

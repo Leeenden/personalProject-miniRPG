@@ -157,6 +157,9 @@ function animateCave() {
     let moving = true;
     // set player animate property to false (no animation by default)
     player.animate = false;
+    // set warp tile status 
+    let onWarpTile = false;
+
 
     // ----- stopping movement ------
     // console.log(animationId)
@@ -254,23 +257,34 @@ function animateCave() {
                     player.position.y + player.height, 
                     instanceZone.position.y + instanceZone.height
                 ) - Math.max(player.position.y, instanceZone.position.y))
-                // ----- check if the player is inside the instance zone ------
-            if (
-                rectanglularCollision({
-                    rectangle1: player, 
-                    rectangle2: instanceZone
-                }) &&
-                // if the val is set lower (1 max), the event will trigger less frequently.
-                overlappingArea > (player.width * player.height) / 2
-                && Math.random() < 0.99
-            ) {
-                console.log("on/inside instance tile")
-
+            
+            // ----- check if the player is inside the instance zone ------
+            if(rectanglularCollision({rectangle1: player, rectangle2: instanceZone}) &&
+            // if the val is set lower (1 max), the event will trigger less frequently.
+            overlappingArea < (player.width * player.height) / 2 && onWarpTile === false) {
+                setTimeout(() => {
+                    onWarpTile = true
+                    console.log(onWarpTile)
+                    console.log(overlappingArea)
+                    console.log("outside the tile")
+                }, 500);
+            } else if (rectanglularCollision({rectangle1: player, rectangle2: instanceZone}) &&
+            // if the val is set lower (1 max), the event will trigger less frequently.
+            overlappingArea > (player.width * player.height) / 2 && onWarpTile === true) {
+                setTimeout(() => {
+                    onWarpTile = false
+                    console.log(onWarpTile)
+                    console.log(overlappingArea)
+                    console.log("inside instance tile")
+                }, 500);
+                // console.log("inside instance tile")
+                // onWarpTile = true
+                // console.log(onWarpTile)
+                // console.log(overlappingArea)
                 // -----  if the player is verfied as inside the boundary then do the following: ------
                 // deactivate current animation loop
                 window.cancelAnimationFrame(animationIdCave)
-                backgroundCave.delete()
-                foregroundCave.delete()
+            
                 // stop the map audio 
                 audio.map.stop()
                 // play new audio
@@ -281,7 +295,7 @@ function animateCave() {
                 gsap.to("#battleFlash", {
                     opacity: 1, 
                     // flash three times
-                    repeat: 3,
+                    repeat: 2,
                     // end on black screen
                     yoyo: true,
                     duration: 0.4,
@@ -295,7 +309,10 @@ function animateCave() {
                                 // run init new map function
                                 // initBattle();
                                 // then run the animate battle function
+                                backgroundMain.postWarpYDown()
+                                foregroundMain.postWarpYDown()
                                 animateMain();
+                                
                                 // remove black screen once aniation had loaded
                                 gsap.to("#battleFlash", {
                                     opacity: 0,
@@ -306,7 +323,18 @@ function animateCave() {
                     }
                 })
                 break
-            } 
+            }
+            // else if (
+            //     rectanglularCollision({
+            //     rectangle1: player, 
+            //     rectangle2: instanceZone
+            // }) &&
+            // // if the val is set lower (1 max), the event will trigger less frequently.
+            // overlappingArea > (player.width * player.height) / 2
+            // // && Math.random() < 0.50
+            // && onWarpTile === true) {
+            //     console.log("just warped")
+            // }
         }
     }
     // ----- W, A, S, D movement code  ------ 
