@@ -105,7 +105,7 @@ body {
     /* border: 3px solid black; */
 }
 
-#floatingTextEXP, #floatingTextDamage, #floatingTextloseHP, #floatingTextLvlup{
+#floatingTextEXP, #floatingTextDamage, #floatingTextloseHP, #floatingTextLvlup, #floatingTextloseSP, #floatingTextloseMP{
     position: absolute;
     height: 200px;
     width: 200px;
@@ -114,17 +114,26 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 3;
+    z-index: 5;
     background-color: transparent;
     color: yellow;
 }
 #floatingTextLvlup {
     color: green;
     font-size: 20px;
-    z-index: 2;
+    z-index: 6;
 }
 #floatingTextloseHP {
     color: red;
+    z-index: 8;
+}
+#floatingTextloseSP {
+    color: yellow;
+    z-index: 8;
+}
+#floatingTextloseMP {
+    color: blue;
+    z-index: 9;
 }
 
 /* character health bars */
@@ -132,7 +141,7 @@ body {
     position: relative;
 }
 /* hidden health bar (empty) */
-#characterHealthbar {
+#characterHealthbar, #characterStaminabar, #characterManabar{
     width: 155px;
     height: 6px;
     background-color: #ccc;
@@ -140,10 +149,16 @@ body {
     position: absolute;
     top: 325px;
     /* right: 390px; */
-    left: 375px;
+    left: 380px;
+}
+#characterStaminabar {
+    top: 332px;
+}
+#characterManabar {
+    top: 339px;
 }
 /* overlapping healthbar */
-#characterHealthbarChange {
+#characterHealthbarChange, #characterStaminabarChange, #characterManabarChange {
     /* max-width: 155px; */
     width: 155px; 
     height: 6px;
@@ -152,8 +167,16 @@ body {
     position: absolute;
     top: 325px;
     /* right: 390px; */
-    left: 375px;
+    left: 380px;
 }
+#characterStaminabarChange {
+    background-color: yellow;
+    top: 332px;
+} 
+#characterManabarChange {
+    background-color: blue;
+    top: 339px;
+} 
 /* char seclected/chosen skills bar */
 #charSkills {
     height: 50px;

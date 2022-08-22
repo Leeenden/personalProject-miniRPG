@@ -2,8 +2,8 @@ const characters = {
     Player: {
         stats: {
             Health: 100,
-            Stamina: 50, 
-            Mana: 50, 
+            Stamina: 100, 
+            Mana: 100, 
             Attack: 15, 
             Defense: 15, 
             Speed: 15

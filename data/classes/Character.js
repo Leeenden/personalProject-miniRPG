@@ -16,16 +16,18 @@ class Character {
     ) {
         this.stats = {...stats}
         this.activeHealth = this.stats.stats.Health
+        this.activeStamina = this.stats.stats.Stamina
+        this.activeMana = this.stats.stats.Mana
         this.isPlayer = isPlayer
         this.isNPC = isNPC
         this.allQuests = allQuests
         this.activeQuests = activeQuests
         // pre-define starting stats
-        this.level = 1,
-        this.requiredExp = 6,
-        this.currentExp = 0,
+        this.level = 1
+        this.requiredExp = 6
+        this.currentExp = 0
         
-        this.talentpoint = 0,
+        this.talentpoint = 0
         this.talents = []
         this.skillChoices = []
         
@@ -71,12 +73,16 @@ class Character {
         if(this.stats.stats.Stamina !== charSP.innerHTML) {
             charSP.innerHTML = this.stats.stats.Stamina
         }
+        // update active SP
+        this.activeStamina = this.stats.stats.Stamina
         //  mana
         let charMP = document.querySelector("#charMP")
         charMP.innerHTML = this.stats.stats.Mana
         if(this.stats.stats.Mana !== charMP.innerHTML) {
             charMP.innerHTML = this.stats.stats.Mana
         }
+        // update active MP
+        this.activeMana = this.stats.stats.Mana
         //  attack
         let charATK = document.querySelector("#charATK")
         charATK.innerHTML = this.stats.stats.Attack
@@ -228,22 +234,20 @@ class Character {
         let float = "#floatingTextloseHP"
         const fltl = gsap.timeline()
         let damage = 10
-        console.log(this.activeHealth)
-        console.log(this.stats.stats.Health)
         this.activeHealth -= damage
-        console.log(this.activeHealth)
-        console.log(this.stats.stats.Health)
+        console.log(`${this.activeHealth} active HP`)
+        console.log(`${this.stats.stats.Health} total`)
         // create floating exp div 
         const minusHPText = document.createElement("div");
         minusHPText.innerHTML = `- ${damage} HP`;
         document.getElementById("floatingTextloseHP").appendChild(minusHPText);
         fltl.to(float, {
-            bottom: 125 + "px",
+            bottom: 100 + "px",
             yoyo: false,
-            duration: 0.5,
+            duration: 0.3,
             onComplete: () => {
                 fltl.to(float, {
-                    duration: 0.5,
+                    duration: 0.3,
                     display: "none",
                     onComplete: () => {
                         minusHPText.remove();
@@ -261,6 +265,85 @@ class Character {
         })
         if(this.activeHealth <= 0){
             console.log("you died")
+        }
+    }
+    loseStamina(){
+        let staminabar = "#characterStaminabarChange" 
+        let floati = "#floatingTextloseSP"
+        const fltl = gsap.timeline()
+        console.log(this.activeStamina)
+        let moveCost = 10
+        this.activeStamina -= moveCost
+        console.log(this.activeStamina)
+        console.log(this.stats.stats.Stamina)
+        // create floating exp div 
+        const minusSPText = document.createElement("div");
+        minusSPText.innerHTML = `- ${moveCost} SP`;
+        document.getElementById("floatingTextloseSP").appendChild(minusSPText);
+        fltl.to(floati, {
+            bottom: 110 + "px",
+            yoyo: false,
+            duration: 0.4,
+            onComplete: () => {
+                fltl.to(floati, {
+                    duration: 0.4,
+                    display: "none",
+                    onComplete: () => {
+                        minusSPText.remove();
+                        fltl.to(floati, {
+                            bottom: 0 + "px",
+                            display: "flex"
+                        })
+                    }
+                })
+            }
+        })
+        // animate health bar
+        gsap.to(staminabar, {
+            width: (this.stats.stats.Stamina - (this.stats.stats.Stamina - this.activeStamina)) / 6 + "%" 
+        })
+        if(this.activeStamina <= 0){
+            console.log("You are out of stamina.")
+        }
+        
+    }
+    loseMana(){
+        let manabar = "#characterManabarChange" 
+        let floats = "#floatingTextloseMP"
+        const fltl = gsap.timeline()
+        console.log(this.activeMana)
+        let moveCost = 10
+        this.activeMana -= moveCost
+        console.log(this.activeMana)
+        console.log(this.stats.stats.Mana)
+        // create floating exp div 
+        const minusMPText = document.createElement("div");
+        minusMPText.innerHTML = `- ${moveCost} MP`;
+        document.getElementById("floatingTextloseMP").appendChild(minusMPText);
+        fltl.to(floats, {
+            bottom: 110 + "px",
+            yoyo: false,
+            duration: 0.4,
+            onComplete: () => {
+                fltl.to(floats, {
+                    duration: 0.4,
+                    display: "none",
+                    onComplete: () => {
+                        minusMPText.remove();
+                        fltl.to(floats, {
+                            bottom: 0 + "px",
+                            display: "flex"
+                        })
+                    }
+                })
+            }
+        })
+        // animate health bar
+        gsap.to(manabar, {
+            width: (this.stats.stats.Mana - (this.stats.stats.Mana - this.activeMana)) / 6 + "%" 
+        })
+        if(this.activeStamina <= 0){
+            console.log("You are out of stamina.")
         }
     }
     levelUp(){
@@ -329,9 +412,36 @@ class Character {
         
     }
     usePunch() {
+        // grab and assign sprite image
+        const punchImage = new Image()
+        punchImage.src = "./images/fireball.png"
+        // create the new sprite
+        const punch = new Sprite({
+            position: {
+                x: player.position.x + 25,
+                y: player.position.y
+            },
+            image: punchImage,
+            frames: {
+                col: 4,
+                row: 1,
+                hold: 10
+            },
+            animate: true,
+            
+        })
+        console.log(player)
+        console.log(punch)
+        // gsap.to(punch.position, {
+        //     x: player.position.x,
+        //     y: player.position.y,
+        // })
+        punch.draw()
         this.skillChoices[0].effect
         audio.punch.play()
         this.loseHealth()
+        this.loseStamina()
+        this.loseMana()
     }
     useSwing(){
         this.skillChoices[1].effect

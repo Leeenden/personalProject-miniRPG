@@ -2,7 +2,7 @@ const audio = {
     map: new Howl({
         src: "./audio/map.wav",
         html5: true,
-        volume: 0.2,
+        volume: 0.1,
         loop: true
     }),
     cave: new Howl ({
@@ -14,7 +14,7 @@ const audio = {
     warpTile: new Howl ({
         src: "./audio/warpTile.wav",
         html5: true,
-        volume: 0.2,
+        volume: 0.1,
         loop: false
     }),
     initBattle: new Howl({
@@ -50,49 +50,49 @@ const audio = {
     victory: new Howl({
         src: "./audio/victory.wav",
         html5: true,
-        volume: 0.2,
+        volume: 0.1,
         loop: false
     }),
     levelup: new Howl({
         src: "./audio/levelup.wav",
         html5: true,
-        volume: 0.3,
+        volume: 0.1,
         loop: false
     }),
     punch: new Howl({
         src: "./audio/punch.wav",
         html5: true,
-        volume: 0.3,
+        volume: 0.1,
         loop: false
     }),
     swing: new Howl ({
         src: "./audio/sword.wav",
         html5: true,
-        volume: 0.3,
+        volume: 0.1,
         loop: false
     }),
     stab: new Howl ({
         src: "./audio/sword.wav",
         html5: true,
-        volume: 0.3,
+        volume: 0.1,
         loop: false
     }),
     shout: new Howl ({
         src: "./audio/shout.wav",
         html5: true,
-        volume: 0.3,
+        volume: 0.1,
         loop: false
     }),
     roar: new Howl ({
         src: "./audio/roar.wav",
         html5: true,
-        volume: 0.3,
+        volume: 0.1,
         loop: false
     }),
     slice: new Howl ({
         src: "./audio/sword.wav",
         html5: true,
-        volume: 0.3,
+        volume: 0.1,
         loop: false
     }),
     
