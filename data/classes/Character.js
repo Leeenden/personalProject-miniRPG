@@ -257,7 +257,7 @@ class Character {
         })
         // animate health bar
         gsap.to(healthbar, {
-            width: (100 - (this.stats.stats.Health - this.activeHealth)) / 6 + "%" 
+            width: (this.stats.stats.Health - (this.stats.stats.Health - this.activeHealth)) / 6 + "%" 
         })
         if(this.activeHealth <= 0){
             console.log("you died")
