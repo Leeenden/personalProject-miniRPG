@@ -15,6 +15,7 @@ class Character {
         activeQuests = []
     ) {
         this.stats = {...stats}
+        this.activeHealth = this.stats.stats.Health
         this.isPlayer = isPlayer
         this.isNPC = isNPC
         this.allQuests = allQuests
@@ -62,6 +63,8 @@ class Character {
         if(this.stats.stats.Health !== charHP.innerHTML) {
             charHP.innerHTML = this.stats.stats.Health
         }
+        // update active HP
+        this.activeHealth = this.stats.stats.Health
         //  stamina
         let charSP = document.querySelector("#charSP")
         charSP.innerHTML = this.stats.stats.Stamina
@@ -220,6 +223,46 @@ class Character {
         this.levelUp();
         }
     }
+    loseHealth(){
+        let healthbar = "#characterHealthbarChange" 
+        let float = "#floatingTextloseHP"
+        const fltl = gsap.timeline()
+        let damage = 10
+        console.log(this.activeHealth)
+        console.log(this.stats.stats.Health)
+        this.activeHealth -= damage
+        console.log(this.activeHealth)
+        console.log(this.stats.stats.Health)
+        // create floating exp div 
+        const minusHPText = document.createElement("div");
+        minusHPText.innerHTML = `- ${damage} HP`;
+        document.getElementById("floatingTextloseHP").appendChild(minusHPText);
+        fltl.to(float, {
+            bottom: 125 + "px",
+            yoyo: false,
+            duration: 0.5,
+            onComplete: () => {
+                fltl.to(float, {
+                    duration: 0.5,
+                    display: "none",
+                    onComplete: () => {
+                        minusHPText.remove();
+                        fltl.to(float, {
+                            bottom: 0 + "px",
+                            display: "flex"
+                        })
+                    }
+                })
+            }
+        })
+        // animate health bar
+        gsap.to(healthbar, {
+            width: (100 - (this.stats.stats.Health - this.activeHealth)) / 6 + "%" 
+        })
+        if(this.activeHealth <= 0){
+            console.log("you died")
+        }
+    }
     levelUp(){
         let expbar = "#playerExpbarChange"
         let floaty = "#floatingTextLvlup"
@@ -288,6 +331,7 @@ class Character {
     usePunch() {
         this.skillChoices[0].effect
         audio.punch.play()
+        this.loseHealth()
     }
     useSwing(){
         this.skillChoices[1].effect
