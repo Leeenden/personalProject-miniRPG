@@ -26,9 +26,6 @@ class Sprite {
     postWarpYUp(){
         this.position.y - 60;
     }
-    postWarpYDown(){
-        this.position.y + 60;
-    }
     // draw (class method)
     draw() {
         c.save()

@@ -19,6 +19,7 @@ class Monster extends Sprite {
         })
         // change health to constructor later for variability
         this.health = 100
+        this.activeHealth = this.health
         this.isEnemy = isEnemy
         this.name = name
         this.attacks = attacks
@@ -46,7 +47,11 @@ class Monster extends Sprite {
         let rotation = 1
         if(this.isEnemy) rotation = -2.7
         // healthbar calc for all attacks
-        recipient.health -= attack.damage
+        recipient.activeHealth -= attack.damage
+
+        console.log(recipient.health)
+        console.log(recipient.activeHealth)
+        console.log(recipient.health)
 
         // switch case for attack choices
         switch (attack.name) {
@@ -83,7 +88,7 @@ class Monster extends Sprite {
                         // enemy gets hit
                         audio.fireballHit.play()
                         gsap.to(healthbar, {
-                            width: recipient.health + "%"
+                            width: (recipient.health - (recipient.health - recipient.activeHealth)) + "%"
                         })
                         // player action animation 
                         gsap.to(recipient.position, {
@@ -137,7 +142,7 @@ class Monster extends Sprite {
                         // enemy gets hit
                         audio.fireballHit.play()
                         gsap.to(healthbar, {
-                            width: recipient.health + "%"
+                            width: (recipient.health - (recipient.health - recipient.activeHealth)) + "%"
                         })
                         // player action animation 
                         gsap.to(recipient.position, {
@@ -191,7 +196,7 @@ class Monster extends Sprite {
                         // enemy gets hit
                         audio.fireballHit.play()
                         gsap.to(healthbar, {
-                            width: recipient.health + "%"
+                            width: (recipient.health - (recipient.health - recipient.activeHealth))  + "%"
                         })
                         // player action animation 
                         gsap.to(recipient.position, {
@@ -229,7 +234,7 @@ class Monster extends Sprite {
                         // enemy gets hit
                         audio.tackleHit.play()
                         gsap.to(healthbar, {
-                            width: recipient.health + "%"
+                            width: (recipient.health - (recipient.health - recipient.activeHealth)) + "%"
                         })
                         // player action animation 
                         gsap.to(recipient.position, {

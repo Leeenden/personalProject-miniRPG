@@ -49,7 +49,7 @@ function initBattle() {
                 renderedSprites
             })
     
-            if (draggle.health <= 0) {
+            if (draggle.activeHealth <= 0) {
                 queue.push(() => {
                     draggle.faint()
                 })
@@ -83,7 +83,7 @@ function initBattle() {
                     renderedSprites
                 })
     
-                if (emby.health <= 0) {
+                if (emby.activeHealth <= 0) {
                     queue.push(() => {
                         emby.faint()
                     })
@@ -93,13 +93,14 @@ function initBattle() {
                             opacity: 1, 
                             onComplete: () => {
                                 cancelAnimationFrame(battleAnimationId)
+                                battle.initiated = false
                                 document.querySelector("#battlescreenUI").style.display = "none";
                                 document.querySelector("#overworldUI").style.display = "block";
                                 animateMain()
                                 gsap.to("#battleFlash", {
                                     opacity: 0
                                 })
-                                battle.initiated = false
+                                
                                 audio.map.play()
                             }
                         })
