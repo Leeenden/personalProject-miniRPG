@@ -7,7 +7,7 @@ const skills = {
         level: 2,
         rank: "Novice",
         image: {
-            src: "./images/skills/punch.png"
+            src: "./images/skills/punchIcon.png"
         },
         effect (min, max) {
             min = 1 

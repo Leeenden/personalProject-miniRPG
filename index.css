@@ -100,7 +100,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    z-index: 4;
     background-color: transparent;
     /* border: 3px solid black; */
 }
@@ -114,7 +114,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    z-index: 3;
     background-color: transparent;
     color: yellow;
 }
@@ -131,7 +131,7 @@ body {
     background-color: transparent;
     color: green;
     font-size: 20px;
-    z-index: 5;
+    z-index: 2;
 }
 
 /* character health bars */
@@ -190,21 +190,13 @@ body {
     border-radius: 20px;
     font-size: 10px;
 }
-/* -------------character inventory -------------------*/
-#characterInventory {
-    height: 500px;
-    width: 350px;
-    background-color: #ccc;
-    margin: 5px;
-    position: absolute;
-    top: 50px;
-    right: 20px;
-
-    border: 3px solid black;
-    border-radius: 20px;
-
-    display: none;
+.chosenSkill img{
+    border: 2px solid red;
+    border-radius: 50%;
+    right: 0;
+    top: 50%;
 }
+
 /* ---------------- skills and talent menu --------------- */
 #skillsMenu, #talentsMenu {
     height: 500px;
@@ -215,8 +207,13 @@ body {
     position: absolute;
     top: 50px;
     right: 20px;
-
     display: none;
+}
+#skillsMenu {
+    z-index: 7;
+}
+#talentsMenu {
+    z-index: 8;
 }
 #skillGrid, #talentGrid {
     display: grid;
@@ -271,37 +268,22 @@ body {
     height: 100%;
     border-radius: 5%;
 }
-/* ---------- talent menu  -------------------*/
-/* #talentsMenu {
+
+/* -------------character inventory -------------------*/
+#characterInventory {
     height: 500px;
     width: 350px;
     background-color: #ccc;
-    border: 3px solid black;
     margin: 5px;
     position: absolute;
     top: 50px;
-    left: 20px;
+    right: 20px;
+    z-index: 6;
+    border: 3px solid black;
+    border-radius: 20px;
 
     display: none;
-} */
-/* #talentGrid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    row-gap: 8px;
-    column-gap: 5px;
-    margin-left: 4px;
-    width: 98%;
-    height: 94%;
-    justify-content: center;
-    text-align: center;
-    text-justify: center;
-} */
-/* .talentChoice {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 2px solid black;
-} */
+}
 /* menu name  */
 #characterInventory h1, #characterDetails h1, #talentsMenu h1, #skillsMenu h1, #questMenu h1{
     margin: 5px;
@@ -339,7 +321,7 @@ body {
     position: absolute;
     top: 50px;
     left: 20px;
-
+    z-index: 4;
     display: none;
 }
 #characterStats {

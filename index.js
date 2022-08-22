@@ -349,10 +349,10 @@ function animateMain() {
                 // deactivate current animation loop
                 window.cancelAnimationFrame(animationIdMain)
                 console.log("cancelled main animation")
-                // cancelAnimationFrame(animateMain)
+                // warp tile sound
+                audio.warpTile.play()
                 // stop the map audio 
                 audio.map.stop()
-                // play new audio
 
                 // -----  the following code controls the animation frames before entering the new map: ------
                 // -----  GSAP library animation settings ------
@@ -373,10 +373,13 @@ function animateMain() {
                                 // -----  activate new animation loop only when animation is complete ------
                                 // run init new map function
                                 // initBattle();
+                                
                                 // then run the animate battle function
                                 animateCave();
-                                backgroundMain.postWarpYUp()
-                                foregroundMain.postWarpYUp()
+                                // play new audio
+                                audio.cave.play()
+                                // backgroundMain.postWarpYUp()
+                                // foregroundMain.postWarpYUp()
                                 console.log("started animation")
                                 // remove black screen once aniation had loaded
                                 gsap.to("#battleFlash", {

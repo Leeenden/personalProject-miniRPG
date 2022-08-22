@@ -240,6 +240,7 @@ class Character {
             // create floating exp div 
             const levelupText = document.createElement("div");
             levelupText.innerHTML = "Level UP!";
+            audio.levelup.play()
             document.getElementById("floatingTextLvlup").appendChild(levelupText);
             fltl.to(floaty, {
                 bottom: 125 + "px",
