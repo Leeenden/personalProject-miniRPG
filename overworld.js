@@ -251,10 +251,18 @@ addEventListener("click", () => {
     if(!clicked) {
         audio.map.play()
         clicked = true
-        quest1.init()
         warrior.init() 
+        
     }
 })
+
+// start quest line
+const initQuestline = () => {
+    quests.map((quest, index) => {
+        warrior.allQuests.push(quest)
+    })
+    console.log(warrior.allQuests)
+}
 
 // run game 
 animateMain()

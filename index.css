@@ -410,6 +410,7 @@ body {
     height: 10%;
     width: 100%;
     border: 2px solid green;
+    font-size: 13px;
 }
 /* --------------- bottom menu bar w/ buttons to all overworld UI -----------*/
 #bottomMenubar {

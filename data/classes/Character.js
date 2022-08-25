@@ -1,23 +1,17 @@
 // -----------------Character class -----------------------------
 class Character {
-    constructor(
-        stats = {
-            Health: 50, 
-            Stamina: 50, 
-            Mana: 50, 
-            Attack: 15, 
-            Defense: 15, 
-            Speed: 15
-        },
-        isPlayer = false,
-        isNPC = false,
+    constructor({
+        stats,
+        isPlayer,
+        isNPC,
         allQuests = [],
         activeQuests = []
+    }
     ) {
-        this.stats = {...stats}
-        this.activeHealth = this.stats.stats.Health
-        this.activeStamina = this.stats.stats.Stamina
-        this.activeMana = this.stats.stats.Mana
+        this.stats = stats
+        this.activeHealth = this.stats.Health
+        this.activeStamina = this.stats.Stamina
+        this.activeMana = this.stats.Mana
         this.isPlayer = isPlayer
         this.isNPC = isNPC
         this.allQuests = allQuests
@@ -34,23 +28,26 @@ class Character {
     }
     init(){
         this.displayStats()
+        initQuestline()
         this.displayQuests()
-        this.gainExp()
+        this.gainExp(2)
     }
     displayQuests() {
-        const qLog = document.createElement('div');
-        qLog.classList.add("questItem");
-        let questInfo = this.allQuests.map(({id, name, reward, status, completed})=>{
-            qLog.innerHTML = `Q${id}: "${name}" Rewards: ${reward} Status:${status} Completed: ${completed}.`
-        })
-        if (questInfo.completed === true) {
+        this.allQuests.map((quest, index)=>{
+            const qLog = document.createElement('div');
+            qLog.classList.add("questItem");
+            qLog.innerHTML = ` Q${quest.id}: "${quest.name}" Rewards: ${quest.reward} Status:${quest.status} Completed: ${quest.completed}.`
             console.log("working...")
+            console.log(qLog.innerHTML)
             document.querySelector("#questLog").append(qLog);
-            
-        } else {
-            document.querySelector("#questLog").appendChild(qLog);
-             
-        }
+            if(quest.status === "Inactive") {
+                qLog.style.backgroundColor = "Grey"
+            } else if(quest.status === "Active") {
+                qLog.style.backgroundColor = "Green"
+            }
+        })
+        
+        
     }
     displayStats() {
         //level
@@ -61,52 +58,51 @@ class Character {
         }
         // healhLevel
         let charHP = document.querySelector("#charHP")
-        charHP.innerHTML = this.stats.stats.Health
-        if(this.stats.stats.Health !== charHP.innerHTML) {
-            charHP.innerHTML = this.stats.stats.Health
+        charHP.innerHTML = this.stats.Health
+        if(this.stats.Health !== charHP.innerHTML) {
+            charHP.innerHTML = this.stats.Health
         }
         // update active HP
-        this.activeHealth = this.stats.stats.Health
+        this.activeHealth = this.stats.Health
         //  stamina
         let charSP = document.querySelector("#charSP")
-        charSP.innerHTML = this.stats.stats.Stamina
-        if(this.stats.stats.Stamina !== charSP.innerHTML) {
-            charSP.innerHTML = this.stats.stats.Stamina
+        charSP.innerHTML = this.stats.Stamina
+        if(this.stats.Stamina !== charSP.innerHTML) {
+            charSP.innerHTML = this.stats.Stamina
         }
         // update active SP
-        this.activeStamina = this.stats.stats.Stamina
+        this.activeStamina = this.stats.Stamina
         //  mana
         let charMP = document.querySelector("#charMP")
-        charMP.innerHTML = this.stats.stats.Mana
-        if(this.stats.stats.Mana !== charMP.innerHTML) {
-            charMP.innerHTML = this.stats.stats.Mana
+        charMP.innerHTML = this.stats.Mana
+        if(this.stats.Mana !== charMP.innerHTML) {
+            charMP.innerHTML = this.stats.Mana
         }
         // update active MP
-        this.activeMana = this.stats.stats.Mana
+        this.activeMana = this.stats.Mana
         //  attack
         let charATK = document.querySelector("#charATK")
-        charATK.innerHTML = this.stats.stats.Attack
-        if(this.stats.stats.Attack !== charATK.innerHTML) {
-            charATK.innerHTML = this.stats.stats.Attack
+        charATK.innerHTML = this.stats.Attack
+        if(this.stats.Attack !== charATK.innerHTML) {
+            charATK.innerHTML = this.stats.Attack
         }
         //  defence
         let charDEF = document.querySelector("#charDEF")
-        charDEF.innerHTML = this.stats.stats.Defense
-        if(this.stats.stats.Defense !== charDEF.innerHTML) {
-            charDEF.innerHTML = this.stats.stats.Defense
+        charDEF.innerHTML = this.stats.Defense
+        if(this.stats.Defense !== charDEF.innerHTML) {
+            charDEF.innerHTML = this.stats.Defense
         }
         //  speed
         let charSPD = document.querySelector("#charSPD")
-        charSPD.innerHTML = this.stats.stats.Speed
-        if(this.stats.stats.Speed !== charSPD.innerHTML) {
-            charSPD.innerHTML = this.stats.stats.Speed
+        charSPD.innerHTML = this.stats.Speed
+        if(this.stats.Speed !== charSPD.innerHTML) {
+            charSPD.innerHTML = this.stats.Speed
         }
     }
     displaySkills() {
         // first skill
         const skillOne = document.getElementById("skillFirst")
         skillOne.innerHTML = this.skillChoices[0].name;
-        console.log(this.skillChoices)
         if(skillOne.innerHTML !== this.skillChoices[0].name) {
             skillOne.innerHTML = this.skillChoices[0].name;
         } 
@@ -193,14 +189,19 @@ class Character {
         }
         
     }
-    gainExp(){
+    gainExp(questId){
         let expbar = "#playerExpbarChange" 
         let float = "#floatingTextEXP"
         const fltl = gsap.timeline()
-        this.currentExp += this.allQuests[0].reward;
+        let gainedExp 
+        let questReward = this.allQuests.map(({reward, id}) => {
+            if(id === questId) gainedExp = `${reward}`
+        })
+        console.log(gainedExp)
+        this.currentExp += gainedExp
         // create floating exp div 
         const expText = document.createElement("div");
-        expText.innerHTML = `+ ${this.allQuests[0].reward} EXP`;
+        expText.innerHTML = `+ ${gainedExp} EXP`;
         document.getElementById("floatingTextEXP").appendChild(expText);
         fltl.to(float, {
             bottom: 125 + "px",
@@ -235,8 +236,8 @@ class Character {
         const fltl = gsap.timeline()
         let damage = 10
         this.activeHealth -= damage
-        console.log(`${this.activeHealth} active HP`)
-        console.log(`${this.stats.stats.Health} total`)
+        // console.log(`${this.activeHealth} active HP`)
+        // console.log(`${this.stats.Health} total`)
         // create floating exp div 
         const minusHPText = document.createElement("div");
         minusHPText.innerHTML = `- ${damage} HP`;
@@ -261,7 +262,7 @@ class Character {
         })
         // animate health bar
         gsap.to(healthbar, {
-            width: (this.stats.stats.Health - (this.stats.stats.Health - this.activeHealth)) / 6 + "%" 
+            width: (this.stats.Health - (this.stats.Health - this.activeHealth)) / 6 + "%" 
         })
         if(this.activeHealth <= 0){
             console.log("you died")
@@ -274,8 +275,8 @@ class Character {
         console.log(this.activeStamina)
         let moveCost = 10
         this.activeStamina -= moveCost
-        console.log(this.activeStamina)
-        console.log(this.stats.stats.Stamina)
+        // console.log(this.activeStamina)
+        // console.log(this.stats.Stamina)
         // create floating exp div 
         const minusSPText = document.createElement("div");
         minusSPText.innerHTML = `- ${moveCost} SP`;
@@ -300,7 +301,7 @@ class Character {
         })
         // animate health bar
         gsap.to(staminabar, {
-            width: (this.stats.stats.Stamina - (this.stats.stats.Stamina - this.activeStamina)) / 6 + "%" 
+            width: (this.stats.Stamina - (this.stats.Stamina - this.activeStamina)) / 6 + "%" 
         })
         if(this.activeStamina <= 0){
             console.log("You are out of stamina.")
@@ -314,8 +315,8 @@ class Character {
         console.log(this.activeMana)
         let moveCost = 10
         this.activeMana -= moveCost
-        console.log(this.activeMana)
-        console.log(this.stats.stats.Mana)
+        // console.log(this.activeMana)
+        // console.log(this.stats.Mana)
         // create floating exp div 
         const minusMPText = document.createElement("div");
         minusMPText.innerHTML = `- ${moveCost} MP`;
@@ -340,7 +341,7 @@ class Character {
         })
         // animate health bar
         gsap.to(manabar, {
-            width: (this.stats.stats.Mana - (this.stats.stats.Mana - this.activeMana)) / 6 + "%" 
+            width: (this.stats.Mana - (this.stats.Mana - this.activeMana)) / 6 + "%" 
         })
         if(this.activeStamina <= 0){
             console.log("You are out of stamina.")
@@ -354,12 +355,12 @@ class Character {
         this.currentExp = 0
         this.level += 1;
         this.talentpoint += 1;
-        this.stats.stats.Health += 3;
-        this.stats.stats.Stamina += 3;
-        this.stats.stats.Mana += 3;
-        this.stats.stats.Attack += 3;
-        this.stats.stats.Defense += 3;
-        this.stats.stats.Speed += 3;
+        this.stats.Health += 3;
+        this.stats.Stamina += 3;
+        this.stats.Mana += 3;
+        this.stats.Attack += 3;
+        this.stats.Defense += 3;
+        this.stats.Speed += 3;
         this.displayStats();
         // update
         setTimeout(() => {
@@ -408,8 +409,6 @@ class Character {
         
         // change the required exp for the next level
         this.requiredExp += this.level * 4;
-        quest1.complete()
-        
     }
     usePunch() {
         
@@ -450,141 +449,8 @@ class Character {
         this.talentpoint -= 1;
         console.log("You chose mark of the Savage");
         this.markOfTheSavage();
-    }
-    useTalentPointChoice2(){
-        console.log("You used a talent point");
-        this.talentpoint -= 1;
-        console.log("You chose mark of the titan");
-        this.markOfTheTitan();
-    }
-    useTalentPointChoice3(){
-        console.log("You used a talent point");
-        this.talentpoint -= 1;
-        console.log("You chose mark of the rogue");
-        this.markOfTheRogue();
-    }
-    useTalentPointChoice4(){
-        let shamansBlessing = setInterval(()=>{
-            this.Health += 5;
-            console.log(`You gained 5 Health, you have ${this.Health} Health`);
-        }, 5000);
-
-        console.log("You used a talent point");
-        this.talentpoint -= 1;
-        console.log("You chose Blessing of the Shaman");
-        console.log("Passive ability activated.")
-        this.abilities.passive = {name: "shamansBlessing", action: shamansBlessing };
-    }
-    useTalentPointChoice5(){
-        let wizardsBlessing = setInterval(()=>{
-            this.Mana += 5;
-            console.log(`You gained 5 Mana. You have ${this.Mana} Mana`);
-        }, 5000)
-        console.log("You used a talent point");
-        this.talentpoint -= 1;
-        console.log("You chose Blessing of the Wizard");
-        console.log("Passive ability activated.")
-        
-        this.abilities.passive = {name: "wizardsBlessing", action: wizardsBlessing };
-    }
-    useTalentPointChoice6(){
-        let warriorsBlessing = setInterval(()=>{
-            this.Stamina += 5;
-            console.log(`You gained 5 Stamina. You have ${this.Stamina} Stamina`);
-        }, 5000)
-        console.log("You used a talent point");
-        this.talentpoint -= 1;
-        console.log("You chose Blessing of the Warrior");
-        console.log("Passive ability activated.")
-        
-        this.abilities.passive = {name: "warriorsBlessing", action: warriorsBlessing };
-    }
-    // choices 7-9
-    //
-    elixirOfHealthTalent(){
-        this.Health += 25;
-        console.log(this.Health);
-        setTimeout(() => {
-            console.log("Cool-down ended");
-        }, 20000);
     } 
-    useTalentPointChoice7(){
-        this.talentpoint -= 1;
-        this.abilities.active = {name: "Elixir of Health", action: this.elixirOfHealthTalent};
-        console.log(` ${this.abilities.active.name} added to activie abilities`);
-    }
-    elixirOfManaTalent(){
-        this.Mana += 25;
-        console.log(this.Health);
-        setTimeout(() => {
-            
-        }, 20000);
-    } 
-    useTalentPointChoice8(){
-        this.talentpoint -= 1;
-        this.abilities.active = {name: "Elixir of Mana ", action: this.elixirOfManaTalent};
-        console.log(` ${this.abilities.active.name} added to activie abilities`);
-    }
-    elixirOfValorTalent(){
-        this.Stamina += 25;
-        console.log(this.Stamina);
-        setTimeout(() => {
-            
-        }, 20000);
-    } 
-    useTalentPointChoice8(){
-        this.talentpoint -= 1;
-        this.abilities.active = {name: "Elixir of Valor ", action: this.elixirOfValorTalent};
-        console.log(` ${this.abilities.active.name} added to activie abilities`);
-    }
-
-    shamonicBloodRitualTalent(){
-        this.Health += 50;
-        this.Defense += 25;
-        console.log(this.Health);
-        console.log(this.Defense);
-            setTimeout(() => {
-                this.Defence -= 25;
-                console.log("Defence returned to normal");
-                console.log(this.Defence);
-            }, 10000);
-    }
-    useTalentPointChoice10(){
-        this.talentpoint -= 1;
-        this.abilities.active = {name: "Shamonic Blood Ritual", action: this.shamonicBloodRitualTalent};
-    }
-    darkWizardTransformationTalent(){
-        this.Mana += 50;
-        this.Attack += 25;
-        console.log(this.Mana);
-        console.log(this.Attack);
-            setTimeout(() => {
-                this.Attack -= 25;
-                console.log("Attack returned to normal");
-                console.log(this.Attack);
-            }, 10000);
-    }  
-    useTalentPointChoice11(){
-        this.talentpoint -= 1;
-        this.abilities.active = {name: "DarkWizardTransformation", action: this.darkWizardTransformationTalent};
-    }
-    beserkerMetamorphasisTalent(){
-        this.Stamina += 50;
-        this.Speed += 25;
-        console.log(this.Stamina);
-        console.log(this.Speed);
-            setTimeout(() => {
-                this.Speed -= 25;
-                console.log("Speed returned to normal");
-                console.log(this.Speed);
-            }, 10000);
-    }
-    useTalentPointChoice12(){
-        this.talentpoint -= 1;
-        this.abilities.active = {name: "BeserkerMetamorphasis", action: this.beserkerMetamorphasisTalent};
-    }   
 };
-
 // define all characters 
 //  define warrior (player) class 
 let warrior 
