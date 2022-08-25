@@ -54,6 +54,34 @@ const quests = [
         },
         status: "Inactive",
         completed: false,
-        reward: 4,
+        reward: 6,
+    },
+    Three = {
+        id: 3,
+        name: "Fist fight!",
+        description: "Use punch on warrior NPC",
+        type: "Fight",
+        level: 2,
+        reqs: {
+            npc: {
+                count: 1,
+                target: "",
+            },
+            items: {
+                count: 1,
+                target: "mushroom",
+            },
+            mobs: {
+                count: 0,
+                target: "",
+            },
+            boss: {
+                count: 1,
+                target: "NPC1"
+            }
+        },
+        status: "Inactive",
+        completed: false,
+        reward: 10,
     },
 ]

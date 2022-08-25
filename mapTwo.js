@@ -295,38 +295,29 @@ function animateCave() {
                 // initial black flash
                 gsap.to("#battleFlash", {
                     opacity: 1, 
-                    // flash three times
-                    repeat: 2,
-                    // end on black screen
-                    yoyo: true,
-                    duration: 0.4,
+                    duration: 0.7,
                     // show battle screen at the end of animation
                     onComplete() {
+                        // -----  activate new animation loop only when animation is complete ------
+                        // run init new map function
+                        // initBattle();
+                        onWarpTile = false;
+                        console.log(`onWarp tile is ${onWarpTile}`)
+                        // then run the animate function
+                        animateMain();
+                        // play new audio
+                        audio.map.play()
+                        // remove black screen once aniation had loaded
                         gsap.to("#battleFlash", {
-                            opacity: 1,
-                            duration: 0.4, 
-                            onComplete() {
-                                // -----  activate new animation loop only when animation is complete ------
-                                // run init new map function
-                                // initBattle();
-                                onWarpTile = false;
-                                console.log(`onWarp tile is ${onWarpTile}`)
-                                // then run the animate function
-                                animateMain();
-                                // play new audio
-                                audio.map.play()
-                                // remove black screen once aniation had loaded
-                                gsap.to("#battleFlash", {
-                                    opacity: 0,
-                                    duration: 0.4
-                                })
-                                setTimeout(() => {
-                                    justWarped = false;
-                                    console.log(`warp tile deactivated`)
-                                }, 3000);
-                            }
+                            opacity: 0,
+                            duration: 0.7
                         })
+                        setTimeout(() => {
+                            justWarped = false;
+                            console.log(`warp tile deactivated`)
+                        }, 3000);
                     }
+
                 })
                 break
             }

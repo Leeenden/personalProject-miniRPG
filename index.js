@@ -368,7 +368,7 @@ function animateMain() {
                 // grab index for the speciifc warp tile on the map
                 instanceZonesMain.map((tile, index)=> {
                     if(instanceZone.position === tile.position) {
-                        warpTileIndex = 2
+                        warpTileIndex = index
                         console.log(`current tile index is ${index} and WTI is ${warpTileIndex}.`)
                     }
                 })
@@ -399,39 +399,30 @@ function animateMain() {
                 // initial black flash
                 gsap.to("#battleFlash", {
                     opacity: 1, 
-                    // flash three times
-                    repeat: 2,
-                    // end on black screen
-                    yoyo: true,
-                    duration: 0.4,
+                    duration: 0.7,
                     // show battle screen at the end of animation
                     onComplete() {
-                        gsap.to("#battleFlash", {
-                            opacity: 1,
-                            duration: 0.4, 
-                            onComplete() {
-                                // -----  activate new animation loop only when animation is complete ------
-                                // run init new map function
-                                // initBattle();
-                                onWarpTile = false;
-                                console.log(`onWarp tile is ${onWarpTile}`)
-                                // then run the animate battle function
-                                animateCave();
-                                // play new audio
-                                audio.cave.play()
+                        // -----  activate new animation loop only when animation is complete ------
+                        // run init new map function
+                        // initBattle();
+                        onWarpTile = false;
+                        console.log(`onWarp tile is ${onWarpTile}`)
+                        // then run the animate battle function
+                        animateCave();
+                        // play new audio
+                        audio.cave.play()
 
-                                // remove black screen once aniation had loaded
-                                gsap.to("#battleFlash", {
-                                    opacity: 0,
-                                    duration: 0.4
-                                })
-                                setTimeout(() => {
-                                    justWarped = false;
-                                    console.log(`warp tile deactivated`)
-                                }, 3000);
-                            }
+                        // remove black screen once aniation had loaded
+                        gsap.to("#battleFlash", {
+                            opacity: 0,
+                            duration: 0.7
                         })
+                        setTimeout(() => {
+                            justWarped = false;
+                            console.log(`warp tile deactivated`)
+                        }, 3000);
                     }
+                        
                 })
                 break
             }
