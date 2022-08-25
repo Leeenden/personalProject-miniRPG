@@ -23,7 +23,8 @@ const instancesMapMain = [];
 for (let i = 0; i < instancesData.length; i += 20){
     instancesMapMain.push(instancesData.slice(i, 20 + i))
 }
-
+let onWarpTile = false;
+let justWarped = false;
 // ----- battleZsone tiles ------
 const battleZonesMapMain = [];
 //parse JSON file to produce arrays of the array for battleZones
@@ -80,6 +81,9 @@ instancesMapMain.forEach((row, i) => {
 
     });
 });
+
+
+// console.log(instanceZonesMain)
 
 // ----- check battlezones array and create the matching boundaries ------
 battleZonesMapMain.forEach((row, i) => {
@@ -227,6 +231,7 @@ function animateMain() {
         instanceZone.draw()
 
     });
+    
     // draw battlezone boundaries
     battleZonesMain.forEach((battleZone) => {
         battleZone.draw()
@@ -245,7 +250,7 @@ function animateMain() {
     player.animate = false;
 
     // set warp tile status 
-    let onWarpTile = false;
+    // let onWarpTile = false;
 
     // ----- stopping movement ------
     // console.log(animationId)
@@ -317,6 +322,7 @@ function animateMain() {
                                     opacity: 0,
                                     duration: 0.4
                                 })
+                                
                             }
                         })
                     }
@@ -332,28 +338,41 @@ function animateMain() {
         for (let i = 0; i < instanceZonesMain.length; i++){
             // define new variable 
             const instanceZone = instanceZonesMain[i]
+            const tile = []
+            
             // calculation to check if player is overlapping with the instance boundary
             const overlappingArea = (
                 Math.min(player.position.x + player.width, instanceZone.position.x + instanceZone.width) - Math.max(player.position.x, instanceZone.position.x)) * (Math.min(player.position.y + player.height, instanceZone.position.y + instanceZone.height) - Math.max(player.position.y, instanceZone.position.y)
             )
+            // const test = instanceZonesMain.map((tile, index)=> {
+            //     if(tile.position === player.position) {
+            //         console.log(`current tile index is ${index} and pos-x is ${tile.position.x} and pos-y is ${tile.position.y}`)
+            //         tileIndex.push(index)
+            //         console.log(tileIndex)
+            //         onWarpTile = true
+            //     }
+                
+            // })
             // ----- check if the player is inside the instance ------
-            if(onWarpTile === true) {
-                return
-            } else if (rectanglularCollision({rectangle1: player, rectangle2: instanceZone}) &&
+            if (rectanglularCollision({rectangle1: player, rectangle2: instanceZone}) &&
                 // if the val is set lower (1 max), the event will trigger less frequently.
-                overlappingArea > (player.width * player.height) / 2 && onWarpTile === false) {
-                console.log("on/inside instance tile")
+                overlappingArea > (player.width * player.height) / 2 && onWarpTile === false && justWarped === false) {
+                console.log("stanidng on warp tile")
                 onWarpTile = true
-                console.log(onWarpTile)
-                // -----  if the player is verfied as inside the boundary then do the following: ------
-                // deactivate current animation loop
+            } else {
+                onWarpTile === false
+                console.log("no tile")
+            }
+            // -----  if the player is verfied as inside the boundary then do the following: ------
+            // deactivate current animation loop
+            if(onWarpTile === true) {
+                console.log("warp tile activated")
                 window.cancelAnimationFrame(animationIdMain)
                 console.log("cancelled main animation")
                 // warp tile sound
                 audio.warpTile.play()
                 // stop the map audio 
                 audio.map.stop()
-
                 // -----  the following code controls the animation frames before entering the new map: ------
                 // -----  GSAP library animation settings ------
                 // initial black flash
@@ -372,31 +391,31 @@ function animateMain() {
                             onComplete() {
                                 // -----  activate new animation loop only when animation is complete ------
                                 // run init new map function
-                                // initBattle();
+                                console.log(onWarpTile)
                                 
+                                // initBattle();
+                                onWarpTile = false;
                                 // then run the animate battle function
                                 animateCave();
+                                console.log("started animation")
                                 // play new audio
                                 audio.cave.play()
-                                // backgroundMain.postWarpYUp()
-                                // foregroundMain.postWarpYUp()
-                                console.log("started animation")
+
                                 // remove black screen once aniation had loaded
                                 gsap.to("#battleFlash", {
                                     opacity: 0,
                                     duration: 0.4
                                 })
+                                setTimeout(() => {
+                                    justWarped = false;
+                                    console.log(`just Warped deactivated`)
+                                }, 3000);
                             }
                         })
                     }
                 })
                 break
-            } 
-            // if (rectanglularCollision({rectangle1: player, rectangle2: instanceZone}) &&
-            //     // if the val is set lower (1 max), the event will trigger less frequently.
-            //     overlappingArea > (player.width * player.height) / 2 && onWarpTile === true) {
-            //     console.log("just warped")
-            // }
+            }
         }
     }
     // ----- W, A, S, D movement code with collisions  ------ 
@@ -637,3 +656,24 @@ addEventListener("keypress", (e) => {
         menuToggle.skillTab.open = false
     }
 })
+
+// grab and assign sprite image
+const punchImage = new Image()
+punchImage.src = "./images/fireball.png"
+// create the new sprite
+const punch = new Sprite({
+    position: {
+        x: player.position.x,
+        y: player.position.y
+    },
+    image: punchImage,
+    frames: {
+        col: 4,
+        row: 1,
+        hold: 10
+    },
+    animate: true,
+    scale: 1
+    
+})
+punch.draw()

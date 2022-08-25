@@ -412,31 +412,14 @@ class Character {
         
     }
     usePunch() {
-        // grab and assign sprite image
-        const punchImage = new Image()
-        punchImage.src = "./images/fireball.png"
-        // create the new sprite
-        const punch = new Sprite({
-            position: {
-                x: player.position.x + 25,
-                y: player.position.y
-            },
-            image: punchImage,
-            frames: {
-                col: 4,
-                row: 1,
-                hold: 10
-            },
-            animate: true,
-            
-        })
-        console.log(player)
+        
         console.log(punch)
+        
         // gsap.to(punch.position, {
-        //     x: player.position.x,
+        //     x: this.position.x,
         //     y: player.position.y,
         // })
-        punch.draw()
+        // punch.draw()
         this.skillChoices[0].effect
         audio.punch.play()
         this.loseHealth()
