@@ -149,7 +149,7 @@ class Character {
                 levelupMessage.remove();
                 document.getElementById("overworldDialogueBox").style.display = "none";
                 this.displaySkills();
-            }, 2500);
+            }, 1000);
         } else if (this.skillChoices.length === 1 && this.level === 3) {
             // just using punch for now, later if statement
             this.skillChoices.push(skills.Two)
@@ -159,7 +159,7 @@ class Character {
                 levelupMessage.remove();
                 document.getElementById("overworldDialogueBox").style.display = "none";
                 this.displaySkills();
-            }, 2500);
+            }, 1000);
         } else if (this.skillChoices.length === 2 && this.level === 4) {
             // just using punch for now, later if statement
             this.skillChoices.push(skills.Three)
@@ -169,7 +169,7 @@ class Character {
                 levelupMessage.remove();
                 document.getElementById("overworldDialogueBox").style.display = "none";
                 this.displaySkills();
-            }, 2500);
+            }, 1000);
         } else if (this.skillChoices.length === 3 && this.level === 5) {
             // just using punch for now, later if statement
             this.skillChoices.push(skills.Four)
@@ -179,7 +179,7 @@ class Character {
                 levelupMessage.remove();
                 document.getElementById("overworldDialogueBox").style.display = "none";
                 this.displaySkills();
-            }, 2500);
+            }, 1000);
         } else if (this.skillChoices.length === 4 && this.level === 6) {
             // just using punch for now, later if statement
             this.skillChoices.push(skills.Five)
@@ -189,7 +189,7 @@ class Character {
                 levelupMessage.remove();
                 document.getElementById("overworldDialogueBox").style.display = "none";
                 this.displaySkills();
-            }, 2500);
+            }, 1000);
         }
         
     }

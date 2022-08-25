@@ -257,12 +257,15 @@ function animateCave() {
             // ----- check if the player is inside the instance zone ------
             if (rectanglularCollision({rectangle1: player, rectangle2: instanceZone}) &&
                 // if the val is set lower (1 max), the event will trigger less frequently.
-                overlappingArea > (player.width * player.height) / 2 && onWarpTile === false && justWarped === false) {
+                overlappingArea > (player.width * player.height) / 2 && justWarped === false) {
                 console.log("on tile, ready to warp")
                 onWarpTile = true
-            } else {
-                onWarpTile = false
-                justWarped = false
+            } else if(rectanglularCollision({rectangle1: player, rectangle2: instanceZone}) &&
+                // if the val is set lower (1 max), the event will trigger less frequently.
+                overlappingArea > (player.width * player.height) / 2 && onWarpTile === true && justWarped === true){
+                console.log("should be able to move")   
+            }  else {
+                
                 console.log("no tile, no recent warp")
             }
             // -----  if the player is verfied as inside the boundary then do the following: ------
@@ -271,7 +274,7 @@ function animateCave() {
                 console.log("warp tile activated")
                 justWarped = true;
                 window.cancelAnimationFrame(animationIdCave)
-                console.log("cancelled main animation")
+                console.log("cancelled animation")
                 // warp tile sound
                 audio.warpTile.play()
                 // stop the map audio 
@@ -294,10 +297,10 @@ function animateCave() {
                             onComplete() {
                                 // -----  activate new animation loop only when animation is complete ------
                                 // run init new map function
-                                console.log(onWarpTile)
                                 // initBattle();
                                 onWarpTile = false;
-                                // then run the animate battle function
+                                console.log(`onWarp tile is ${onWarpTile}`)
+                                // then run the animate function
                                 animateMain();
                                 // play new audio
                                 audio.map.play()
@@ -308,7 +311,7 @@ function animateCave() {
                                 })
                                 setTimeout(() => {
                                     justWarped = false;
-                                    console.log(`justWarped deactivated`)
+                                    console.log(`warp tile deactivated`)
                                 }, 3000);
                             }
                         })

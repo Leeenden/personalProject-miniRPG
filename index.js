@@ -56,7 +56,10 @@ collisionsMapMain.forEach((row, i) => {
                         x: j * Boundary.width + offsetMain.x,
                         y: i * Boundary.height + offsetMain.y
                     },
-                    color: "rgba(255, 0, 0, 0.7)"
+                    color: "rgba(255, 0, 0, 0.7)",
+                    isWarp: false,
+                    isWall: true,
+                    isBZ: false
                 })
             );
 
@@ -75,7 +78,10 @@ instancesMapMain.forEach((row, i) => {
                         x: j * Boundary.width + offsetMain.x,
                         y: i * Boundary.height + offsetMain.y
                     },
-                    color: "rgba(255, 255, 255, 0.7)"
+                    color: "rgba(255, 255, 255, 0.7)",
+                    isWarp: true,
+                    isWall: false,
+                    isBZ: false
                 })
             );
 
@@ -83,7 +89,7 @@ instancesMapMain.forEach((row, i) => {
 });
 
 
-// console.log(instanceZonesMain)
+console.log(instanceZonesMain)
 
 // ----- check battlezones array and create the matching boundaries ------
 battleZonesMapMain.forEach((row, i) => {
@@ -97,7 +103,10 @@ battleZonesMapMain.forEach((row, i) => {
                         x: j * Boundary.width + offsetMain.x,
                         y: i * Boundary.height + offsetMain.y
                     },
-                    color: "rgba(255, 255, 0, 0.7)"
+                    color: "rgba(255, 255, 0, 0.7)",
+                    isWarp: false,
+                    isWall: false,
+                    isBZ: true
                 })
             );
 
@@ -356,19 +365,24 @@ function animateMain() {
             // ----- check if the player is inside the instance ------
             if (rectanglularCollision({rectangle1: player, rectangle2: instanceZone}) &&
                 // if the val is set lower (1 max), the event will trigger less frequently.
-                overlappingArea > (player.width * player.height) / 2 && onWarpTile === false && justWarped === false) {
+                overlappingArea > (player.width * player.height) / 2 && justWarped === false) {
                 console.log("stanidng on warp tile")
                 onWarpTile = true
+            } else if(rectanglularCollision({rectangle1: player, rectangle2: instanceZone}) &&
+                // if the val is set lower (1 max), the event will trigger less frequently.
+                overlappingArea > (player.width * player.height) / 2 && onWarpTile === true && justWarped === true){
+                console.log("should be able to move")
             } else {
-                onWarpTile === false
-                console.log("no tile")
+                
+                console.log("no tile, no recent warp")
             }
             // -----  if the player is verfied as inside the boundary then do the following: ------
             // deactivate current animation loop
             if(onWarpTile === true) {
                 console.log("warp tile activated")
+                justWarped = true;
                 window.cancelAnimationFrame(animationIdMain)
-                console.log("cancelled main animation")
+                console.log("cancelled animation")
                 // warp tile sound
                 audio.warpTile.play()
                 // stop the map audio 
@@ -391,13 +405,11 @@ function animateMain() {
                             onComplete() {
                                 // -----  activate new animation loop only when animation is complete ------
                                 // run init new map function
-                                console.log(onWarpTile)
-                                
                                 // initBattle();
                                 onWarpTile = false;
+                                console.log(`onWarp tile is ${onWarpTile}`)
                                 // then run the animate battle function
                                 animateCave();
-                                console.log("started animation")
                                 // play new audio
                                 audio.cave.play()
 
@@ -408,7 +420,7 @@ function animateMain() {
                                 })
                                 setTimeout(() => {
                                     justWarped = false;
-                                    console.log(`just Warped deactivated`)
+                                    console.log(`warp tile deactivated`)
                                 }, 3000);
                             }
                         })
