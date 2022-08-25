@@ -238,10 +238,13 @@ function animateCave() {
     // ----- checking for collisions in the instance zone tiles whilst moving  ------
     // ----- loop through the instances array ------
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
+        // empty warp index array
+        let warpTileIndex = []
         // loop through array
         for (let i = 0; i < instanceZonesCave.length; i++){
             // define new variable 
             const instanceZone = instanceZonesCave[i]
+            
             // calculation to check if player is overlapping with the instance boundary
             const overlappingArea = 
                 (Math.min(
@@ -257,20 +260,28 @@ function animateCave() {
             // ----- check if the player is inside the instance zone ------
             if (rectanglularCollision({rectangle1: player, rectangle2: instanceZone}) &&
                 // if the val is set lower (1 max), the event will trigger less frequently.
-                overlappingArea > (player.width * player.height) / 2 && justWarped === false) {
+                overlappingArea > (player.width * player.height) / 2 && justWarped === false ) {
                 console.log("on tile, ready to warp")
+                instanceZonesCave.map((tile, index)=> {
+                    if(instanceZone.position === tile.position) {
+                        warpTileIndex = 1
+                        console.log(`current tile index is ${index} and WTI is ${warpTileIndex}.`)
+                    }
+                })
                 onWarpTile = true
             } else if(rectanglularCollision({rectangle1: player, rectangle2: instanceZone}) &&
                 // if the val is set lower (1 max), the event will trigger less frequently.
-                overlappingArea > (player.width * player.height) / 2 && onWarpTile === true && justWarped === true){
-                console.log("should be able to move")   
-            }  else {
-                
-                console.log("no tile, no recent warp")
-            }
+                overlappingArea > (player.width * player.height) / 2 && onWarpTile === true && justWarped === true){ 
+                    instanceZonesCave.map((tile, index)=> {
+                        if(instanceZone.position === tile.position) {
+                            warpTileIndex = 1
+                            console.log(`current tile index is ${index} and WTI is ${warpTileIndex}.`)
+                        }
+                    })    
+            } 
             // -----  if the player is verfied as inside the boundary then do the following: ------
-            // deactivate current animation loop
-            if(onWarpTile === true) {
+            // if on the correct tile and warp statsu has been verfied
+            if(onWarpTile === true && warpTileIndex === 1) {
                 console.log("warp tile activated")
                 justWarped = true;
                 window.cancelAnimationFrame(animationIdCave)
