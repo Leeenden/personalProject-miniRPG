@@ -245,11 +245,27 @@ addEventListener("keypress", (e) => {
         console.log(useSkillBtns.Five.pressed)
     }
 })
+
+// ----- randomAudio functions ------
+
+const randomAudio = () => {
+    const max = 50000
+    let randomNum = Math.round(Math.random() * max)
+    setTimeout(() => {
+        audio.crickets.play()
+        randomAudio()
+    }, randomNum);
+}
+
+
 // ----- initiate game mechanics function ------
 let clicked = false
 addEventListener("click", () => {
     if(!clicked) {
         audio.map.play()
+        
+        randomAudio()
+        
         clicked = true
         warrior.init() 
         

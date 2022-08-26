@@ -28,9 +28,9 @@ const instanceZonesCaveLower = [];
 // const battleZonesCaveLower = [];
 
 // define the offset of images within the map
-const offsetCaveLower = {
-    x: -390,
-    y: -365
+let offsetCaveLower = {
+    x: 125,
+    y: -235
 }
 
 // ----- check collisions array and create the matching boundaries ------
@@ -93,11 +93,11 @@ instancesMapCaveLower.forEach((row, i) => {
 // ----- define sprite images ------
 //  main background map
 const caveMapLower = new Image();
-caveMapLower.src = "images/maps/practiceCave.png";
+caveMapLower.src = "images/maps/practiceLowerCave.png";
 
 // main map foreground objects (walk-behind)
 const caveMapLowerForeground = new Image();
-caveMapLowerForeground.src = "images/maps/practiceCaveLowerForeground.png";
+caveMapLowerForeground.src = "images/maps/practiceLowerCaveForeground.png";
 
 // ----- main map sprites ------
 // background
@@ -264,7 +264,7 @@ function animateCaveLower() {
                 console.log("on tile, ready to warp")
                 instanceZonesCaveLower.map((tile, index)=> {
                     if(instanceZone.position === tile.position) {
-                        warpTileIndex = 1
+                        warpTileIndex = index
                         console.log(`current tile index is ${index} and WTI is ${warpTileIndex}.`)
                     }
                 })
@@ -274,17 +274,17 @@ function animateCaveLower() {
                 overlappingArea > (player.width * player.height) / 2 && onWarpTile === true && justWarped === true){ 
                     instanceZonesCaveLower.map((tile, index)=> {
                         if(instanceZone.position === tile.position) {
-                            warpTileIndex = 1
+                            warpTileIndex = index
                             console.log(`current tile index is ${index} and WTI is ${warpTileIndex}.`)
                         }
                     })    
             } 
             // -----  if the player is verfied as inside the boundary then do the following: ------
             // if on the correct tile and warp statsu has been verfied
-            if(onWarpTile === true && warpTileIndex === 1) {
+            if(onWarpTile === true && justWarped === false) {
                 console.log("warp tile activated")
                 justWarped = true;
-                window.cancelAnimationFrame(animationIdCave)
+                window.cancelAnimationFrame(animationIdCaveLower)
                 console.log("cancelled animation")
                 // warp tile sound
                 audio.warpTile.play()
@@ -298,16 +298,25 @@ function animateCaveLower() {
                     duration: 0.7,
                     // show battle screen at the end of animation
                     onComplete() {
-                        // -----  activate new animation loop only when animation is complete ------
-                        // run init new map function
-                        // initBattle();
                         onWarpTile = false;
                         console.log(`onWarp tile is ${onWarpTile}`)
-                        // then run the animate function
-                        animateMain();
-                        // play new audio
-                        audio.map.play()
-                        // remove black screen once aniation had loaded
+                        if(warpTileIndex === 1) {
+                            // -----  activate new animation loop only when animation is complete ------
+                            // run init new map function
+                            // initBattle();
+                            
+                            // then run the animate battle function
+                            animateMain();
+                            // play new audio
+                            audio.map.play()
+                            
+                        } else if (warpTileIndex === 0) {
+                            // then run the animate function
+                            animateCave();
+                            // play new audio
+                            audio.cave.play()
+                            // remove black screen once aniation had loaded
+                        }
                         gsap.to("#battleFlash", {
                             opacity: 0,
                             duration: 0.7
@@ -352,7 +361,7 @@ function animateCaveLower() {
         }
         // stop movement 
         if(moving)
-            moveablesCave.forEach((movable) => {
+            moveablesCaveLower.forEach((movable) => {
                 movable.position.y += 3
         })
     // ----- a / left key controller ------ 
@@ -382,7 +391,7 @@ function animateCaveLower() {
         }
         // stop movement 
         if(moving)
-        moveablesCave.forEach((movable) => {
+        moveablesCaveLower.forEach((movable) => {
             movable.position.x += 3
         })
         // ----- s / down key controller ------ 
@@ -412,7 +421,7 @@ function animateCaveLower() {
         }
         // stop movement 
         if(moving)
-        moveablesCave.forEach((movable) => {
+        moveablesCaveLower.forEach((movable) => {
             movable.position.y -= 3
         })
         // ----- d key controller ------ 
@@ -442,7 +451,7 @@ function animateCaveLower() {
         }
         // stop movement 
         if(moving)
-        moveablesCave.forEach((movable) => {
+        moveablesCaveLower.forEach((movable) => {
             movable.position.x -= 3
         })
     }

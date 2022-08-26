@@ -39,7 +39,7 @@ const instanceZonesMain = [];
 const battleZonesMain = [];
 
 // define the offset of images within the map
-const offsetMain = {
+let offsetMain = {
     x: -275,
     y: -350
 }
@@ -365,7 +365,6 @@ function animateMain() {
             if (rectanglularCollision({rectangle1: player, rectangle2: instanceZone}) &&
                 // if the val is set lower (1 max), the event will trigger less frequently.
                 overlappingArea > (player.width * player.height) / 2 && justWarped === false ) {
-                console.log("stanidng on warp tile")
                 
                 // grab index for the speciifc warp tile on the map
                 instanceZonesMain.map((tile, index)=> {
@@ -380,18 +379,16 @@ function animateMain() {
                 overlappingArea > (player.width * player.height) / 2 && onWarpTile === true && justWarped === true){
                     instanceZonesMain.map((tile, index)=> {
                         if(instanceZone.position === tile.position) {
-                            warpTileIndex = 2
+                            warpTileIndex = index
                             console.log(`current tile index is ${index} and WTI is ${warpTileIndex}.`)
                         } 
                     })
             } 
             // -----  if the player is verfied as inside the boundary then do the following: ------
             // deactivate current animation loop
-            if(onWarpTile === true && warpTileIndex === 2) {
-                console.log("warp tile activated")
+            if(onWarpTile === true && justWarped === false) {
                 justWarped = true;
                 window.cancelAnimationFrame(animationIdMain)
-                console.log("cancelled animation")
                 // warp tile sound
                 audio.warpTile.play()
                 // stop the map audio 
@@ -404,25 +401,33 @@ function animateMain() {
                     duration: 0.7,
                     // show battle screen at the end of animation
                     onComplete() {
-                        // -----  activate new animation loop only when animation is complete ------
-                        // run init new map function
-                        // initBattle();
                         onWarpTile = false;
                         console.log(`onWarp tile is ${onWarpTile}`)
-                        // then run the animate battle function
-                        animateCave();
-                        // play new audio
-                        audio.cave.play()
-
-                        // remove black screen once aniation had loaded
+                        if(warpTileIndex === 2) {
+                            // -----  activate new animation loop only when animation is complete ------
+                            // run init new map function
+                            // initBattle();
+                            
+                            // then run the animate battle function
+                            animateCave();
+                            // play new audio
+                            audio.cave.play()
+                            
+                        } else if (warpTileIndex === 0) {
+                            // then run the animate function
+                            animateCaveLower();
+                            // play new audio
+                            audio.cave.play()
+                            // remove black screen once aniation had loaded
+                        }
                         gsap.to("#battleFlash", {
                             opacity: 0,
                             duration: 0.7
                         })
                         setTimeout(() => {
                             justWarped = false;
-                            console.log(`warp tile deactivated`)
                         }, 3000);
+                        console.log("should have rendered map")
                     }
                         
                 })

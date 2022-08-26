@@ -30,6 +30,12 @@ const audio = {
         volume: 0.3,
         loop: false
     }),
+    crickets: new Howl({
+        src: "./audio/crickets.wav",
+        html5: true,
+        volume: 0.3,
+        loop: false
+    }),
     initBattle: new Howl({
         src: "./audio/initBattle.wav",
         html5: true,

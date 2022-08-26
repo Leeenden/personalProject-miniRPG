@@ -28,7 +28,7 @@ const instanceZonesCave = [];
 // const battleZonesCave = [];
 
 // define the offset of images within the map
-const offsetCave = {
+let offsetCave = {
     x: -390,
     y: -365
 }
@@ -260,11 +260,11 @@ function animateCave() {
             // ----- check if the player is inside the instance zone ------
             if (rectanglularCollision({rectangle1: player, rectangle2: instanceZone}) &&
                 // if the val is set lower (1 max), the event will trigger less frequently.
-                overlappingArea > (player.width * player.height) / 2 && justWarped === false ) {
+                overlappingArea > (player.width * player.height) / 2 && justWarped === false) {
                 console.log("on tile, ready to warp")
                 instanceZonesCave.map((tile, index)=> {
                     if(instanceZone.position === tile.position) {
-                        warpTileIndex = 1
+                        warpTileIndex = index
                         console.log(`current tile index is ${index} and WTI is ${warpTileIndex}.`)
                     }
                 })
@@ -274,14 +274,14 @@ function animateCave() {
                 overlappingArea > (player.width * player.height) / 2 && onWarpTile === true && justWarped === true){ 
                     instanceZonesCave.map((tile, index)=> {
                         if(instanceZone.position === tile.position) {
-                            warpTileIndex = 1
+                            warpTileIndex = index
                             console.log(`current tile index is ${index} and WTI is ${warpTileIndex}.`)
                         }
                     })    
             } 
             // -----  if the player is verfied as inside the boundary then do the following: ------
             // if on the correct tile and warp statsu has been verfied
-            if(onWarpTile === true && warpTileIndex === 1) {
+            if(onWarpTile === true && justWarped === false) {
                 console.log("warp tile activated")
                 justWarped = true;
                 window.cancelAnimationFrame(animationIdCave)
@@ -298,16 +298,31 @@ function animateCave() {
                     duration: 0.7,
                     // show battle screen at the end of animation
                     onComplete() {
-                        // -----  activate new animation loop only when animation is complete ------
-                        // run init new map function
-                        // initBattle();
                         onWarpTile = false;
                         console.log(`onWarp tile is ${onWarpTile}`)
-                        // then run the animate function
-                        animateMain();
-                        // play new audio
-                        audio.map.play()
-                        // remove black screen once aniation had loaded
+                        if(warpTileIndex === 1) {
+                            // -----  activate new animation loop only when animation is complete ------
+                            // run init new map function
+                            // initBattle();
+                            
+                            // then run the animate function
+                            animateMain();
+                            // play new audio
+                            audio.map.play()
+                            // remove black screen once aniation had loaded
+                            
+                        } else if (warpTileIndex === 0) {
+                            // then run the animate function
+                            offsetCaveLower = {
+                                x: -800,
+                                y: -235
+                            }
+                            animateCaveLower();
+                            
+                            // play new audio
+                            audio.cave.play()
+                            // remove black screen once aniation had loaded
+                        }
                         gsap.to("#battleFlash", {
                             opacity: 0,
                             duration: 0.7
