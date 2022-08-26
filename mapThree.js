@@ -119,15 +119,15 @@ const backgroundCaveLower = new Sprite({
 // foreground
 const foregroundCaveLower = new Sprite({
     position: {
-        x: offsetCave.x, 
-        y: offsetCave.y
+        x: offsetCaveLower.x, 
+        y: offsetCaveLower.y
     },
     image: caveMapLowerForeground,
     scale: 1
 })
 
 // ----- create moveables array which contains the items which should move when the player moves ------
-const moveablesCave = [backgroundCaveLower, ...boundariesCaveLower, foregroundCaveLower, ...instanceZonesCaveLower]
+const moveablesCaveLower = [backgroundCaveLower, ...boundariesCaveLower, foregroundCaveLower, ...instanceZonesCaveLower]
 
 // -------------- main map animate function  -------------------------
 function animateCaveLower() {

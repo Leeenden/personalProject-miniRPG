@@ -17,6 +17,19 @@ const audio = {
         volume: 0.1,
         loop: false
     }),
+    stepGrass:  new Howl({
+        src: "./audio/stepGrass.wav",
+        html5: true,
+        volume: 0.2,
+        loop: true,
+        rate: 0.5
+    }),
+    grassRustle:  new Howl({
+        src: "./audio/grassRustle.wav",
+        html5: true,
+        volume: 0.3,
+        loop: false
+    }),
     initBattle: new Howl({
         src: "./audio/initBattle.wav",
         html5: true,

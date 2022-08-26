@@ -246,6 +246,7 @@ function animateMain() {
     npcOne.draw();
     // draw player character
     player.draw();
+    punch.draw()
     // draw foreground ** note drawn after player to ensure player can wlak behind those images
     foregroundMain.draw();
 
@@ -264,6 +265,7 @@ function animateMain() {
 
     // ----- checking for collisions in the battle zone tiles whilst moving  ------
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
+        
         // ----- loop through the battleZones array------
         for (let i = 0; i < battleZonesMain.length; i++){
             // define new variable 
@@ -673,7 +675,7 @@ punchImage.src = "./images/fireball.png"
 // create the new sprite
 const punch = new Sprite({
     position: {
-        x: player.position.x,
+        x: player.position.x +50,
         y: player.position.y
     },
     image: punchImage,
@@ -683,7 +685,6 @@ const punch = new Sprite({
         hold: 10
     },
     animate: true,
-    scale: 1
+    scale: 0.5
     
 })
-punch.draw()
