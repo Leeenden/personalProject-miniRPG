@@ -13,23 +13,23 @@ canvas.height = 640;
 // ----- collisions/barrier tiles ------
 const collisionsMapMain = [];
 //parse JSON file to produce arrays of the array for collisions
-for (let i = 0; i < collisions.length; i += 20){
-   collisionsMapMain.push(collisions.slice(i, 20 + i))
+for (let i = 0; i < collisions.length; i += 60){
+   collisionsMapMain.push(collisions.slice(i, 60 + i))
 }
 
 // ----- instance/warp tiles  ------
 const instancesMapMain = [];
-//parse JSON file to produce arrays of the array for battleZones
-for (let i = 0; i < instancesData.length; i += 20){
-    instancesMapMain.push(instancesData.slice(i, 20 + i))
+//parse JSON file to produce arrays of the array for instances
+for (let i = 0; i < instancesData.length; i += 60){
+    instancesMapMain.push(instancesData.slice(i, 60 + i))
 }
 let onWarpTile = false;
 let justWarped = false;
 // ----- battleZsone tiles ------
 const battleZonesMapMain = [];
 //parse JSON file to produce arrays of the array for battleZones
-for (let i = 0; i < battleZonesData.length; i += 20){
-    battleZonesMapMain.push(battleZonesData.slice(i, 20 + i))
+for (let i = 0; i < battleZonesData.length; i += 60){
+    battleZonesMapMain.push(battleZonesData.slice(i, 60 + i))
 }
 
 // -------------- collision boundary code -------------------------
@@ -40,15 +40,15 @@ const battleZonesMain = [];
 
 // define the offset of images within the map
 let offsetMain = {
-    x: -275,
-    y: -350
+    x: 135,
+    y: -175
 }
 
 // ----- check collisions array and create the matching boundaries ------
 collisionsMapMain.forEach((row, i) => {
     row.forEach((symbol, j) => {
         // check json map file for correct num val.
-        if (symbol === 2475)
+        if (symbol === 16765)
             boundariesMain.push(
                 // create new boundary class object 
                 new Boundary({
@@ -70,7 +70,7 @@ collisionsMapMain.forEach((row, i) => {
 instancesMapMain.forEach((row, i) => {
     row.forEach((symbol, j) => {
         // check json map file for correct num val.
-        if (symbol === 2476)
+        if (symbol === 16766)
             instanceZonesMain.push(
                 // create new boundary class object 
                 new Boundary({
@@ -89,36 +89,36 @@ instancesMapMain.forEach((row, i) => {
 });
 
 // ----- check battlezones array and create the matching boundaries ------
-battleZonesMapMain.forEach((row, i) => {
-    row.forEach((symbol, j) => {
-        // check json map file for correct num val.
-        if (symbol === 2477)
-            battleZonesMain.push(
-                // create new boundary class object 
-                new Boundary({
-                    position: {
-                        x: j * Boundary.width + offsetMain.x,
-                        y: i * Boundary.height + offsetMain.y
-                    },
-                    color: "rgba(255, 255, 0, 0.7)",
-                    isWarp: false,
-                    isWall: false,
-                    isBZ: true
-                })
-            );
+// battleZonesMapMain.forEach((row, i) => {
+//     row.forEach((symbol, j) => {
+//         // check json map file for correct num val.
+//         if (symbol === 2477)
+//             battleZonesMain.push(
+//                 // create new boundary class object 
+//                 new Boundary({
+//                     position: {
+//                         x: j * Boundary.width + offsetMain.x,
+//                         y: i * Boundary.height + offsetMain.y
+//                     },
+//                     color: "rgba(255, 255, 0, 0.7)",
+//                     isWarp: false,
+//                     isWall: false,
+//                     isBZ: true
+//                 })
+//             );
 
-    });
-});
+//     });
+// });
 
 // -------------- main map sprite code -------------------------
 // ----- define sprite images ------
 //  main background map
 const mainMap = new Image();
-mainMap.src = "images/maps/map.png";
+mainMap.src = "images/maps/startTownAnimated.png";
 
 // main map foreground objects (walk-behind)
 const mainMapForeground = new Image();
-mainMapForeground.src = "images/maps/foregroundObjects.png";
+mainMapForeground.src = "images/maps/startTownFOAnimated.png";
 
 // main player/character
 const playerImage = new Image();
@@ -186,6 +186,12 @@ const foregroundMain = new Sprite({
         y: offsetMain.y
     },
     image: mainMapForeground,
+    frames: {
+        col: 4,
+        row: 1,
+        hold: 30
+    },
+    animate: true,
     scale: 1
 })
 
@@ -207,7 +213,7 @@ const keys = {
 }
 
 // ----- create moveables array which contains the items which should move when the player moves ------
-const moveablesMain = [backgroundMain, ...boundariesMain, foregroundMain, ...instanceZonesMain, ...battleZonesMain, npcOne]
+const moveablesMain = [backgroundMain, ...boundariesMain, foregroundMain, ...instanceZonesMain, npcOne]
 // ----- create the rectangle in which a collision will occur ------
 function rectanglularCollision({rectangle1, rectangle2}) {
     return (
@@ -239,9 +245,9 @@ function animateMain() {
     });
     
     // draw battlezone boundaries
-    battleZonesMain.forEach((battleZone) => {
-        battleZone.draw()
-    });
+    // battleZonesMain.forEach((battleZone) => {
+    //     battleZone.draw()
+    // });
     // draw NPC characters
     npcOne.draw();
     // draw player character
@@ -352,15 +358,7 @@ function animateMain() {
             const overlappingArea = (
                 Math.min(player.position.x + player.width, instanceZone.position.x + instanceZone.width) - Math.max(player.position.x, instanceZone.position.x)) * (Math.min(player.position.y + player.height, instanceZone.position.y + instanceZone.height) - Math.max(player.position.y, instanceZone.position.y)
             )
-            // const test = instanceZonesMain.map((tile, index)=> {
-            //     if(tile.position === player.position) {
-            //         console.log(`current tile index is ${index} and pos-x is ${tile.position.x} and pos-y is ${tile.position.y}`)
-            //         tileIndex.push(index)
-            //         console.log(tileIndex)
-            //         onWarpTile = true
-            //     }
-                
-            // })
+            
             // ----- check if the player is inside the instance ------
             if (rectanglularCollision({rectangle1: player, rectangle2: instanceZone}) &&
                 // if the val is set lower (1 max), the event will trigger less frequently.
