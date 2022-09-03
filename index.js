@@ -13,23 +13,23 @@ canvas.height = 640;
 // ----- collisions/barrier tiles ------
 const collisionsMapMain = [];
 //parse JSON file to produce arrays of the array for collisions
-for (let i = 0; i < collisions.length; i += 60){
-   collisionsMapMain.push(collisions.slice(i, 60 + i))
+for (let i = 0; i < collisions.length; i += 90){
+   collisionsMapMain.push(collisions.slice(i, 90 + i))
 }
 
 // ----- instance/warp tiles  ------
 const instancesMapMain = [];
 //parse JSON file to produce arrays of the array for instances
-for (let i = 0; i < instancesData.length; i += 60){
-    instancesMapMain.push(instancesData.slice(i, 60 + i))
+for (let i = 0; i < instancesData.length; i += 90){
+    instancesMapMain.push(instancesData.slice(i, 90 + i))
 }
 let onWarpTile = false;
 let justWarped = false;
 // ----- battleZsone tiles ------
 const battleZonesMapMain = [];
 //parse JSON file to produce arrays of the array for battleZones
-for (let i = 0; i < battleZonesData.length; i += 60){
-    battleZonesMapMain.push(battleZonesData.slice(i, 60 + i))
+for (let i = 0; i < battleZonesData.length; i += 90){
+    battleZonesMapMain.push(battleZonesData.slice(i, 90 + i))
 }
 
 // -------------- collision boundary code -------------------------
@@ -40,8 +40,8 @@ const battleZonesMain = [];
 
 // define the offset of images within the map
 let offsetMain = {
-    x: 135,
-    y: -175
+    x: -225,
+    y: -440
 }
 
 // ----- check collisions array and create the matching boundaries ------
@@ -173,7 +173,7 @@ const backgroundMain = new Sprite({
     frames: {
         col: 4,
         row: 1,
-        hold: 30
+        hold: 40
     },
     animate: true,
     scale: 1
@@ -189,7 +189,7 @@ const foregroundMain = new Sprite({
     frames: {
         col: 4,
         row: 1,
-        hold: 30
+        hold: 40
     },
     animate: true,
     scale: 1
