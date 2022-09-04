@@ -40,8 +40,8 @@ const battleZonesMain = [];
 
 // define the offset of images within the map
 let offsetMain = {
-    x: -225,
-    y: -450
+    x: -615,
+    y: -335
 }
 
 // ----- check collisions array and create the matching boundaries ------
@@ -122,7 +122,7 @@ mainMapForeground.src = "images/maps/startTownFOAnimated.png";
 
 // main player/character
 const playerImage = new Image();
-playerImage.src = "images/charSmall.png";
+playerImage.src = "images/testChar2.png";
 
 // test npc 
 const NPCOneImage = new Image();
@@ -133,12 +133,12 @@ NPCOneImage.src = "images/testNPC.png";
 // player
 const player = new Sprite({
     position: {
-        x: canvas.width / 2 - 96 / 4,
-        y: canvas.height / 2 - 128 / 4
+        x: canvas.width / 2 - 96 / 6,
+        y: canvas.height / 2 - 64 / 4
     },
     image: playerImage,
     frames: {
-        col: 4,
+        col: 6,
         row: 4,
         hold: 10
     },
@@ -173,7 +173,7 @@ const backgroundMain = new Sprite({
     frames: {
         col: 4,
         row: 1,
-        hold: 40
+        hold: 60
     },
     animate: true,
     scale: 1
@@ -189,7 +189,7 @@ const foregroundMain = new Sprite({
     frames: {
         col: 4,
         row: 1,
-        hold: 40
+        hold: 60
     },
     animate: true,
     scale: 1
