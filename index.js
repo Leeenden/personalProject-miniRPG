@@ -37,6 +37,12 @@ const animatedPlantsMapMain = [];
 for (let i = 0; i < animatedPlantsData.length; i += 90){
     animatedPlantsMapMain.push(animatedPlantsData.slice(i, 90 + i))
 }
+// ----- animated Animals tiles ------
+const animatedAnimalsMapMain = [];
+//parse JSON file to produce arrays of the array for animated plants
+for (let i = 0; i < animatedAnimalsData.length; i += 90){
+    animatedAnimalsMapMain.push(animatedAnimalsData.slice(i, 90 + i))
+}
 
 // -------------- collision boundary code -------------------------
 // define empty boundaries arrays for each type needed
@@ -44,6 +50,7 @@ const boundariesMain = [];
 const instanceZonesMain = [];
 const battleZonesMain = [];
 const animatedPlantsZonesMain = [];
+const animatedAnimalsZonesMain = [];
 // define the offset of images within the map
 let offsetMain = {
     x: -120,
@@ -54,7 +61,7 @@ let offsetMain = {
 collisionsMapMain.forEach((row, i) => {
     row.forEach((symbol, j) => {
         // check json map file for correct num val.
-        if (symbol === 16765)
+        if (symbol === 38885)
             boundariesMain.push(
                 // create new boundary class object 
                 new Boundary({
@@ -76,7 +83,7 @@ collisionsMapMain.forEach((row, i) => {
 instancesMapMain.forEach((row, i) => {
     row.forEach((symbol, j) => {
         // check json map file for correct num val.
-        if (symbol === 16766)
+        if (symbol === 38892)
             instanceZonesMain.push(
                 // create new boundary class object 
                 new Boundary({
@@ -95,18 +102,24 @@ instancesMapMain.forEach((row, i) => {
 });
 
 // ----- check animated plant zones array and create the matching sprites ------
-
-//test function for rendeirng sprites on map
+//define sprite images
 const pinkFlowerImage = new Image();
-pinkFlowerImage.src = "images/chicken.png";
-let flower
-
+pinkFlowerImage.src = "images/sprites/pinkFlower.png";
+const daisyImage = new Image();
+daisyImage.src = "images/sprites/daisy.png";
+const lilypadImage = new Image();
+lilypadImage.src = "images/sprites/lilypad.png";
+// pre define different flower variables
+let pinkFlower
+let daisy
+let lilypad
+// main code to check which plant goes where
 animatedPlantsMapMain.forEach((row, i) => {
     row.forEach((symbol, j) => {
         // check json map file for correct num val.
-        if (symbol === 16765) {
+        if (symbol === 38899) {
             animatedPlantsZonesMain.push(
-                // create new boundary class object 
+                // first create the boundary which can be turned invisible
                 new Boundary({
                     position: {
                         x: j * Boundary.width + offsetMain.x,
@@ -118,8 +131,9 @@ animatedPlantsMapMain.forEach((row, i) => {
                     isBZ: false
                 })
             )
+            // then create the sprite image assign to the boundary position
             animatedPlantsZonesMain.push(
-                flower = new Sprite({
+                pinkFlower = new Sprite({
                     position: {
                         x: j * Boundary.width + offsetMain.x,
                         y: i * Boundary.height + offsetMain.y
@@ -127,24 +141,177 @@ animatedPlantsMapMain.forEach((row, i) => {
                     image: pinkFlowerImage,
                     frames: {
                         col: 4,
-                        row: 4,
+                        row: 1,
                         hold: 20,
+                    },
+                    animate: true,
+                    scale: 2
+                })
+            )
+            // code to randomise the sprite animation if more than one column
+            // let ranNum
+            // function ranNumber(min, max) {
+            //     ranNum = Math.floor(Math.random() * (max - min + 1)) + min
+            // }
+            // ranNumber(0, flower.frames.row - 1)
+            // console.log(ranNum)
+            // flower.frames.rowVal = ranNum
+        } else if (symbol === 38887) {
+            animatedPlantsZonesMain.push(
+                // first create the boundary which can be turned invisible
+                new Boundary({
+                    position: {
+                        x: j * Boundary.width + offsetMain.x,
+                        y: i * Boundary.height + offsetMain.y
+                    },
+                    color: "rgba(105, 155, 255, 0)",
+                    isWarp: false,
+                    isWall: false,
+                    isBZ: false
+                })
+            )
+            // then create the sprite image assign to the boundary position
+            animatedPlantsZonesMain.push(
+                daisy = new Sprite({
+                    position: {
+                        x: j * Boundary.width + offsetMain.x,
+                        y: i * Boundary.height + offsetMain.y
+                    },
+                    image: daisyImage,
+                    frames: {
+                        col: 4,
+                        row: 1,
+                        hold: 20
                     },
                     animate: true,
                     scale: 1
                 })
             )
-            let ranNum
-            function ranNumber(min, max) {
-                ranNum = Math.floor(Math.random() * (max - min + 1)) + min
-            }
-            ranNumber(0, flower.frames.row - 1)
-            console.log(ranNum)
-            flower.frames.rowVal = ranNum
+        } else if (symbol === 38879) {
+            animatedPlantsZonesMain.push(
+                // first create the boundary which can be turned invisible
+                new Boundary({
+                    position: {
+                        x: j * Boundary.width + offsetMain.x,
+                        y: i * Boundary.height + offsetMain.y
+                    },
+                    color: "rgba(105, 155, 255, 0)",
+                    isWarp: false,
+                    isWall: false,
+                    isBZ: false
+                })
+            )
+            // then create the sprite image assign to the boundary position
+            animatedPlantsZonesMain.push(
+                lilypad = new Sprite({
+                    position: {
+                        x: j * Boundary.width + offsetMain.x,
+                        y: i * Boundary.height + offsetMain.y
+                    },
+                    image: lilypadImage,
+                    frames: {
+                        col: 4,
+                        row: 1,
+                        hold: 40
+                    },
+                    animate: true,
+                    scale: 1
+                })
+            )
         }
 
     });
 });
+
+// ----- check animated animals zones array and create the matching sprites ------
+//define sprite images
+const pidgeonImage = new Image();
+pidgeonImage.src = "images/sprites/pidgeon.png";
+const hummingbirdImage = new Image();
+hummingbirdImage.src = "images/sprites/hummingbird.png";
+
+// pre define different flower variables
+let pidgeon
+let hummingbird
+// main code to check which plant goes where
+animatedAnimalsMapMain.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        // check json map file for correct num val.
+        if (symbol === 38877) {
+            animatedAnimalsZonesMain.push(
+                // first create the boundary which can be turned invisible
+                new Boundary({
+                    position: {
+                        x: j * Boundary.width + offsetMain.x,
+                        y: i * Boundary.height + offsetMain.y
+                    },
+                    color: "rgba(105, 155, 255, 0)",
+                    isWarp: false,
+                    isWall: false,
+                    isBZ: false
+                })
+            )
+            // then create the sprite image assign to the boundary position
+            animatedAnimalsZonesMain.push(
+                pidgeon = new Sprite({
+                    position: {
+                        x: j * Boundary.width + offsetMain.x,
+                        y: i * Boundary.height + offsetMain.y
+                    },
+                    image: pidgeonImage,
+                    frames: {
+                        col: 4,
+                        row: 3,
+                        hold: 40,
+                    },
+                    animate: true,
+                    scale: 2
+                })
+            )
+            // code to randomise the sprite animation if more than one column
+            let ranNum
+            function ranNumber(min, max) {
+                ranNum = Math.floor(Math.random() * (max - min + 1)) + min
+            }
+            ranNumber(0, pidgeon.frames.row - 1)
+            console.log(ranNum)
+            pidgeon.frames.rowVal = ranNum
+        } else if (symbol === 38880) {
+            animatedAnimalsZonesMain.push(
+                // first create the boundary which can be turned invisible
+                new Boundary({
+                    position: {
+                        x: j * Boundary.width + offsetMain.x,
+                        y: i * Boundary.height + offsetMain.y
+                    },
+                    color: "rgba(105, 155, 255, 0)",
+                    isWarp: false,
+                    isWall: false,
+                    isBZ: false
+                })
+            )
+            // then create the sprite image assign to the boundary position
+            animatedAnimalsZonesMain.push(
+                daisy = new Sprite({
+                    position: {
+                        x: j * Boundary.width + offsetMain.x,
+                        y: i * Boundary.height + offsetMain.y
+                    },
+                    image: hummingbirdImage,
+                    frames: {
+                        col: 2,
+                        row: 1,
+                        hold: 20
+                    },
+                    animate: true,
+                    scale: 2
+                })
+            )
+        }
+
+    });
+});
+
 // ----- check battlezones array and create the matching boundaries ------
 // battleZonesMapMain.forEach((row, i) => {
 //     row.forEach((symbol, j) => {
@@ -269,7 +436,7 @@ const keys = {
 }
 
 // ----- create moveables array which contains the items which should move when the player moves ------
-const moveablesMain = [backgroundMain, ...boundariesMain, foregroundMain, ...instanceZonesMain, ...animatedPlantsZonesMain, npcOne]
+const moveablesMain = [backgroundMain, ...boundariesMain, foregroundMain, ...instanceZonesMain, ...animatedAnimalsZonesMain, ...animatedPlantsZonesMain, npcOne]
 // ----- create the rectangle in which a collision will occur ------
 function rectanglularCollision({rectangle1, rectangle2}) {
     return (
@@ -300,6 +467,9 @@ function animateMain() {
     });
     animatedPlantsZonesMain.forEach((animatedPlantsZone) => {
         animatedPlantsZone.draw()
+    });
+    animatedAnimalsZonesMain.forEach((animatedAnimalsZone) => {
+        animatedAnimalsZone.draw()
     });
     // draw battlezone boundaries
     // battleZonesMain.forEach((battleZone) => {
