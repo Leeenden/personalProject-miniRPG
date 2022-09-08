@@ -16,7 +16,7 @@ const collisionsMapMain = [];
 for (let i = 0; i < collisions.length; i += 90){
    collisionsMapMain.push(collisions.slice(i, 90 + i))
 }
-
+let renderedSpritesPlants
 // ----- instance/warp tiles  ------
 const instancesMapMain = [];
 //parse JSON file to produce arrays of the array for instances
@@ -25,11 +25,17 @@ for (let i = 0; i < instancesData.length; i += 90){
 }
 let onWarpTile = false;
 let justWarped = false;
-// ----- battleZsone tiles ------
+// ----- battleZone tiles ------
 const battleZonesMapMain = [];
 //parse JSON file to produce arrays of the array for battleZones
 for (let i = 0; i < battleZonesData.length; i += 90){
     battleZonesMapMain.push(battleZonesData.slice(i, 90 + i))
+}
+// ----- animated Plants tiles ------
+const animatedPlantsMapMain = [];
+//parse JSON file to produce arrays of the array for animated plants
+for (let i = 0; i < animatedPlantsData.length; i += 90){
+    animatedPlantsMapMain.push(animatedPlantsData.slice(i, 90 + i))
 }
 
 // -------------- collision boundary code -------------------------
@@ -37,11 +43,11 @@ for (let i = 0; i < battleZonesData.length; i += 90){
 const boundariesMain = [];
 const instanceZonesMain = [];
 const battleZonesMain = [];
-
+const animatedPlantsZonesMain = [];
 // define the offset of images within the map
 let offsetMain = {
-    x: -615,
-    y: -335
+    x: -120,
+    y: -160
 }
 
 // ----- check collisions array and create the matching boundaries ------
@@ -88,6 +94,57 @@ instancesMapMain.forEach((row, i) => {
     });
 });
 
+// ----- check animated plant zones array and create the matching sprites ------
+
+//test function for rendeirng sprites on map
+const pinkFlowerImage = new Image();
+pinkFlowerImage.src = "images/chicken.png";
+let flower
+
+animatedPlantsMapMain.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        // check json map file for correct num val.
+        if (symbol === 16765) {
+            animatedPlantsZonesMain.push(
+                // create new boundary class object 
+                new Boundary({
+                    position: {
+                        x: j * Boundary.width + offsetMain.x,
+                        y: i * Boundary.height + offsetMain.y
+                    },
+                    color: "rgba(105, 155, 255, 0)",
+                    isWarp: false,
+                    isWall: false,
+                    isBZ: false
+                })
+            )
+            animatedPlantsZonesMain.push(
+                flower = new Sprite({
+                    position: {
+                        x: j * Boundary.width + offsetMain.x,
+                        y: i * Boundary.height + offsetMain.y
+                    },
+                    image: pinkFlowerImage,
+                    frames: {
+                        col: 4,
+                        row: 4,
+                        hold: 20,
+                    },
+                    animate: true,
+                    scale: 1
+                })
+            )
+            let ranNum
+            function ranNumber(min, max) {
+                ranNum = Math.floor(Math.random() * (max - min + 1)) + min
+            }
+            ranNumber(0, flower.frames.row - 1)
+            console.log(ranNum)
+            flower.frames.rowVal = ranNum
+        }
+
+    });
+});
 // ----- check battlezones array and create the matching boundaries ------
 // battleZonesMapMain.forEach((row, i) => {
 //     row.forEach((symbol, j) => {
@@ -114,11 +171,11 @@ instancesMapMain.forEach((row, i) => {
 // ----- define sprite images ------
 //  main background map
 const mainMap = new Image();
-mainMap.src = "images/maps/startTownAnimated.png";
+mainMap.src = "images/maps/startTownTest.png";
 
 // main map foreground objects (walk-behind)
 const mainMapForeground = new Image();
-mainMapForeground.src = "images/maps/startTownFOAnimated.png";
+mainMapForeground.src = "images/maps/startTownTestFO.png";
 
 // main player/character
 const playerImage = new Image();
@@ -149,8 +206,8 @@ const player = new Sprite({
 // test NPC
 const npcOne = new Sprite({
     position: {
-        x: (canvas.width / 2 - 384 / 8) - 375,
-        y: (canvas.height / 2 - 192 / 4) - 120
+        x: (canvas.width / 2 - 384 / 8) - offsetMain.x,
+        y: (canvas.height / 2 - 192 / 4) - offsetMain.y
     },
     image: NPCOneImage,
     frames: {
@@ -171,14 +228,13 @@ const backgroundMain = new Sprite({
     },
     image: mainMap,
     frames: {
-        col: 4,
+        col: 1,
         row: 1,
-        hold: 60
+        hold: 10
     },
     animate: true,
     scale: 1
 })
-
 // foreground
 const foregroundMain = new Sprite({
     position: {
@@ -187,7 +243,7 @@ const foregroundMain = new Sprite({
     },
     image: mainMapForeground,
     frames: {
-        col: 4,
+        col: 1,
         row: 1,
         hold: 60
     },
@@ -213,7 +269,7 @@ const keys = {
 }
 
 // ----- create moveables array which contains the items which should move when the player moves ------
-const moveablesMain = [backgroundMain, ...boundariesMain, foregroundMain, ...instanceZonesMain, npcOne]
+const moveablesMain = [backgroundMain, ...boundariesMain, foregroundMain, ...instanceZonesMain, ...animatedPlantsZonesMain, npcOne]
 // ----- create the rectangle in which a collision will occur ------
 function rectanglularCollision({rectangle1, rectangle2}) {
     return (
@@ -241,9 +297,10 @@ function animateMain() {
     // draw instance tile boundaries
     instanceZonesMain.forEach((instanceZone) => {
         instanceZone.draw()
-
     });
-    
+    animatedPlantsZonesMain.forEach((animatedPlantsZone) => {
+        animatedPlantsZone.draw()
+    });
     // draw battlezone boundaries
     // battleZonesMain.forEach((battleZone) => {
     //     battleZone.draw()
