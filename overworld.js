@@ -164,6 +164,10 @@ punchBtn.addEventListener("click", (e) => {
         warrior.usePunch();
         useSkillBtns.One.clicked = false
         console.log(useSkillBtns.One.clicked)
+        playerRenderedSprites.splice(1, 0, punch)
+        setTimeout(() => {
+            playerRenderedSprites.splice(1, 1)
+        }, 200);
     } 
 })
 swingBtn.addEventListener("click", (e) => {

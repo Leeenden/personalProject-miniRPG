@@ -43,7 +43,12 @@ const animatedAnimalsMapMain = [];
 for (let i = 0; i < animatedAnimalsData.length; i += 90){
     animatedAnimalsMapMain.push(animatedAnimalsData.slice(i, 90 + i))
 }
-
+// ----- animated Animals tiles ------
+const animatedNPCMapMain = [];
+//parse JSON file to produce arrays of the array for animated plants
+for (let i = 0; i < animatedNPCdata.length; i += 90){
+    animatedNPCMapMain.push(animatedNPCdata.slice(i, 90 + i))
+}
 // -------------- collision boundary code -------------------------
 // define empty boundaries arrays for each type needed
 const boundariesMain = [];
@@ -51,6 +56,7 @@ const instanceZonesMain = [];
 const battleZonesMain = [];
 const animatedPlantsZonesMain = [];
 const animatedAnimalsZonesMain = [];
+const animatedNPCZonesMain = [];
 // define the offset of images within the map
 let offsetMain = {
     x: -120,
@@ -184,7 +190,7 @@ animatedPlantsMapMain.forEach((row, i) => {
                         hold: 20
                     },
                     animate: true,
-                    scale: 1
+                    scale: 1.5
                 })
             )
         } else if (symbol === 38879) {
@@ -265,7 +271,7 @@ animatedAnimalsMapMain.forEach((row, i) => {
                         hold: 40,
                     },
                     animate: true,
-                    scale: 2
+                    scale: 1.5
                 })
             )
             // code to randomise the sprite animation if more than one column
@@ -301,13 +307,69 @@ animatedAnimalsMapMain.forEach((row, i) => {
                     frames: {
                         col: 2,
                         row: 1,
-                        hold: 20
+                        hold: 2
                     },
                     animate: true,
-                    scale: 2
+                    scale: 1
                 })
             )
         }
+
+    });
+});
+
+// ----- check animated NPC zones array and create the matching sprites ------
+//define sprite images
+const kidImage = new Image();
+kidImage.src = "images/sprites/kid01.png";
+
+// pre define different flower variables
+let kid
+
+// main code to check which plant goes where
+animatedNPCMapMain.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        // check json map file for correct num val.
+        if (symbol === 38890) {
+            animatedNPCZonesMain.push(
+                // first create the boundary which can be turned invisible
+                new Boundary({
+                    position: {
+                        x: j * Boundary.width + offsetMain.x,
+                        y: i * Boundary.height + offsetMain.y
+                    },
+                    color: "rgba(105, 155, 255, 0)",
+                    isWarp: false,
+                    isWall: false,
+                    isBZ: false
+                })
+            )
+            // then create the sprite image assign to the boundary position
+            animatedNPCZonesMain.push(
+                kid = new Sprite({
+                    position: {
+                        x: j * Boundary.width + offsetMain.x,
+                        y: i * Boundary.height + offsetMain.y
+                    },
+                    image: kidImage,
+                    frames: {
+                        col: 4,
+                        row: 4,
+                        hold: 20,
+                    },
+                    animate: true,
+                    scale: 2.25
+                })
+            )
+            // code to randomise the sprite animation if more than one column
+            let ranNum
+            function ranNumber(min, max) {
+                ranNum = Math.floor(Math.random() * (max - min + 1)) + min
+            }
+            ranNumber(0, kid.frames.row - 1)
+            console.log(ranNum)
+            kid.frames.rowVal = ranNum
+        } 
 
     });
 });
@@ -369,22 +431,7 @@ const player = new Sprite({
     animate: true,
     scale: 1
 })
-
-// test NPC
-const npcOne = new Sprite({
-    position: {
-        x: (canvas.width / 2 - 384 / 8) - offsetMain.x,
-        y: (canvas.height / 2 - 192 / 4) - offsetMain.y
-    },
-    image: NPCOneImage,
-    frames: {
-        col: 8,
-        row: 4,
-        hold: 10
-    },
-    animate: false,
-    scale: 1
-})
+const playerRenderedSprites = [player]
 
 // ----- main map sprites ------
 // background
@@ -436,7 +483,7 @@ const keys = {
 }
 
 // ----- create moveables array which contains the items which should move when the player moves ------
-const moveablesMain = [backgroundMain, ...boundariesMain, foregroundMain, ...instanceZonesMain, ...animatedAnimalsZonesMain, ...animatedPlantsZonesMain, npcOne]
+const moveablesMain = [backgroundMain, ...boundariesMain, foregroundMain, ...instanceZonesMain, ...animatedAnimalsZonesMain, ...animatedPlantsZonesMain, ...animatedNPCZonesMain]
 // ----- create the rectangle in which a collision will occur ------
 function rectanglularCollision({rectangle1, rectangle2}) {
     return (
@@ -465,21 +512,30 @@ function animateMain() {
     instanceZonesMain.forEach((instanceZone) => {
         instanceZone.draw()
     });
+    // draw animated plants
     animatedPlantsZonesMain.forEach((animatedPlantsZone) => {
         animatedPlantsZone.draw()
     });
+    // draw animated animals
     animatedAnimalsZonesMain.forEach((animatedAnimalsZone) => {
         animatedAnimalsZone.draw()
+    });
+    // draw NPC characters
+    animatedNPCZonesMain.forEach((animatedNPCZone) => {
+        animatedNPCZone.draw()
     });
     // draw battlezone boundaries
     // battleZonesMain.forEach((battleZone) => {
     //     battleZone.draw()
     // });
-    // draw NPC characters
-    npcOne.draw();
+    // draw player characters
+    playerRenderedSprites.forEach((sprite) => {
+        sprite.draw()
+    });
+    
     // draw player character
-    player.draw();
-    punch.draw()
+    // player.draw();
+    // punch.draw()
     // draw foreground ** note drawn after player to ensure player can wlak behind those images
     foregroundMain.draw();
 
@@ -676,7 +732,7 @@ function animateMain() {
                         ...boundary, 
                         position: {
                             x: boundary.position.x,
-                            y: boundary.position.y + 3
+                            y: boundary.position.y + 8
                         }
                     }
                 })
@@ -705,7 +761,7 @@ function animateMain() {
                     rectangle2: {
                         ...boundary, 
                         position: {
-                            x: boundary.position.x + 3,
+                            x: boundary.position.x + 8,
                             y: boundary.position.y
                         }
                     }
@@ -736,7 +792,7 @@ function animateMain() {
                         ...boundary, 
                         position: {
                             x: boundary.position.x,
-                            y: boundary.position.y - 3
+                            y: boundary.position.y - 8
                         }
                     }
                 })
@@ -765,7 +821,7 @@ function animateMain() {
                     rectangle2: {
                         ...boundary, 
                         position: {
-                            x: boundary.position.x - 3,
+                            x: boundary.position.x - 8,
                             y: boundary.position.y 
                         }
                     }
